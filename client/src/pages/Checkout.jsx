@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import api from '../utils/api';
 
 export default function Checkout() {
 	const { items, subtotal, clear } = useCart();
-	const { user, updateUser } = useAuth();
+	const { user } = useAuth();
 	const [customer, setCustomer] = useState({ name: '', email: '', phone: '', address: '' });
 	const [fulfillment, setFulfillment] = useState({ type: 'pickup' });
 	const [payment, setPayment] = useState({ method: 'cash' });
@@ -13,11 +13,9 @@ export default function Checkout() {
 	const [discount, setDiscount] = useState(0);
 	const [placing, setPlacing] = useState(false);
 	const [errors, setErrors] = useState({});
-	const member = Boolean(user?.membership?.active);
-	const memberDiscount = useMemo(()=> member ? Math.round(subtotal * 0.10 * 100) / 100 : 0, [member, subtotal]);
-	const tax = Math.round((subtotal - discount - memberDiscount) * 0.05 * 100) / 100;
-	const deliveryFee = (fulfillment.type === 'delivery' ? 5 : 0) * (member? 0 : 1);
-	const total = Math.max(0, subtotal - discount - memberDiscount + tax + deliveryFee);
+	const tax = Math.round((subtotal - discount) * 0.05 * 100) / 100;
+	const deliveryFee = (fulfillment.type === 'delivery' ? 5 : 0);
+	const total = Math.max(0, subtotal - discount + tax + deliveryFee);
 
 	const validate = () => {
 		const e = {};
@@ -50,7 +48,6 @@ export default function Checkout() {
 				couponCode,
 				userId: user?.id,
 			});
-			if (data?.user) updateUser(data.user);
 			clear();
 			alert('Order placed!');
 		} catch (e) {
@@ -114,7 +111,7 @@ export default function Checkout() {
 					<div className="space-y-1 text-sm">
 						<div className="flex justify-between"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
 						<div className="flex justify-between"><span>Discount</span><span>-${discount.toFixed(2)}</span></div>
-						{member && <div className="flex justify-between text-burnt-600"><span>Membership Discount</span><span>-${memberDiscount.toFixed(2)}</span></div>}
+
 						<div className="flex justify-between"><span>Tax</span><span>${tax.toFixed(2)}</span></div>
 						<div className="flex justify-between"><span>Delivery</span><span>${deliveryFee.toFixed(2)}</span></div>
 						<div className="flex justify-between font-semibold border-t pt-2"><span>Total</span><span>${total.toFixed(2)}</span></div>

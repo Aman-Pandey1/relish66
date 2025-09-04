@@ -8,7 +8,6 @@ export default function AdminProducts(){
 	const navigate = useNavigate();
 	const [items,setItems]=useState([]);
 	const [q,setQ]=useState('');
-	const [service,setService]=useState('');
 	const [page,setPage]=useState(1);
 	const pageSize=10;
 	const [file,setFile]=useState(null);
@@ -27,9 +26,8 @@ export default function AdminProducts(){
 		const r=await api.get('/products'); setItems(r.data);
 	};
 	const filtered = items.filter(p=>{
-		const okService = service? (p.service===service) : true;
 		const okQ = q? (p.title?.toLowerCase().includes(q.toLowerCase())) : true;
-		return okService && okQ;
+		return okQ;
 	});
 	const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 	const pageItems = filtered.slice((page-1)*pageSize, page*pageSize);
@@ -45,11 +43,6 @@ export default function AdminProducts(){
 			</div>
 			<div className="flex items-center gap-3 mb-4">
 				<input className="border rounded px-3 py-2" placeholder="Search products" value={q} onChange={(e)=>{ setQ(e.target.value); setPage(1); }} />
-				<select className="border rounded px-3 py-2" value={service} onChange={(e)=>{ setService(e.target.value); setPage(1); }}>
-					<option value="">All Services</option>
-					<option value="liquor">Liquor</option>
-					<option value="general">General Store</option>
-				</select>
 			</div>
 			<form onSubmit={doImport} className="flex items-center gap-3 mb-6">
 				<input type="file" accept=".xlsx,.xls" onChange={(e)=>setFile(e.target.files?.[0]||null)} />
@@ -58,14 +51,13 @@ export default function AdminProducts(){
 			</form>
 			<table className="w-full text-sm">
 				<thead>
-					<tr className="text-left border-b"><th className="py-2">Title</th><th>Price</th><th>Service</th><th>Category</th><th></th></tr>
+					<tr className="text-left border-b"><th className="py-2">Title</th><th>Price</th><th>Category</th><th></th></tr>
 				</thead>
 				<tbody>
 					{pageItems.map(p=> (
 						<tr key={p._id} className="border-b">
 							<td className="py-2">{p.title}</td>
 							<td>${p.price.toFixed(2)}</td>
-							<td>{p.service||'-'}</td>
 							<td>{p.category?.name}</td>
 							<td className="text-right">
 								<Link to={`/admin/products/${p._id}`} className="underline mr-3">Edit</Link>

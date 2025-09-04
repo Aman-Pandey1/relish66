@@ -10,11 +10,10 @@ export default function Shop() {
 	const { add } = useCart();
 	const [items, setItems] = useState([]);
 	const [categories, setCategories] = useState([]);
-	const [filters, setFilters] = useState({ category: '', sort: '', q: '', service:'' });
+	const [filters, setFilters] = useState({ category: '', sort: '', q: '' });
 	const [also,setAlso]=useState([]);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [showCart, setShowCart] = useState(false);
-    const [generalOnly] = useState(() => typeof window !== 'undefined' && localStorage.getItem(generalOnlyKey) === '1');
 
 	useEffect(() => { api.get('/categories').then((res) => setCategories(res.data)); }, []);
 	// initialize from URL
@@ -22,9 +21,7 @@ export default function Shop() {
 		const category = searchParams.get('category') || '';
 		const q = searchParams.get('q') || '';
 		const sort = searchParams.get('sort') || '';
-		let service = searchParams.get('service') || '';
-		if (generalOnly) service = 'general';
-		setFilters((prev) => ({ ...prev, category, q, sort, service }));
+		setFilters((prev) => ({ ...prev, category, q, sort }));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	useEffect(() => {
@@ -38,7 +35,7 @@ export default function Shop() {
 		if(filters.category) next.set('category', filters.category);
 		if(filters.q) next.set('q', filters.q);
 		if(filters.sort) next.set('sort', filters.sort);
-		if(filters.service) next.set('service', filters.service);
+		// service removed
 		setSearchParams(next, { replace:true });
 	}, [filters, setSearchParams]);
 
@@ -46,8 +43,8 @@ export default function Shop() {
 		<div className="container-pad py-8">
 			<h1 className="font-serif text-3xl mb-4">Shop</h1>
 			<div className="flex gap-3 mb-4">
-				<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-burnt-600 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
-				<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-burnt-600 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
+				<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
+				<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
 				<button className="ml-auto md:hidden btn-primary" onClick={()=>setShowCart(true)}>View Cart</button>
 			</div>
 			<div className="grid md:grid-cols-[22rem_1fr] gap-6">
@@ -55,8 +52,8 @@ export default function Shop() {
 				<section>
 					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
 						<div className="flex gap-2">
-							<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-burnt-600 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
-							<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-burnt-600 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
+							<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
+							<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
 						</div>
 						<div className="flex-1 md:max-w-md">
 							<input className="border rounded px-3 py-2 w-full" placeholder="Search products" value={filters.q} onChange={(e)=>setFilters({ ...filters, q: e.target.value })} />
@@ -81,7 +78,7 @@ export default function Shop() {
 									{p.thumbnail && <img src={p.thumbnail} alt={p.title} className="w-full h-32 object-cover" />}
 									<div className="p-3">
 										<div className="font-medium line-clamp-1">{p.title}</div>
-										<div className="text-burnt-600 font-semibold">${p.price.toFixed(2)}</div>
+										<div className="text-blue-700 font-semibold">${p.price.toFixed(2)}</div>
 									</div>
 								</Link>
 							))}

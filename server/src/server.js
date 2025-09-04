@@ -8,7 +8,7 @@ import productRoutes from './routes/productRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
-import newsletterRoutes from './routes/newsletterRoutes.js';
+// newsletter removed
 import contactRoutes from './routes/contactRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import authRoutes from './routes/authRoutes.js';
@@ -38,14 +38,13 @@ async function bootstrapData() {
 		const slugToId = Object.fromEntries(catDocs.map((c) => [c.slug, c._id]));
 		const products = [
 			{
-				title: 'Kicking Horse Lager',
-				slug: 'kicking-horse-lager-6pk',
+				title: 'Relish66 Special',
+				slug: 'relish66-special',
 				description: 'Crisp mountain-brewed lager. 6 x 355ml',
 				price: 13.99,
 				thumbnail: 'https://images.unsplash.com/photo-1546539782-6fc531453083?q=80&w=1600&auto=format&fit=crop',
 				attributes: { abv: '5%', volumeMl: 355, flavourNotes: 'Crisp, clean' },
 				isFeatured: true,
-				service: 'liquor',
 				discountPercent: 10,
 				category: slugToId['beer'],
 			},
@@ -57,19 +56,18 @@ async function bootstrapData() {
 				thumbnail: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop',
 				attributes: { abv: '13%', volumeMl: 750, flavourNotes: 'Cherry, spice' },
 				isFeatured: true,
-				service: 'liquor',
 				discountPercent: 20,
 				category: slugToId['wine'],
 			},
 		];
 		await Product.insertMany(products);
-		await Promotion.create({ title: 'Winter Warmers', subtitle: '10% off select spirits', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop', ctaText: 'Shop Spirits', ctaLink: '/shop', order: 1, active: true });
+		await Promotion.create({ title: 'Winter Warmers', subtitle: 'Seasonal specials', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop', ctaText: 'Shop Now', ctaLink: '/shop', order: 1, active: true });
 		console.log('Bootstrapped initial data');
 	}
 	const adminExists = await User.findOne({ role: 'admin' });
 	if (!adminExists) {
-		await User.create({ name: 'Admin', email: 'admin@kickinghorse.store', password: 'Admin123!', role: 'admin' });
-		console.log('Created default admin user: admin@kickinghorse.store / Admin123!');
+		await User.create({ name: 'Admin', email: 'admin@relish66.com', password: 'Admin123!', role: 'admin' });
+		console.log('Created default admin user: admin@relish66.com / Admin123!');
 	}
 }
 
@@ -101,7 +99,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/coupons', couponRoutes);
-app.use('/api/newsletter', newsletterRoutes);
+// app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/promotions', promotionRoutes);

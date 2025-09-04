@@ -5,7 +5,7 @@ export function SeoProvider({ children }){
 }
 
 export function Seo({ title, description }){
-	const t = title ? `${title} | Kicking Horse General Store` : 'Kicking Horse General Store';
+	const t = title ? `${title} | Relish66` : 'Relish66';
 	return (
 		<Helmet>
 			<title>{t}</title>
@@ -13,6 +13,7 @@ export function Seo({ title, description }){
 			<meta property="og:title" content={t} />
 			{description && <meta property="og:description" content={description} />}
 			<meta property="og:type" content="website" />
+			<meta name="theme-color" content="#1E3A8A" />
 		</Helmet>
 	);
 }

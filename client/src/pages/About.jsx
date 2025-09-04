@@ -11,7 +11,7 @@ export default function About() {
   return (
     <div className="overflow-hidden">
       <PageBanner
-        title="About Kicking Horse General Store"
+        title="About Relish66"
         subtitle="Mountain roots. Curated selection. Friendly faces."
         image="https://images.unsplash.com/photo-1542000550-85cd0f37f13b?q=80&w=1600&auto=format&fit=crop"
         height="h-[40vh]"
@@ -22,7 +22,7 @@ export default function About() {
       <section className={`container-pad py-16 grid md:grid-cols-2 gap-12 items-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="space-y-6 text-neutral-700 leading-relaxed">
           <h2 className="font-serif text-3xl text-neutral-800">Welcome to Our Mountain Home</h2>
-          <p className="text-lg">Rooted in the spirit of the mountains, Kicking Horse General Store is a community hub for quality beverages and everyday staples. From local craft producers to global classics, we curate our shelves with care and hospitality.</p>
+          <p className="text-lg">Rooted in the spirit of the mountains, Relish66 is a community hub for quality food and everyday staples. From local craft producers to global classics, we curate our shelves with care and hospitality.</p>
           <p className="text-lg">We believe great stores are built on great relationships. Our team is here to help you find the perfect bottle, snack, or gift for any occasion.</p>
         </div>
         <div className="relative group">
@@ -30,7 +30,7 @@ export default function About() {
           <img 
             className="relative rounded-lg shadow-xl transform transition duration-700 group-hover:scale-105" 
             src="https://images.unsplash.com/photo-1541976590-713941681591?q=80&w=1200&auto=format&fit=crop" 
-            alt="Our team at Kicking Horse General Store" 
+            alt="Our team at Relish66" 
           />
         </div>
       </section>
@@ -173,7 +173,7 @@ export default function About() {
       <section className="bg-amber-600 text-white py-16">
         <div className="container-pad text-center">
           <h2 className="font-serif text-3xl mb-6">Visit Us Today</h2>
-          <p className="max-w-2xl mx-auto mb-8 text-amber-100">Experience the Kicking Horse difference. We're more than just a store—we're your neighbors, your friends, and your partners in finding the perfect products for any occasion.</p>
+          <p className="max-w-2xl mx-auto mb-8 text-amber-100">Experience the Relish66 difference. We're more than just a store—we're your neighbors, your friends, and your partners in finding the perfect products for any occasion.</p>
           <button className="bg-white text-amber-700 px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
             Plan Your Visit
           </button>

@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
-import AgeGate from './components/AgeGate.jsx';
+// AgeGate removed per requirements
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
@@ -20,14 +20,14 @@ import AdminProductForm from './pages/AdminProductForm.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 import { motion } from 'framer-motion';
 import AdminDashboard from './pages/AdminDashboard.jsx';
-import Membership from './pages/Membership.jsx';
-import Rewards from './pages/Rewards.jsx';
+// Membership and Rewards removed
+import Menu from './pages/Menu.jsx';
 import Orders from './pages/Orders.jsx';
 
 export default function App() {
 	return (
 		<div className="min-h-full flex flex-col">
-			<AgeGate />
+			{/* AgeGate removed */}
 			<Header />
 			<main className="flex-1">
 				<motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.3 }}>
@@ -49,8 +49,7 @@ export default function App() {
 						<Route path="/admin/promotions" element={<AdminPromotions />} />
 						<Route path="/admin/products" element={<AdminProducts />} />
 						<Route path="/admin/products/:id" element={<AdminProductForm />} />
-						<Route path="/membership" element={<Membership />} />
-						<Route path="/rewards" element={<Rewards />} />
+						<Route path="/menu" element={<Menu />} />
 						<Route path="/orders" element={<Orders />} />
 					</Routes>
 				</motion.div>

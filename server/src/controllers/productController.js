@@ -4,9 +4,8 @@ import XLSX from 'xlsx';
 
 export const getProducts = async (req, res, next) => {
 	try {
-		const { category, sort, q, min, max, featured, limit, service, minDiscount } = req.query;
+		const { category, sort, q, min, max, featured, limit, minDiscount } = req.query;
 		const filter = { isActive: true };
-		if (service && ['liquor','general'].includes(service)) filter.service = service;
 		if (minDiscount) filter.discountPercent = { $gte: Number(minDiscount) };
 		if (category) {
 			const cat = await Category.findOne({ slug: category });
@@ -59,7 +58,6 @@ export const createProduct = async (req, res, next) => {
 		if (!data.category) return res.status(400).json({ message: 'Category is required' });
 		if (!data.price) return res.status(400).json({ message: 'Price is required' });
 		if (!data.title || !data.slug) return res.status(400).json({ message: 'Title and slug are required' });
-		if (!data.service || !['liquor','general'].includes(data.service)) data.service = 'liquor';
 		const product = await Product.create(data);
 		res.status(201).json(product);
 	} catch (err) {
@@ -114,11 +112,6 @@ export const importProductsFromExcel = async (req, res, next) => {
 			const isFeatured = typeof rawFeatured !== 'undefined'
 				? String(rawFeatured).trim().toLowerCase() === 'true' || String(rawFeatured).trim().toLowerCase() === 'yes' || String(rawFeatured).trim() === '1'
 				: false;
-			const rawService = (r.service || r.Service || r.categoryType || '').toString().toLowerCase();
-			const norm = rawService.replace(/[^a-z]/g,'');
-			let service = 'liquor';
-			if (norm.includes('gen')) service = 'general';
-			else if (norm.includes('liq')) service = 'liquor';
 			docs.push({
 				title,
 				slug,
@@ -127,7 +120,6 @@ export const importProductsFromExcel = async (req, res, next) => {
 				thumbnail: r.thumbnail || r.image || r.Image || '',
 				category: categoryId,
 				isFeatured,
-				service,
 				discountPercent: r.discountPercent ? Number(r.discountPercent) : 0,
 				attributes: {
 					abv: r.abv || r.ABV || '',

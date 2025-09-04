@@ -64,7 +64,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-sm text-neutral-500">Email</div>
-                  <div className="font-medium">hello@kickinghorse.store</div>
+                  <div className="font-medium">hello@relish66.com</div>
                 </div>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function Contact() {
             </div>
             <div className="h-96 w-full">
               <iframe 
-                title="Kicking Horse General Store Location" 
+                title="Relish66 Location" 
                 className="w-full h-full" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade" 
