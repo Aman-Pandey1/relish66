@@ -12,14 +12,14 @@ const connectDB = async () => {
 		if (!memoryServerInstance) {
 			memoryServerInstance = await MongoMemoryServer.create({ instance: { port: 0 } });
 		}
-		const uri = memoryServerInstance.getUri('kickinghorse');
+		const uri = memoryServerInstance.getUri('relish66');
 		await mongoose.connect(uri);
 		console.log('MongoDB (memory) connected');
 		return;
 	}
 
 	// Default to persistent Mongo if URI not provided
-	const persistentUri = configuredUri || 'mongodb://127.0.0.1:27017/kickinghorse';
+	const persistentUri = configuredUri || 'mongodb://127.0.0.1:27017/relish66';
 	await mongoose.connect(persistentUri);
 	console.log('MongoDB connected');
 };

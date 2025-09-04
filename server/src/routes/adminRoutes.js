@@ -11,7 +11,7 @@ router.get('/stats', stats);
 // Excel template for product import
 router.get('/excel-template/products', (_req, res) => {
 	const rows = [[
-		'title','slug','description','price','categorySlug','service','discountPercent','image','isFeatured','abv','volumeMl','origin','flavourNotes'
+		'title','slug','description','price','categorySlug','discountPercent','image','isFeatured','abv','volumeMl','origin','flavourNotes'
 	]];
 	const sheet = XLSX.utils.aoa_to_sheet(rows);
 	const wb = XLSX.utils.book_new();

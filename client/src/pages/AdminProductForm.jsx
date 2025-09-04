@@ -9,17 +9,17 @@ export default function AdminProductForm(){
 	const isNew = id === 'new';
 	const { user } = useAuth();
 	const [categories,setCategories]=useState([]);
-	const [form,setForm]=useState({ title:'', slug:'', description:'', price:'', categorySlug:'', service:'liquor', imageUrl:'', isFeatured:false });
+	const [form,setForm]=useState({ title:'', slug:'', description:'', price:'', categorySlug:'', imageUrl:'', isFeatured:false });
 	const [error,setError]=useState('');
 	const [progress,setProgress]=useState(0);
 	useEffect(()=>{ if(!user||user.role!=='admin'){ navigate('/admin/login'); return; } api.get('/categories').then(r=>setCategories(r.data)); },[user,navigate]);
 	useEffect(()=>{ if(!isNew && user && user.role==='admin'){
 		api.get('/products').then(r=>{
 			const p=r.data.find(x=>x._id===id);
-			if(p) setForm({ title:p.title, slug:p.slug, description:p.description||'', price:p.price, categorySlug:p.category?.slug||'', image:null });
+			if(p) setForm({ title:p.title, slug:p.slug, description:p.description||'', price:p.price, categorySlug:p.category?.slug||'', imageUrl:p.thumbnail||'' });
 		});
 	}},[id,isNew,user]);
-	// Switch to URL-based image for single uploads
+	// URL-based image only
 	const submit=async(e)=>{
 		e.preventDefault();
 		const payload = { ...form };
@@ -42,10 +42,6 @@ export default function AdminProductForm(){
 						{categories.map(c=> <option key={c._id} value={c.slug}>{c.emoji} {c.name}</option>)}
 					</select>
 				</div>
-				<select className="border rounded px-3 py-2" value={form.service} onChange={(e)=>setForm({...form,service:e.target.value})}>
-					<option value="liquor">Liquor</option>
-					<option value="general">General Store</option>
-				</select>
 				<input className="border rounded px-3 py-2" placeholder="Image URL (https://...)" value={form.imageUrl} onChange={(e)=>setForm({...form,imageUrl:e.target.value})}/>
 				<label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={form.isFeatured} onChange={(e)=>setForm({...form,isFeatured:e.target.checked})}/> Featured product</label>
 				{error && <div className="text-red-600 text-sm">{error}</div>}

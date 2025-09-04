@@ -14,17 +14,8 @@ export const createOrder = async (req, res, next) => {
 		const { subtotal } = calcTotals(items);
 		let discount = 0;
 		let coupon;
-		let membershipApplied = false;
 		let deliveryFee = fulfillment?.type === 'delivery' ? 5 : 0;
-		let member = null;
-		if (userId) {
-			member = await User.findById(userId);
-			if (member?.membership?.active) {
-				membershipApplied = true;
-				deliveryFee = 0;
-				discount += Math.round(subtotal * 0.10 * 100) / 100;
-			}
-		}
+		let member = userId ? await User.findById(userId) : null;
 		if (couponCode) {
 			coupon = await Coupon.findOne({ code: couponCode.toUpperCase(), isActive: true });
 			if (coupon) {
@@ -34,7 +25,6 @@ export const createOrder = async (req, res, next) => {
 		}
 		const tax = Math.round((subtotal - discount) * 0.05 * 100) / 100;
 		const total = Math.max(0, subtotal - discount + tax + deliveryFee);
-		const earnedPoints = member?.membership?.active ? Math.floor(Math.max(0, subtotal - discount)) : 0;
 		const order = await Order.create({
 			items,
 			user: member?._id,
@@ -43,15 +33,9 @@ export const createOrder = async (req, res, next) => {
 			coupon: coupon?._id,
 			amounts: { subtotal, discount, tax, deliveryFee, total, currency: 'CAD' },
 			payment,
-			rewardPointsEarned: earnedPoints,
 			status: 'new',
 		});
-		let updatedUser = null;
-		if (earnedPoints > 0) {
-			updatedUser = await User.findByIdAndUpdate(member._id, { $inc: { rewardPoints: earnedPoints } }, { new: true });
-		}
-		const publicUser = updatedUser ? { id: updatedUser._id, name: updatedUser.name, email: updatedUser.email, role: updatedUser.role, membership: updatedUser.membership, rewardPoints: updatedUser.rewardPoints } : null;
-		res.status(201).json({ order, user: publicUser });
+		res.status(201).json({ order });
 	} catch (err) {
 		next(err);
 	}

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 export default function AdminLogin(){
 	const { login, status, user } = useAuth();
 	const navigate = useNavigate();
-	const [email,setEmail]=useState('admin@kickinghorse.store');
+	const [email,setEmail]=useState('admin@relish66.com');
 	const [password,setPassword]=useState('Admin123!');
 	const submit=async(e)=>{
 		e.preventDefault();

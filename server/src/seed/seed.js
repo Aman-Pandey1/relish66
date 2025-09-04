@@ -17,8 +17,8 @@ const categories = [
 
 const products = [
 	{
-		title: 'Kicking Horse Lager',
-		slug: 'kicking-horse-lager-6pk',
+		title: 'Relish66 Special',
+		slug: 'relish66-special',
 		description: 'Crisp mountain-brewed lager. 6 x 355ml',
 		price: 13.99,
 		thumbnail: '/images/beer/lager.jpg',
@@ -50,7 +50,7 @@ const products = [
 	const slugToId = Object.fromEntries(catDocs.map((c) => [c.slug, c._id]));
 	const toInsert = products.map((p) => ({ ...p, category: slugToId[p.categorySlug] }));
 	await Product.insertMany(toInsert);
-	await User.create({ name: 'Admin', email: 'admin@kickinghorse.store', password: 'Admin123!', role: 'admin' });
+	await User.create({ name: 'Admin', email: 'admin@relish66.com', password: 'Admin123!', role: 'admin' });
 	await Promotion.create({ title: 'Winter Warmers', subtitle: '10% off select spirits', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop', ctaText: 'Shop Spirits', ctaLink: '/shop', order: 1, active: true });
 	console.log('Seeded categories, products, admin user, and promotions');
 	process.exit(0);

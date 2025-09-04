@@ -110,7 +110,7 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* About Kicking Horse Section */}
+			{/* About Relish66 Section */}
 			<section className="container-pad py-16 md:py-24">
 				<div className="grid md:grid-cols-2 gap-10 items-center">
 					<motion.div
@@ -119,7 +119,7 @@ export default function Home() {
 						transition={{ duration: 0.7 }}
 						viewport={{ once: true }}
 					>
-						<h2 className="font-serif text-4xl md:text-5xl mb-4">About Kicking Horse</h2>
+						<h2 className="font-serif text-4xl md:text-5xl mb-4">About Relish66</h2>
 						<p className="text-gray-700 leading-relaxed mb-4">Rooted in mountain culture, we bring a curated selection of beer, wine, spirits, and everyday goods to our community and visitors. From local craft producers to global icons, we carefully choose what goes on our shelves.</p>
 						<p className="text-gray-700 leading-relaxed">Our friendly team is here to help you find the perfect bottle or gift for any occasion — whether you're exploring new flavors or stocking up on favorites.</p>
 						<Link to="/about" className="btn-primary mt-6 inline-block">Learn More</Link>
@@ -510,6 +510,7 @@ export default function Home() {
 				</motion.div>
 			</section>
 
+			{/* Newsletter replaced with contact CTA */}
 			<section ref={refs.newsletter} className="bg-neutral-100">
 				<div className="container-pad py-16 md:py-24">
 					<motion.div
@@ -520,25 +521,15 @@ export default function Home() {
 						className="grid md:grid-cols-2 gap-8 items-center"
 					>
 						<div>
-							<h3 className="font-serif text-3xl mb-4">Stay in the loop</h3>
-							<p className="text-neutral-600 mb-6">Get news, releases, and exclusive offers delivered to your inbox.</p>
-							<form className="max-w-md flex gap-2" onSubmit={async (e)=>{e.preventDefault();const email=e.currentTarget.elements.email.value;await api.post('/newsletter/subscribe',{email,source:'home'});e.currentTarget.reset();}}>
-								<input name="email" className="border px-4 py-3 rounded-lg w-full" placeholder="Email address" />
-								<motion.button 
-									whileHover={{ scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									className="btn-primary px-6 py-3"
-								>
-									Subscribe
-								</motion.button>
-							</form>
-							<p className="text-sm text-neutral-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+							<h3 className="font-serif text-3xl mb-4">Questions or Catering?</h3>
+							<p className="text-neutral-600 mb-6">Call (604) 555-0123 or email hello@relish66.com. We're happy to help.</p>
+							<Link to="/contact" className="btn-primary px-6 py-3 inline-block w-max">Contact Us</Link>
 						</div>
 						<motion.img 
 							whileHover={{ scale: 1.02 }}
 							className="rounded-xl shadow-md" 
 							src={newsletterImage} 
-							alt="Newsletter" 
+							alt="Contact Relish66" 
 						/>
 					</motion.div>
 				</div>

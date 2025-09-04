@@ -42,7 +42,6 @@ const orderSchema = new mongoose.Schema(
 			status: { type: String, enum: ['pending', 'paid', 'failed'], default: 'pending' },
 			transactionId: String,
 		},
-		rewardPointsEarned: { type: Number, default: 0 },
 		status: { type: String, enum: ['new', 'processing', 'fulfilled', 'cancelled'], default: 'new' },
 	},
 	{ timestamps: true }

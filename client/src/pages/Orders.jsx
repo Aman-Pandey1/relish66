@@ -25,7 +25,6 @@ export default function Orders(){
 									<div>Items: {o.items?.length||0}</div>
 									<div>Subtotal: ${Number(o.amounts?.subtotal||0).toFixed(2)}</div>
 									<div>Discount: -${Number(o.amounts?.discount||0).toFixed(2)}</div>
-									{Number(o.rewardPointsEarned||0)>0 && <div className="text-burnt-700">Rewards earned: {o.rewardPointsEarned} pts</div>}
 								</div>
 								<div>
 									<div>Tax: ${Number(o.amounts?.tax||0).toFixed(2)}</div>

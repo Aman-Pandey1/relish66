@@ -9,7 +9,7 @@ export default function Privacy(){
 
 				<h2 className="font-semibold text-xl mt-6">Information We Collect</h2>
 				<ul className="list-disc ml-6">
-					<li>Account data: name, email, password (hashed), membership status</li>
+					<li>Account data: name, email, password (hashed)</li>
 					<li>Order data: items purchased, delivery address, contact details</li>
 					<li>Payment data: method and status (processed by third-party providers)</li>
 					<li>Technical data: IP address, device info, cookies for session/auth</li>
@@ -18,7 +18,7 @@ export default function Privacy(){
 				<h2 className="font-semibold text-xl mt-6">How We Use Information</h2>
 				<ul className="list-disc ml-6">
 					<li>To process and deliver orders</li>
-					<li>To manage your account, membership, and rewards</li>
+					<li>To manage your account and orders</li>
 					<li>To communicate updates, receipts, and support</li>
 					<li>To improve our products, services, and website</li>
 				</ul>
@@ -49,7 +49,7 @@ export default function Privacy(){
 				<p>We may update this policy from time to time. We will post the updated policy on this page with a new effective date.</p>
 
 				<h2 className="font-semibold text-xl mt-6">Contact Us</h2>
-				<p>If you have questions about this policy, contact us at hello@kickinghorse.store.</p>
+				<p>If you have questions about this policy, contact us at hello@relish66.com.</p>
 			</div>
 		</div>
 	);

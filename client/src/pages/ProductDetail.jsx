@@ -36,7 +36,7 @@ export default function ProductDetail() {
 				<div>
 					<h1 className="font-serif text-3xl mb-2">{product.title}</h1>
 					<p className="text-neutral-600 mb-4">{product.description}</p>
-					<div className="text-burnt-600 text-2xl font-semibold mb-4">${priceNumber.toFixed(2)}</div>
+					<div className="text-blue-700 text-2xl font-semibold mb-4">${priceNumber.toFixed(2)}</div>
 					<div className="flex items-center gap-2 mb-4">
 						<label>Qty</label>
 						<input type="number" className="border rounded px-3 py-2 w-20" min={1} value={qty} onChange={(e) => setQty(Number(e.target.value))} />
@@ -77,7 +77,7 @@ export default function ProductDetail() {
 									{p.thumbnail && <img src={p.thumbnail} alt={p.title} className="w-full h-24 object-cover" />}
 									<div className="p-2 text-sm">
 										<div className="font-medium line-clamp-1">{p.title}</div>
-										<div className="text-burnt-600 font-semibold">${Number(p.price||0).toFixed(2)}</div>
+										<div className="text-blue-700 font-semibold">${Number(p.price||0).toFixed(2)}</div>
 									</div>
 								</Link>
 							))}
