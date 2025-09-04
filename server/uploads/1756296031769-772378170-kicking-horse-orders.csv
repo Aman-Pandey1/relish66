@@ -1,0 +1,6 @@
+id,date,status,customer,total,shippingMethod,paymentMethod
+ORD-5932,2023-10-28,Delivered,"John Doe",78.95,Standard Shipping,Credit Card
+ORD-5821,2023-10-15,Shipped,"Sarah Johnson",45.99,Express Shipping,PayPal
+ORD-5730,2023-09-28,Processing,"Michael Chen",124.5,Local Delivery,Credit Card
+ORD-5627,2023-10-25,Delivered,"Emma Wilson",58.95,Standard Shipping,Credit Card
+ORD-5512,2023-10-22,Pending,"Olivia Garcia",45.98,Standard Shipping,PayPal

@@ -1,0 +1,629 @@
+import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import PromoCarousel from '../components/PromoCarousel.jsx';
+import { Seo } from '../components/Seo.jsx';
+import ProductCard from '../components/ProductCard.jsx';
+import CategoryStrip from '../components/CategoryStrip.jsx';
+import api from '../utils/api';
+import { motion, useInView } from 'framer-motion';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import GroupsIcon from '@mui/icons-material/Groups';
+import LiquorIcon from '@mui/icons-material/Liquor';
+import WineBarIcon from '@mui/icons-material/WineBar';
+import PageBanner from '../components/PageBanner.jsx';
+
+// Import local images
+import bannerImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import aboutImage1 from '../assets/banner2.jpg';
+import aboutImage2 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import aboutImage3 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import aboutImage4 from '../assets/banner2.jpg';
+// Replace with an actual winter-themed image
+import winterWarmerImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import localImage1 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import localImage2 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import localImage3 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import newsletterImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+import faqImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
+
+export default function Home() {
+	const [featured, setFeatured] = useState([]);
+	const [recent, setRecent] = useState([]);
+	const [winterImageError, setWinterImageError] = useState(false);
+	const refs = {
+		featured: useRef(null),
+		categories: useRef(null),
+		promotions: useRef(null),
+		arrivals: useRef(null),
+		services: useRef(null),
+		local: useRef(null),
+		testimonials: useRef(null),
+		newsletter: useRef(null),
+		faq: useRef(null),
+		cta: useRef(null)
+	};
+
+	const inView = {};
+	Object.keys(refs).forEach(key => {
+		inView[key] = useInView(refs[key], { once: true, margin: "-100px" });
+	});
+
+	useEffect(() => {
+		api.get('/products', { params: { featured: true } }).then(r => setFeatured(r.data));
+		api.get('/products', { params: { sort: 'newest', limit: 8 } }).then(r => setRecent(r.data));
+	}, []);
+
+	const fadeIn = {
+		hidden: { opacity: 0, y: 50 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+	};
+
+	const staggerChildren = {
+		visible: { transition: { staggerChildren: 0.1 } }
+	};
+
+	// Winter warmer fallback image
+	const winterFallbackImage = 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1075&q=80';
+
+	return (
+		<div className="overflow-hidden">
+			<Seo title="Home" description="Mountain spirits, local goods, and friendly faces." />
+			
+			{/* Custom Banner with reduced overlay */}
+			<section className="relative h-screen min-h-[600px] flex items-center justify-center">
+				<img 
+					src={bannerImage} 
+					alt="Golden Spirits" 
+					className="absolute inset-0 w-full h-full object-cover"
+				/>
+				<div className="absolute inset-0 bg-black/20"></div> {/* Reduced overlay opacity */}
+				<div className="container-pad relative z-10 text-center text-white">
+					<motion.h1 
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8 }}
+						className="font-serif text-5xl md:text-6xl mb-4"
+					>
+						
+					</motion.h1>
+					<motion.p 
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8, delay: 0.2 }}
+						className="text-xl md:text-2xl mb-8"
+					>
+						
+					</motion.p>
+					<motion.div 
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8, delay: 0.4 }}
+						className="flex flex-col sm:flex-row gap-4 justify-center"
+					>
+						<Link to="/shop" className="btn-primary text-lg px-8 py-4">Shop Now</Link>
+						{/* <a href="#delivery" className="px-8 py-4 border-2 border-burnt-400 text-burnt-400 rounded-lg hover:bg-burnt-400 hover:text-white transition-all text-lg">Delivery Info</a> */}
+					</motion.div>
+				</div>
+			</section>
+
+			{/* About Kicking Horse Section */}
+			<section className="container-pad py-16 md:py-24">
+				<div className="grid md:grid-cols-2 gap-10 items-center">
+					<motion.div
+						initial={{ opacity: 0, x: -50 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.7 }}
+						viewport={{ once: true }}
+					>
+						<h2 className="font-serif text-4xl md:text-5xl mb-4">About Kicking Horse</h2>
+						<p className="text-gray-700 leading-relaxed mb-4">Rooted in mountain culture, we bring a curated selection of beer, wine, spirits, and everyday goods to our community and visitors. From local craft producers to global icons, we carefully choose what goes on our shelves.</p>
+						<p className="text-gray-700 leading-relaxed">Our friendly team is here to help you find the perfect bottle or gift for any occasion — whether you're exploring new flavors or stocking up on favorites.</p>
+						<Link to="/about" className="btn-primary mt-6 inline-block">Learn More</Link>
+					</motion.div>
+					<motion.div 
+						className="grid grid-cols-2 gap-4"
+						initial={{ opacity: 0, x: 50 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.7 }}
+						viewport={{ once: true }}
+					>
+						<motion.img 
+							whileHover={{ scale: 1.05 }}
+							className="rounded-xl h-48 w-full object-cover" 
+							src={aboutImage1} 
+							alt="Store"
+						/>
+						<motion.img 
+							whileHover={{ scale: 1.05 }}
+							className="rounded-xl h-48 w-full object-cover mt-6" 
+							src={aboutImage2} 
+							alt="Team"
+						/>
+						<motion.img 
+							whileHover={{ scale: 1.05 }}
+							className="rounded-xl h-48 w-full object-cover" 
+							src={aboutImage3} 
+							alt="Spirits"
+						/>
+						<motion.img 
+							whileHover={{ scale: 1.05 }}
+							className="rounded-xl h-48 w-full object-cover mt-6" 
+							src={aboutImage4} 
+							alt="Community"
+						/>
+					</motion.div>
+				</div>
+			</section>
+
+			<div ref={refs.categories}>
+				<CategoryStrip />
+			</div>
+
+			<section ref={refs.featured} className="container-pad py-16 md:py-24">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.featured ? "visible" : "hidden"}
+					className="text-center mb-12"
+				>
+					<h2 className="font-serif text-4xl md:text-5xl mb-4">Featured Spirits</h2>
+					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Discover our handpicked selection of premium spirits and local favorites</p>
+				</motion.div>
+				<motion.div
+					variants={staggerChildren}
+					initial="hidden"
+					animate={inView.featured ? "visible" : "hidden"}
+					className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+				>
+					{featured.map((p) => (
+						<motion.div 
+							key={p._id} 
+							variants={fadeIn}
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+						>
+							<ProductCard product={p} />
+						</motion.div>
+					))}
+				</motion.div>
+			</section>
+
+			{/* Discount Products Section */}
+			<section className="container-pad py-16 md:py-24">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.featured ? "visible" : "hidden"}
+					className="text-center mb-12"
+				>
+					<h2 className="font-serif text-4xl md:text-5xl mb-4">Discount Products</h2>
+					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Great deals with 10% off or more</p>
+				</motion.div>
+				<motion.div
+					variants={staggerChildren}
+					initial="hidden"
+					animate={inView.featured ? "visible" : "hidden"}
+					className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+				>
+					{recent.filter(p => (p.discountPercent||0) >= 10).slice(0,8).map((p) => (
+						<motion.div key={p._id} variants={fadeIn}>
+							<ProductCard product={p} />
+						</motion.div>
+					))}
+				</motion.div>
+			</section>
+
+
+
+			<section ref={refs.promotions} className="py-16 md:py-24 relative overflow-hidden">
+				<div className="absolute inset-0 bg-black/30 z-0" /> {/* Reduced overlay opacity */}
+				<img 
+					src={winterImageError ? winterFallbackImage : winterWarmerImage} 
+					alt="Winter Warmer seasonal specials" 
+					className="absolute inset-0 w-full h-full object-cover -z-10"
+					onError={() => setWinterImageError(true)}
+				/>
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.promotions ? "visible" : "hidden"}
+					className="container-pad relative z-10"
+				>
+					<div className="max-w-4xl mx-auto text-center text-white">
+						<h2 className="font-serif text-4xl md:text-5xl mb-6">Winter Warmers</h2>
+						<p className="text-xl mb-8">Cozy up with our seasonal selections perfect for cold winter nights</p>
+						<PromoCarousel />
+						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+							<Link to="/promotions" className="inline-block mt-8 px-8 py-3 bg-burnt-500 hover:bg-burnt-600 text-white rounded-lg transition-all">
+								View All Promotions
+							</Link>
+						</motion.div>
+					</div>
+				</motion.div>
+			</section>
+
+			<section ref={refs.arrivals} className="container-pad py-16 md:py-24">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.arrivals ? "visible" : "hidden"}
+					className="flex flex-col md:flex-row items-start justify-between mb-12"
+				>
+					<div>
+						<h2 className="font-serif text-4xl md:text-5xl mb-4">New Arrivals</h2>
+						<p className="text-xl text-gray-600">Fresh selections just added to our collection</p>
+					</div>
+					<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+						<Link to="/shop" className="mt-4 md:mt-0 px-6 py-3 border-2 border-burnt-900 text-burnt-900 rounded-lg hover:bg-burnt-900 hover:text-white transition-all">
+							Browse All
+						</Link>
+					</motion.div>
+				</motion.div>
+				<motion.div
+					variants={staggerChildren}
+					initial="hidden"
+					animate={inView.arrivals ? "visible" : "hidden"}
+					className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+				>
+					{recent.map((p) => (
+						<motion.div 
+							key={p._id} 
+							variants={fadeIn}
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+						>
+							<ProductCard product={p} />
+						</motion.div>
+					))}
+				</motion.div>
+			</section>
+
+			<section ref={refs.services} className="bg-burnt-50 py-16 md:py-24">
+				<div className="container-pad">
+					<motion.div
+						variants={fadeIn}
+						initial="hidden"
+						animate={inView.services ? "visible" : "hidden"}
+						className="text-center mb-16"
+					>
+						<h2 className="font-serif text-4xl md:text-5xl mb-4">Why Choose Us</h2>
+						<p className="text-xl text-gray-600 max-w-3xl mx-auto">Experience the difference of our premium service and curated selections</p>
+					</motion.div>
+					<motion.div
+						variants={staggerChildren}
+						initial="hidden"
+						animate={inView.services ? "visible" : "hidden"}
+						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+					>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="bg-white p-8 rounded-xl shadow-md text-center"
+						>
+							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+								<LocalShippingIcon className="text-amber-600 text-2xl" />
+							</div>
+							<h3 className="font-semibold text-xl mb-3">Local Delivery</h3>
+							<p className="text-gray-600">Same-day delivery within Golden, BC on eligible orders over $50.</p>
+						</motion.div>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="bg-white p-8 rounded-xl shadow-md text-center"
+						>
+							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+								<LiquorIcon className="text-amber-600 text-2xl" />
+							</div>
+							<h3 className="font-semibold text-xl mb-3">Curated Selection</h3>
+							<p className="text-gray-600">Handpicked beer, wine, and spirits from trusted producers worldwide.</p>
+						</motion.div>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="bg-white p-8 rounded-xl shadow-md text-center"
+						>
+							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+								<GroupsIcon className="text-amber-600 text-2xl" />
+							</div>
+							<h3 className="font-semibold text-xl mb-3">Community Focus</h3>
+							<p className="text-gray-600">We support local makers and community events throughout the year.</p>
+						</motion.div>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="bg-white p-8 rounded-xl shadow-md text-center"
+						>
+							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+								<StorefrontIcon className="text-amber-600 text-2xl" />
+							</div>
+							<h3 className="font-semibold text-xl mb-3">Expert Staff</h3>
+							<p className="text-gray-600">Knowledgeable team ready to help you find the perfect spirit for any occasion.</p>
+						</motion.div>
+					</motion.div>
+				</div>
+			</section>
+
+			<section ref={refs.local} className="py-16 md:py-24 bg-gray-100">
+				<div className="container-pad">
+					<motion.div
+						variants={fadeIn}
+						initial="hidden"
+						animate={inView.local ? "visible" : "hidden"}
+						className="text-center mb-16"
+					>
+						<h2 className="font-serif text-4xl md:text-5xl mb-4">Local Highlights</h2>
+						<p className="text-xl text-gray-600 max-w-3xl mx-auto">Showcasing the best of our regional producers and distilleries</p>
+					</motion.div>
+					<motion.div
+						variants={staggerChildren}
+						initial="hidden"
+						animate={inView.local ? "visible" : "hidden"}
+						className="grid grid-cols-1 md:grid-cols-3 gap-8"
+					>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="group relative overflow-hidden rounded-2xl"
+						>
+							<img 
+								src={localImage1} 
+								alt="Local distillery" 
+								className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+							/>
+							<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+								<div>
+									<h3 className="text-white text-xl font-semibold mb-2">BC Craft Distilleries</h3>
+									<p className="text-amber-200">Supporting local producers across British Columbia</p>
+								</div>
+							</div>
+						</motion.div>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="group relative overflow-hidden rounded-2xl"
+						>
+							<img 
+								src={localImage2} 
+								alt="Wine tasting" 
+								className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+							/>
+							<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+								<div>
+									<h3 className="text-white text-xl font-semibold mb-2">Wine Tasting Events</h3>
+									<p className="text-amber-200">Join us for exclusive wine tasting experiences</p>
+								</div>
+							</div>
+						</motion.div>
+						<motion.div 
+							variants={fadeIn} 
+							whileHover={{ y: -10, transition: { duration: 0.3 } }}
+							className="group relative overflow-hidden rounded-2xl"
+						>
+							<img 
+								src={localImage3} 
+								alt="Liquor 3" 
+								className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+							/>
+							<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+								<div>
+									<h3 className="text-white text-xl font-semibold mb-2">Local Liquor Stores</h3>
+									<p className="text-amber-200">Wide selection of spirits and craft cocktails</p>
+								</div>
+							</div>
+						</motion.div>
+					</motion.div>
+				</div>
+			</section>
+
+			<section ref={refs.testimonials} className="container-pad py-16 md:py-24 bg-gray-50">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.testimonials ? "visible" : "hidden"}
+					className="text-center mb-12"
+				>
+					<h2 className="font-serif text-4xl md:text-5xl mb-4">What Our Customers Say</h2>
+					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Hear from our satisfied customers about their experience</p>
+				</motion.div>
+				<motion.div
+					variants={staggerChildren}
+					initial="hidden"
+					animate={inView.testimonials ? "visible" : "hidden"}
+					className="grid md:grid-cols-3 gap-8"
+				>
+					<motion.div 
+						variants={fadeIn}
+						whileHover={{ y: -5, transition: { duration: 0.3 } }}
+						className="bg-white p-8 rounded-xl shadow-md relative"
+					>
+						<div className="absolute top-0 left-0 w-full h-2 bg-amber-500 rounded-t-xl"></div>
+						<div className="flex items-center mb-4">
+							<div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+								<span className="text-amber-600 font-semibold">A</span>
+							</div>
+							<div>
+								<h4 className="font-semibold">Alex G.</h4>
+								<p className="text-amber-600 text-sm">Verified Customer</p>
+							</div>
+						</div>
+						<div className="flex mb-3">
+							{[...Array(5)].map((_, i) => (
+								<svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+									<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+								</svg>
+							))}
+						</div>
+						<p className="italic text-gray-600">"Amazing selection and super friendly team! Will definitely be coming back for more."</p>
+					</motion.div>
+					
+					<motion.div 
+						variants={fadeIn}
+						whileHover={{ y: -5, transition: { duration: 0.3 } }}
+						className="bg-white p-8 rounded-xl shadow-md relative"
+					>
+						<div className="absolute top-0 left-0 w-full h-2 bg-amber-500 rounded-t-xl"></div>
+						<div className="flex items-center mb-4">
+							<div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+								<span className="text-amber-600 font-semibold">P</span>
+							</div>
+							<div>
+								<h4 className="font-semibold">Priya S.</h4>
+								<p className="text-amber-600 text-sm">Verified Customer</p>
+							</div>
+						</div>
+						<div className="flex mb-3">
+							{[...Array(5)].map((_, i) => (
+								<svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+									<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+								</svg>
+							))}
+						</div>
+						<p className="italic text-gray-600">"Pickup was quick and easy. The staff was incredibly helpful in recommending the perfect wine for our anniversary dinner."</p>
+					</motion.div>
+					
+					<motion.div 
+						variants={fadeIn}
+						whileHover={{ y: -5, transition: { duration: 0.3 } }}
+						className="bg-white p-8 rounded-xl shadow-md relative"
+					>
+						<div className="absolute top-0 left-0 w-full h-2 bg-amber-500 rounded-t-xl"></div>
+						<div className="flex items-center mb-4">
+							<div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+								<span className="text-amber-600 font-semibold">D</span>
+							</div>
+							<div>
+								<h4 className="font-semibold">Daniel R.</h4>
+								<p className="text-amber-600 text-sm">Verified Customer</p>
+							</div>
+						</div>
+						<div className="flex mb-3">
+							{[...Array(5)].map((_, i) => (
+								<svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+									<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+								</svg>
+							))}
+						</div>
+						<p className="italic text-gray-600">"Love the local highlights and curated finds. The seasonal selections are always spot on!"</p>
+					</motion.div>
+				</motion.div>
+			</section>
+
+			<section ref={refs.newsletter} className="bg-neutral-100">
+				<div className="container-pad py-16 md:py-24">
+					<motion.div
+						initial={{ opacity: 0, y: 50 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.7 }}
+						viewport={{ once: true }}
+						className="grid md:grid-cols-2 gap-8 items-center"
+					>
+						<div>
+							<h3 className="font-serif text-3xl mb-4">Stay in the loop</h3>
+							<p className="text-neutral-600 mb-6">Get news, releases, and exclusive offers delivered to your inbox.</p>
+							<form className="max-w-md flex gap-2" onSubmit={async (e)=>{e.preventDefault();const email=e.currentTarget.elements.email.value;await api.post('/newsletter/subscribe',{email,source:'home'});e.currentTarget.reset();}}>
+								<input name="email" className="border px-4 py-3 rounded-lg w-full" placeholder="Email address" />
+								<motion.button 
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									className="btn-primary px-6 py-3"
+								>
+									Subscribe
+								</motion.button>
+							</form>
+							<p className="text-sm text-neutral-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+						</div>
+						<motion.img 
+							whileHover={{ scale: 1.02 }}
+							className="rounded-xl shadow-md" 
+							src={newsletterImage} 
+							alt="Newsletter" 
+						/>
+					</motion.div>
+				</div>
+			</section>
+
+			<section ref={refs.faq} className="container-pad py-16 md:py-24">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.faq ? "visible" : "hidden"}
+					className="text-center mb-12"
+				>
+					<h2 className="font-serif text-4xl md:text-5xl mb-4">Frequently Asked Questions</h2>
+					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Find answers to common questions about our products and services</p>
+				</motion.div>
+				<motion.div
+					variants={staggerChildren}
+					initial="hidden"
+					animate={inView.faq ? "visible" : "hidden"}
+					className="grid md:grid-cols-2 gap-8 items-start max-w-5xl mx-auto"
+				>
+					<div className="space-y-4">
+						<Accordion className="rounded-lg overflow-hidden shadow-md">
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<span className="font-semibold">What are your delivery options?</span>
+							</AccordionSummary>
+							<AccordionDetails>
+								We offer local pickup and delivery within Golden, BC. Delivery fees apply based on distance. Orders over $50 qualify for free delivery within a 5km radius.
+							</AccordionDetails>
+						</Accordion>
+						<Accordion className="rounded-lg overflow-hidden shadow-md">
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<span className="font-semibold">Do you check ID for age verification?</span>
+							</AccordionSummary>
+							<AccordionDetails>
+								Yes, a valid government-issued ID is required for age verification on pickup or delivery. We strictly adhere to BC's legal drinking age of 19 years.
+							</AccordionDetails>
+						</Accordion>
+						<Accordion className="rounded-lg overflow-hidden shadow-md">
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<span className="font-semibold">Can I return alcohol products?</span>
+							</AccordionSummary>
+							<AccordionDetails>
+								Unopened products in their original condition may be eligible for return within 7 days of purchase, in accordance with BC liquor regulations. Receipt is required for all returns.
+							</AccordionDetails>
+						</Accordion>
+						<Accordion className="rounded-lg overflow-hidden shadow-md">
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<span className="font-semibold">Do you offer special orders for products not in stock?</span>
+							</AccordionSummary>
+							<AccordionDetails>
+								Yes, we can special order many products not regularly stocked. Contact us with the product details, and we'll check availability and pricing for you.
+							</AccordionDetails>
+						</Accordion>
+						<Accordion className="rounded-lg overflow-hidden shadow-md">
+							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+								<span className="font-semibold">What payment methods do you accept?</span>
+							</AccordionSummary>
+							<AccordionDetails>
+								We accept cash, all major credit cards, debit cards, and mobile payments like Apple Pay and Google Pay. We also offer gift cards available for purchase in-store.
+							</AccordionDetails>
+						</Accordion>
+					</div>
+					<motion.img 
+						whileHover={{ scale: 1.02 }}
+						className="rounded-xl shadow-md" 
+						src={faqImage} 
+						alt="FAQ" 
+					/>
+				</motion.div>
+			</section>
+
+			<section ref={refs.cta} className="container-pad py-16 md:py-24 bg-burnt-900 text-white rounded-xl my-12 text-center">
+				<motion.div
+					variants={fadeIn}
+					initial="hidden"
+					animate={inView.cta ? "visible" : "hidden"}
+				>
+					<h3 className="font-serif text-4xl md:text-5xl mb-4">Ready to stock up?</h3>
+					<p className="text-xl mb-8 max-w-2xl mx-auto">Browse our latest arrivals, seasonal specials, and customer favorites</p>
+					<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+						<Link to="/shop" className="btn-primary bg-white text-burnt-900 hover:bg-gray-100 px-8 py-4 text-lg">Shop Now</Link>
+					</motion.div>
+				</motion.div>
+			</section>
+		</div>
+	);
+}
