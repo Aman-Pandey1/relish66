@@ -148,16 +148,10 @@ export const importProductsFromExcel = async (req, res, next) => {
 				slug,
 				description: r.description || r.Description || '',
 				price: Number(r.price || r.Price || 0),
-				thumbnail: r.thumbnail || r.image || r.Image || '',
+				thumbnail: r.thumbnail || r.imageUrl || r.image || r.Image || '',
 				category: categoryId,
 				isFeatured,
-				discountPercent: r.discountPercent ? Number(r.discountPercent) : 0,
-				attributes: {
-					abv: r.abv || r.ABV || '',
-					volumeMl: r.volumeMl ? Number(r.volumeMl) : undefined,
-					origin: r.origin || r.Origin || '',
-					flavourNotes: r.flavourNotes || r.Notes || '',
-				},
+				discountPercent: 0,
 			});
 		}
 
