@@ -11,13 +11,13 @@ router.get('/stats', stats);
 // Excel template for product import
 router.get('/excel-template/products', (_req, res) => {
 	const rows = [[
-		'name','slug','description','price','category','imageUrl','isFeatured'
+		'name','slug','description','price','category','imageUrl'
 	],[
 		'Chole Bhature (2 pcs)','chole-bhature-2pcs','Fluffy bhature with chickpea curry','12.66','Breakfast / Lunch','https://...','false'
 	],[
-		'Veg Thali','veg-thali','Daal / Paneer / Rice / Bread / Raita / Salad / Sweet','14.66','Lunch Combo / Thali','https://...','true'
+		'Veg Thali','veg-thali','Daal / Paneer / Rice / Bread / Raita / Salad / Sweet','14.66','Lunch Combo / Thali','https://...'
 	],[
-		'Mango Lassi','mango-lassi','Refreshing mango yogurt drink','5.66','Drinks','https://...','true'
+		'Mango Lassi','mango-lassi','Refreshing mango yogurt drink','5.66','Drinks','https://...'
 	]];
 	const sheet = XLSX.utils.aoa_to_sheet(rows);
 	const wb = XLSX.utils.book_new();

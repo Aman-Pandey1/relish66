@@ -139,10 +139,7 @@ export const importProductsFromExcel = async (req, res, next) => {
 				slugToId[categorySlug] = categoryId;
 			}
 			if (!categoryId) continue;
-			const rawFeatured = r.isFeatured ?? r.Featured ?? r.featured;
-			const isFeatured = typeof rawFeatured !== 'undefined'
-				? String(rawFeatured).trim().toLowerCase() === 'true' || String(rawFeatured).trim().toLowerCase() === 'yes' || String(rawFeatured).trim() === '1'
-				: false;
+			const isFeatured = false;
 			docs.push({
 				title,
 				slug,
