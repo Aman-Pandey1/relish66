@@ -43,8 +43,8 @@ export default function Shop() {
 		<div className="container-pad py-8">
 			<h1 className="font-serif text-3xl mb-4">Shop</h1>
 			<div className="flex gap-3 mb-4">
-				<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
-				<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
+				<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-navy-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
+				<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-navy-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
 				<button className="ml-auto md:hidden btn-primary" onClick={()=>setShowCart(true)}>View Cart</button>
 			</div>
 			<div className="grid md:grid-cols-[22rem_1fr] gap-6">
@@ -52,8 +52,8 @@ export default function Shop() {
 				<section>
 					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
 						<div className="flex gap-2">
-							<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
-							<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-blue-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
+							<button className={`px-3 py-1 border rounded ${filters.sort===''?'bg-navy-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'' })}>Best Sellers</button>
+							<button className={`px-3 py-1 border rounded ${filters.sort==='newest'?'bg-navy-700 text-white':''}`} onClick={()=>setFilters({ ...filters, sort:'newest' })}>New Arrivals</button>
 						</div>
 						<div className="flex-1 md:max-w-md">
 							<input className="border rounded px-3 py-2 w-full" placeholder="Search products" value={filters.q} onChange={(e)=>setFilters({ ...filters, q: e.target.value })} />
@@ -78,7 +78,7 @@ export default function Shop() {
 									{p.thumbnail && <img src={p.thumbnail} alt={p.title} className="w-full h-32 object-cover" />}
 									<div className="p-3">
 										<div className="font-medium line-clamp-1">{p.title}</div>
-										<div className="text-blue-700 font-semibold">${p.price.toFixed(2)}</div>
+										<div className="text-navy-700 font-semibold">${p.price.toFixed(2)}</div>
 									</div>
 								</Link>
 							))}

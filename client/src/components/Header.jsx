@@ -20,24 +20,24 @@ export default function Header() {
 					<span className="text-black">Relish66</span>
 				</Link>
 				<nav className="hidden md:flex items-center gap-6">
-					<NavLink to="/shop" className={({ isActive }) => (isActive ? 'text-blue-700' : 'text-neutral-700')}>Shop</NavLink>
-					<NavLink to="/menu" className={({ isActive }) => (isActive ? 'text-blue-700' : 'text-neutral-700')}>Menu</NavLink>
-					<NavLink to="/about" className={({ isActive }) => (isActive ? 'text-blue-700' : 'text-neutral-700')}>About</NavLink>
-					<NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-blue-700' : 'text-neutral-700')}>Contact</NavLink>
-					{user && <NavLink to="/orders" className={({ isActive }) => (isActive ? 'text-blue-700' : 'text-neutral-700')}>Orders</NavLink>}
+					<NavLink to="/shop" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Shop</NavLink>
+					<NavLink to="/menu" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Menu</NavLink>
+					<NavLink to="/about" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>About</NavLink>
+					<NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Contact</NavLink>
+					{user && <NavLink to="/orders" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Orders</NavLink>}
 					<form className="ml-4" onSubmit={(e)=>{ e.preventDefault(); const q=e.currentTarget.elements.q.value.trim(); if(q) navigate(`/shop?q=${encodeURIComponent(q)}`); }}>
 						<input name="q" className="border rounded px-3 py-1.5 text-sm" placeholder="Search products..." />
 					</form>
 				</nav>
 				<div className="flex items-center gap-3">
 					<Link to="/wishlist" className="relative text-2xl" aria-label="Wishlist">❤
-						{wishlistCount>0 && <span className="absolute -top-2 -right-2 bg-blue-700 text-white text-xs rounded-full px-1.5">{wishlistCount}</span>}
+						{wishlistCount>0 && <span className="absolute -top-2 -right-2 bg-navy-700 text-white text-xs rounded-full px-1.5">{wishlistCount}</span>}
 					</Link>
 
 					<Link to="/cart" className="relative text-2xl" aria-label="Cart">
 						<span role="img" aria-label="cart">🛒</span>
 						{cartCount > 0 && (
-							<span className="absolute -top-2 -right-2 bg-blue-700 text-white text-xs rounded-full px-1.5">
+							<span className="absolute -top-2 -right-2 bg-navy-700 text-white text-xs rounded-full px-1.5">
 								{cartCount}
 							</span>
 						)}

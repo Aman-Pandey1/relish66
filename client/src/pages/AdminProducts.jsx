@@ -38,6 +38,7 @@ export default function AdminProducts(){
 				<h1 className="font-serif text-3xl">Admin: Products</h1>
 				<div className="flex items-center gap-3">
 					<button className="btn-outline" onClick={async()=>{ const res=await api.get('/admin/excel-template/products', { responseType:'blob' }); const url=URL.createObjectURL(res.data); const a=document.createElement('a'); a.href=url; a.download='products_template.xlsx'; a.click(); URL.revokeObjectURL(url); }}>Download Template</button>
+					<button className="btn-outline" onClick={async()=>{ const res=await api.get('/admin/excel-template/menu', { responseType:'blob' }); const url=URL.createObjectURL(res.data); const a=document.createElement('a'); a.href=url; a.download='menu_template.xlsx'; a.click(); URL.revokeObjectURL(url); }}>Menu Template</button>
 					<Link to="/admin/products/new" className="btn-primary">New Product</Link>
 				</div>
 			</div>
