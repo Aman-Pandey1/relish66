@@ -8,12 +8,9 @@ import api from '../utils/api';
 import { motion, useInView } from 'framer-motion';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LocalBarIcon from '@mui/icons-material/LocalBar';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import GroupsIcon from '@mui/icons-material/Groups';
-import LiquorIcon from '@mui/icons-material/Liquor';
-import WineBarIcon from '@mui/icons-material/WineBar';
 import PageBanner from '../components/PageBanner.jsx';
 
 // Import local images
@@ -81,13 +78,13 @@ export default function Home() {
 
 	return (
 		<div className="overflow-hidden">
-			<Seo title="Home" description="Mountain spirits, local goods, and friendly faces." />
+			<Seo title="Home" description="Authentic Indian cuisine and friendly service." />
 			
 			{/* Custom Banner with reduced overlay */}
 			<section className="relative h-screen min-h-[600px] flex items-center justify-center">
 				<img 
 					src={bannerImage} 
-					alt="Golden Spirits" 
+					alt="Relish Menu" 
 					className="absolute inset-0 w-full h-full object-cover"
 				/>
 				<div className="absolute inset-0 bg-black/20"></div> {/* Reduced overlay opacity */}
@@ -130,7 +127,7 @@ export default function Home() {
 						viewport={{ once: true }}
 					>
 						<h2 className="font-serif text-4xl md:text-5xl mb-4">About Relish66</h2>
-						<p className="text-gray-700 leading-relaxed mb-4">Rooted in mountain culture, we bring a curated selection of beer, wine, spirits, and everyday goods to our community and visitors. From local craft producers to global icons, we carefully choose what goes on our shelves.</p>
+						<p className="text-gray-700 leading-relaxed mb-4">Serving authentic Indian food with house-made chutneys and masalas. From breakfast specials to chef’s tasting menus, enjoy fresh, flavorful dishes all day.</p>
 						<p className="text-gray-700 leading-relaxed">Our friendly team is here to help you find the perfect bottle or gift for any occasion — whether you're exploring new flavors or stocking up on favorites.</p>
 						<Link to="/about" className="btn-primary mt-6 inline-block">Learn More</Link>
 					</motion.div>
@@ -157,7 +154,7 @@ export default function Home() {
 							whileHover={{ scale: 1.05 }}
 							className="rounded-xl h-48 w-full object-cover" 
 							src={aboutImage3} 
-							alt="Spirits"
+							alt="Cuisine"
 						/>
 						<motion.img 
 							whileHover={{ scale: 1.05 }}
@@ -208,8 +205,8 @@ export default function Home() {
 					animate={inView.featured ? "visible" : "hidden"}
 					className="text-center mb-12"
 				>
-					<h2 className="font-serif text-4xl md:text-5xl mb-4">Featured Spirits</h2>
-					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Discover our handpicked selection of premium spirits and local favorites</p>
+					<h2 className="font-serif text-4xl md:text-5xl mb-4">Chef Specials</h2>
+					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Discover our handpicked seasonal favorites and house specials</p>
 				</motion.div>
 				<motion.div
 					variants={staggerChildren}
@@ -350,10 +347,10 @@ export default function Home() {
 							className="bg-white p-8 rounded-xl shadow-md text-center"
 						>
 							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-								<LiquorIcon className="text-amber-600 text-2xl" />
+								<span className="text-2xl">🍽️</span>
 							</div>
-							<h3 className="font-semibold text-xl mb-3">Curated Selection</h3>
-							<p className="text-gray-600">Handpicked beer, wine, and spirits from trusted producers worldwide.</p>
+							<h3 className="font-semibold text-xl mb-3">Curated Dishes</h3>
+							<p className="text-gray-600">Handpicked specials prepared with our house-made chutneys and masalas.</p>
 						</motion.div>
 						<motion.div 
 							variants={fadeIn} 
@@ -422,13 +419,13 @@ export default function Home() {
 						>
 							<img 
 								src={localImage2} 
-								alt="Wine tasting" 
+								alt="Dining experience" 
 								className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
 							/>
 							<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
 								<div>
-									<h3 className="text-white text-xl font-semibold mb-2">Wine Tasting Events</h3>
-									<p className="text-amber-200">Join us for exclusive wine tasting experiences</p>
+									<h3 className="text-white text-xl font-semibold mb-2">Family Dining</h3>
+									<p className="text-amber-200">Comforting meals perfect for sharing</p>
 								</div>
 							</div>
 						</motion.div>
@@ -439,13 +436,13 @@ export default function Home() {
 						>
 							<img 
 								src={localImage3} 
-								alt="Liquor 3" 
+								alt="Restaurant ambience" 
 								className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
 							/>
 							<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
 								<div>
-									<h3 className="text-white text-xl font-semibold mb-2">Local Liquor Stores</h3>
-									<p className="text-amber-200">Wide selection of spirits and craft cocktails</p>
+									<h3 className="text-white text-xl font-semibold mb-2">Warm Hospitality</h3>
+									<p className="text-amber-200">Friendly service and memorable experiences</p>
 								</div>
 							</div>
 						</motion.div>
@@ -516,7 +513,7 @@ export default function Home() {
 								</svg>
 							))}
 						</div>
-						<p className="italic text-gray-600">"Pickup was quick and easy. The staff was incredibly helpful in recommending the perfect wine for our anniversary dinner."</p>
+						<p className="italic text-gray-600">"Pickup was quick and easy. The staff helped us choose the perfect dishes for our celebration dinner."</p>
 					</motion.div>
 					
 					<motion.div 
@@ -598,34 +595,34 @@ export default function Home() {
 						</Accordion>
 						<Accordion className="rounded-lg overflow-hidden shadow-md">
 							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-								<span className="font-semibold">Do you check ID for age verification?</span>
+								<span className="font-semibold">Do you offer catering or group bookings?</span>
 							</AccordionSummary>
 							<AccordionDetails>
-								Yes, a valid government-issued ID is required for age verification on pickup or delivery. We strictly adhere to BC's legal drinking age of 19 years.
+								Yes, we provide catering and group bookings. Contact us with your menu preferences and headcount.
 							</AccordionDetails>
 						</Accordion>
 						<Accordion className="rounded-lg overflow-hidden shadow-md">
 							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-								<span className="font-semibold">Can I return alcohol products?</span>
+								<span className="font-semibold">Can I change or cancel my pre-order?</span>
 							</AccordionSummary>
 							<AccordionDetails>
-								Unopened products in their original condition may be eligible for return within 7 days of purchase, in accordance with BC liquor regulations. Receipt is required for all returns.
+								We accept changes to pre-orders up to 24 hours before pickup or delivery. Please contact us for assistance.
 							</AccordionDetails>
 						</Accordion>
 						<Accordion className="rounded-lg overflow-hidden shadow-md">
 							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-								<span className="font-semibold">Do you offer special orders for products not in stock?</span>
+								<span className="font-semibold">Do you have vegan, gluten-free, or dairy-free options?</span>
 							</AccordionSummary>
 							<AccordionDetails>
-								Yes, we can special order many products not regularly stocked. Contact us with the product details, and we'll check availability and pricing for you.
+								Yes. Please ask your server — many dishes can be prepared vegan, gluten-free, or dairy-free.
 							</AccordionDetails>
 						</Accordion>
 						<Accordion className="rounded-lg overflow-hidden shadow-md">
 							<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-								<span className="font-semibold">What payment methods do you accept?</span>
+								<span className="font-semibold">How spicy are your dishes?</span>
 							</AccordionSummary>
 							<AccordionDetails>
-								We accept cash, all major credit cards, debit cards, and mobile payments like Apple Pay and Google Pay. We also offer gift cards available for purchase in-store.
+								We can prepare dishes mild, medium, hot, or extra hot. Let us know your preference.
 							</AccordionDetails>
 						</Accordion>
 					</div>

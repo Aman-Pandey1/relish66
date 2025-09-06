@@ -139,25 +139,16 @@ export const importProductsFromExcel = async (req, res, next) => {
 				slugToId[categorySlug] = categoryId;
 			}
 			if (!categoryId) continue;
-			const rawFeatured = r.isFeatured ?? r.Featured ?? r.featured;
-			const isFeatured = typeof rawFeatured !== 'undefined'
-				? String(rawFeatured).trim().toLowerCase() === 'true' || String(rawFeatured).trim().toLowerCase() === 'yes' || String(rawFeatured).trim() === '1'
-				: false;
+			const isFeatured = false;
 			docs.push({
 				title,
 				slug,
 				description: r.description || r.Description || '',
 				price: Number(r.price || r.Price || 0),
-				thumbnail: r.thumbnail || r.image || r.Image || '',
+				thumbnail: r.thumbnail || r.imageUrl || r.image || r.Image || '',
 				category: categoryId,
 				isFeatured,
-				discountPercent: r.discountPercent ? Number(r.discountPercent) : 0,
-				attributes: {
-					abv: r.abv || r.ABV || '',
-					volumeMl: r.volumeMl ? Number(r.volumeMl) : undefined,
-					origin: r.origin || r.Origin || '',
-					flavourNotes: r.flavourNotes || r.Notes || '',
-				},
+				discountPercent: 0,
 			});
 		}
 

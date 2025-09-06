@@ -28,40 +28,59 @@ async function bootstrapData() {
 	const count = await Category.countDocuments();
 	if (count === 0) {
 		const categories = [
-			{ name: 'Beer', slug: 'beer', emoji: '🍺' },
-			{ name: 'Wine', slug: 'wine', emoji: '🍷' },
-			{ name: 'Spirits', slug: 'spirits', emoji: '🥃' },
-			{ name: 'Groceries', slug: 'groceries', emoji: '🛒' },
-			{ name: 'Specialty / Local', slug: 'specialty-local', emoji: '🌾' },
+			{ name: 'Breakfast / Lunch', slug: 'breakfast-lunch', emoji: '🍽️' },
+			{ name: 'Lunch Combo / Thali', slug: 'thali', emoji: '🍱' },
+			{ name: 'Chaat - Cold Items', slug: 'chaat-cold', emoji: '🥗' },
+			{ name: 'Chaat - Tawa Items', slug: 'chaat-tawa', emoji: '🍳' },
+			{ name: 'Chaat - Frying Items', slug: 'chaat-frying', emoji: '🍟' },
+			{ name: 'Veg Appetizers', slug: 'veg-appetizers', emoji: '🥦' },
+			{ name: 'Non Veg Appetizers', slug: 'non-veg-appetizers', emoji: '🍗' },
+			{ name: 'Veg Main Course', slug: 'veg-main-course', emoji: '🥬' },
+			{ name: 'Non Veg Main Course', slug: 'non-veg-main-course', emoji: '🍖' },
+			{ name: 'Rice', slug: 'rice', emoji: '🍚' },
+			{ name: 'Breads', slug: 'breads', emoji: '🥖' },
+			{ name: 'Extras', slug: 'extras', emoji: '🧂' },
+			{ name: 'Soup', slug: 'soup', emoji: '🥣' },
+			{ name: 'Drinks', slug: 'drinks', emoji: '🥤' },
+			{ name: 'Desserts', slug: 'desserts', emoji: '🍰' },
+			{ name: 'Chef Special Menu', slug: 'chef-special', emoji: '👨‍🍳' },
 		];
 		const catDocs = await Category.insertMany(categories);
 		const slugToId = Object.fromEntries(catDocs.map((c) => [c.slug, c._id]));
 		const products = [
 			{
-				title: 'Relish66 Special',
-				slug: 'relish66-special',
-				description: 'Crisp mountain-brewed lager. 6 x 355ml',
-				price: 13.99,
-				thumbnail: 'https://images.unsplash.com/photo-1546539782-6fc531453083?q=80&w=1600&auto=format&fit=crop',
-				attributes: { abv: '5%', volumeMl: 355, flavourNotes: 'Crisp, clean' },
+				title: 'Chole Bhature (2 pcs)',
+				slug: 'chole-bhature-2pcs',
+				description: 'Fluffy bhature served with spicy chickpea curry',
+				price: 12.66,
+				thumbnail: 'https://images.unsplash.com/photo-1604908176997-431682cd12d1?q=80&w=1600&auto=format&fit=crop',
 				isFeatured: true,
-				discountPercent: 10,
-				category: slugToId['beer'],
+				discountPercent: 0,
+				category: slugToId['breakfast-lunch'],
 			},
 			{
-				title: 'Rocky Ridge Pinot Noir',
-				slug: 'rocky-ridge-pinot-noir',
-				description: 'Elegant red with cherry and spice notes',
-				price: 24.99,
-				thumbnail: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop',
-				attributes: { abv: '13%', volumeMl: 750, flavourNotes: 'Cherry, spice' },
+				title: 'Veg Thali',
+				slug: 'veg-thali',
+				description: 'Daal, paneer, rice, bread, raita, salad, and sweet',
+				price: 14.66,
+				thumbnail: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?q=80&w=1600&auto=format&fit=crop',
 				isFeatured: true,
-				discountPercent: 20,
-				category: slugToId['wine'],
+				discountPercent: 0,
+				category: slugToId['thali'],
+			},
+			{
+				title: 'Mango Lassi',
+				slug: 'mango-lassi',
+				description: 'Refreshing mango yogurt drink',
+				price: 5.66,
+				thumbnail: 'https://images.unsplash.com/photo-1627662164325-2f4a75e21b93?q=80&w=1600&auto=format&fit=crop',
+				isFeatured: true,
+				discountPercent: 0,
+				category: slugToId['drinks'],
 			},
 		];
 		await Product.insertMany(products);
-		await Promotion.create({ title: 'Winter Warmers', subtitle: 'Seasonal specials', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=1600&auto=format&fit=crop', ctaText: 'Shop Now', ctaLink: '/shop', order: 1, active: true });
+		await Promotion.create({ title: 'Chef Specials', subtitle: 'Seasonal favorites', image: 'https://images.unsplash.com/photo-1604908554026-3b4b7bdbaff3?q=80&w=1600&auto=format&fit=crop', ctaText: 'View Menu', ctaLink: '/shop', order: 1, active: true });
 		console.log('Bootstrapped initial data');
 	}
 	const adminExists = await User.findOne({ role: 'admin' });
