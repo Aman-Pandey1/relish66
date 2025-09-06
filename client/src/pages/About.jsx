@@ -48,7 +48,7 @@ export default function About() {
               },
               {
                 title: "Quality",
-                desc: "Curated selection across beer, wine, spirits, and daily essentials.",
+                desc: "Curated selection of authentic Indian dishes and daily essentials.",
                 icon: "⭐"
               },
               {
@@ -142,7 +142,7 @@ export default function About() {
             { 
               src: "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?q=80&w=800&auto=format&fit=crop", 
               name: "Emma Rodriguez",
-              role: "Wine & Spirits Expert"
+              role: "Head Chef"
             },
             { 
               src: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800&auto=format&fit=crop", 

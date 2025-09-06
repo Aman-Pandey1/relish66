@@ -123,41 +123,38 @@ export const importProductsFromExcel = async (req, res, next) => {
 
 		// First try structured import (with headers)
 		const rows = XLSX.utils.sheet_to_json(sheet);
-		const cats = await Category.find({});
-		const slugToId = Object.fromEntries(cats.map((c)=>[c.slug,c._id]));
 		const docs = [];
+		let skipped = 0;
+		const errors = [];
+		const catCache = {};
 		for (const r of rows) {
-			const slug = String(r.slug || r.Slug || (r.name || r.title || '').toString().toLowerCase().replace(/\s+/g,'-')).toLowerCase();
-			const title = r.title || r.name || '';
-			if (!slug || !title) continue;
-			if (await Product.findOne({ slug })) continue;
-			let categorySlug = (r.categorySlug || r.category || r.Category || '').toString().toLowerCase();
-			let categoryId = slugToId[categorySlug];
-			if (!categoryId && categorySlug) {
-				const created = await Category.create({ name: (r.category || r.Category), slug: categorySlug });
-				categoryId = created._id;
-				slugToId[categorySlug] = categoryId;
-			}
-			if (!categoryId) continue;
-			const rawFeatured = r.isFeatured ?? r.Featured ?? r.featured;
-			const isFeatured = typeof rawFeatured !== 'undefined'
-				? String(rawFeatured).trim().toLowerCase() === 'true' || String(rawFeatured).trim().toLowerCase() === 'yes' || String(rawFeatured).trim() === '1'
-				: false;
+			// Expecting: name, category, price, imageUrl (case-insensitive; allow a few aliases)
+			const nameVal = r.name || r.Name || r.title || r.Title || '';
+			const categoryName = r.category || r.Category || '';
+			const priceVal = r.price || r.Price || '';
+			const imgUrl = r.imageUrl || r.ImageUrl || r['Image URL'] || r['image URL'] || r.Image || r.image || '';
+
+			const title = String(nameVal || '').trim();
+			if (!title) { skipped++; errors.push({ row: r, reason: 'Missing name' }); continue; }
+			const slug = toSlug(title);
+			if (!slug) { skipped++; errors.push({ row: r, reason: 'Invalid slug derived from name' }); continue; }
+			if (await Product.findOne({ slug })) { skipped++; errors.push({ row: r, reason: 'Duplicate slug' }); continue; }
+
+			const categoryTitle = String(categoryName || '').trim();
+			if (!categoryTitle) { skipped++; errors.push({ row: r, reason: 'Missing category' }); continue; }
+			const category = await ensureCategoryByName(categoryTitle, catCache);
+
+			const parsedPrice = parsePrice(priceVal);
+			if (isNaN(parsedPrice) || parsedPrice < 0) { skipped++; errors.push({ row: r, reason: 'Invalid price' }); continue; }
+
 			docs.push({
 				title,
 				slug,
-				description: r.description || r.Description || '',
-				price: Number(r.price || r.Price || 0),
-				thumbnail: r.thumbnail || r.image || r.Image || '',
-				category: categoryId,
-				isFeatured,
-				discountPercent: r.discountPercent ? Number(r.discountPercent) : 0,
-				attributes: {
-					abv: r.abv || r.ABV || '',
-					volumeMl: r.volumeMl ? Number(r.volumeMl) : undefined,
-					origin: r.origin || r.Origin || '',
-					flavourNotes: r.flavourNotes || r.Notes || '',
-				},
+				price: Number(parsedPrice),
+				thumbnail: String(imgUrl || '').trim(),
+				category,
+				isFeatured: false,
+				discountPercent: 0,
 			});
 		}
 
@@ -214,6 +211,6 @@ export const importProductsFromExcel = async (req, res, next) => {
 		}
 
 		if (docs.length) await Product.insertMany(docs);
-		res.json({ inserted: docs.length });
+		res.json({ inserted: docs.length, skipped, errors });
 	} catch (e) { next(e); }
 };
