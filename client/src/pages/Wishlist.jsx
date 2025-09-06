@@ -22,7 +22,7 @@ export default function Wishlist(){
 							{p.thumbnail && <img src={p.thumbnail} alt={p.title} className="w-full h-40 object-cover" />}
 							<div className="p-3 flex-1 flex flex-col gap-1">
 								<div className="font-medium">{p.title}</div>
-								<div className="text-blue-700 font-semibold mt-auto">${p.price.toFixed(2)}</div>
+								<div className="text-navy-700 font-semibold mt-auto">${p.price.toFixed(2)}</div>
 							</div>
 							<div className="flex gap-2 p-3">
 								<button className="btn-primary flex-1" onClick={()=>add({ slug:p.slug, title:p.title, price:p.price, thumbnail:p.thumbnail })}>Add to Cart</button>

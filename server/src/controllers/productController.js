@@ -88,11 +88,40 @@ export const deleteProduct = async (req, res, next) => {
 	} catch (err) { next(err); }
 };
 
+function toSlug(value) {
+	return String(value || '')
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+}
+
+function parsePrice(value) {
+	if (value === null || typeof value === 'undefined') return NaN;
+	if (typeof value === 'number') return value;
+	const s = String(value).replace(/[^0-9.,-]/g, '').replace(',', '.');
+	const n = parseFloat(s);
+	return isNaN(n) ? NaN : n;
+}
+
+async function ensureCategoryByName(name, cache) {
+	const slug = toSlug(name);
+	if (cache[slug]) return cache[slug];
+	let cat = await Category.findOne({ slug });
+	if (!cat) {
+		cat = await Category.create({ name: name.trim(), slug });
+	}
+	cache[slug] = cat._id;
+	return cat._id;
+}
+
 export const importProductsFromExcel = async (req, res, next) => {
 	try {
 		if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 		const workbook = XLSX.readFile(req.file.path);
 		const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+		// First try structured import (with headers)
 		const rows = XLSX.utils.sheet_to_json(sheet);
 		const cats = await Category.find({});
 		const slugToId = Object.fromEntries(cats.map((c)=>[c.slug,c._id]));
@@ -102,12 +131,14 @@ export const importProductsFromExcel = async (req, res, next) => {
 			const title = r.title || r.name || '';
 			if (!slug || !title) continue;
 			if (await Product.findOne({ slug })) continue;
-			const categorySlug = (r.categorySlug || r.category || r.Category || '').toString().toLowerCase();
-			const categoryId = slugToId[categorySlug];
-			if (!categoryId) {
-				// skip rows without valid category
-				continue;
+			let categorySlug = (r.categorySlug || r.category || r.Category || '').toString().toLowerCase();
+			let categoryId = slugToId[categorySlug];
+			if (!categoryId && categorySlug) {
+				const created = await Category.create({ name: (r.category || r.Category), slug: categorySlug });
+				categoryId = created._id;
+				slugToId[categorySlug] = categoryId;
 			}
+			if (!categoryId) continue;
 			const rawFeatured = r.isFeatured ?? r.Featured ?? r.featured;
 			const isFeatured = typeof rawFeatured !== 'undefined'
 				? String(rawFeatured).trim().toLowerCase() === 'true' || String(rawFeatured).trim().toLowerCase() === 'yes' || String(rawFeatured).trim() === '1'
@@ -129,6 +160,59 @@ export const importProductsFromExcel = async (req, res, next) => {
 				},
 			});
 		}
+
+		if (!docs.length) {
+			// Fallback: menu-style import (section headers + item/price rows)
+			const aoa = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false });
+			const catCache = { ...slugToId };
+			let currentCategoryId = null;
+			for (let i = 0; i < aoa.length; i++) {
+				const row = aoa[i] || [];
+				const c0 = (row[0] || '').toString().trim();
+				const c1 = (row[1] || '').toString().trim();
+				if (!c0 && !c1) continue;
+
+				const price1 = parsePrice(c1);
+				const price0 = parsePrice(c0);
+
+				// Section header if first col text and not a price and no second col price
+				if (c0 && isNaN(price0) && (c1 === '' || isNaN(price1))) {
+					// treat as category header
+					currentCategoryId = await ensureCategoryByName(c0, catCache);
+					continue;
+				}
+
+				// Two-column product: title | price
+				if (c0 && !isNaN(price1)) {
+					const title = c0;
+					const price = Number(price1);
+					const slug = toSlug(title);
+					if (await Product.findOne({ slug })) continue;
+					const category = currentCategoryId || (await ensureCategoryByName('General', catCache));
+					docs.push({ title, slug, price, category, isFeatured: false, discountPercent: 0 });
+					continue;
+				}
+
+				// One-column product followed by price-only next row
+				if (c0 && (!c1 || isNaN(price1))) {
+					const next = aoa[i + 1] || [];
+					const n0 = (next[0] || '').toString().trim();
+					const n1 = (next[1] || '').toString().trim();
+					const nPrice = !isNaN(parsePrice(n1)) ? Number(parsePrice(n1)) : (!isNaN(parsePrice(n0)) ? Number(parsePrice(n0)) : NaN);
+					if (!isNaN(nPrice)) {
+						const title = c0;
+						const slug = toSlug(title);
+						if (!(await Product.findOne({ slug }))) {
+							const category = currentCategoryId || (await ensureCategoryByName('General', catCache));
+							docs.push({ title, slug, price: nPrice, category, isFeatured: false, discountPercent: 0 });
+						}
+						i++; // consume next row as price row
+						continue;
+					}
+				}
+			}
+		}
+
 		if (docs.length) await Product.insertMany(docs);
 		res.json({ inserted: docs.length });
 	} catch (e) { next(e); }

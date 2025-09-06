@@ -14,9 +14,9 @@ export default function ProductCard({ product }){
 	const finalPrice = hasDiscount ? basePrice * (1 - Number(product.discountPercent)/100) : basePrice;
 	return (
 		<motion.div whileHover={{ y:-6, boxShadow:'0 10px 24px rgba(0,0,0,0.12)' }} transition={{ type:'spring', stiffness:250, damping:20 }} className="group border rounded-lg overflow-hidden bg-white transition relative">
-			<div className="absolute top-2 left-2 bg-blue-700 text-white text-xs rounded-full px-2 py-1 shadow z-10">${finalPrice.toFixed(2)}</div>
+			<div className="absolute top-2 left-2 bg-navy-700 text-white text-xs rounded-full px-2 py-1 shadow z-10">${finalPrice.toFixed(2)}</div>
 			{hasDiscount && (
-				<div className="absolute top-2 right-12 bg-blue-700 text-white text-xs rounded-full px-2 py-1 shadow z-10">-{Math.round(Number(product.discountPercent))}%</div>
+				<div className="absolute top-2 right-12 bg-navy-700 text-white text-xs rounded-full px-2 py-1 shadow z-10">-{Math.round(Number(product.discountPercent))}%</div>
 			)}
 			<button aria-label="Wishlist" className="absolute top-2 right-2 z-10 bg-white/90 hover:bg-white rounded-full px-2 py-1 text-lg shadow" onClick={(e)=>{ e.preventDefault(); toggle(product._id); }}>
 				<span className={inWishlist? 'text-red-600' : 'text-neutral-600'}>❤</span>
@@ -28,7 +28,7 @@ export default function ProductCard({ product }){
 					<div className="text-sm text-neutral-500">{product.category?.name}</div>
 					{hasDiscount && (
 						<div className="mt-1">
-							<span className="text-blue-700 font-semibold">${finalPrice.toFixed(2)}</span>
+							<span className="text-navy-700 font-semibold">${finalPrice.toFixed(2)}</span>
 							<span className="text-neutral-400 line-through ml-2">${basePrice.toFixed(2)}</span>
 						</div>
 					)}

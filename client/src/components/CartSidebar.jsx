@@ -30,7 +30,7 @@ export default function CartSidebar(){
                     <div className="pt-2 border-t">
                         <div className="flex justify-between mb-2 text-sm"><span>Subtotal</span><span>${Number(subtotal||0).toFixed(2)}</span></div>
                         <Link to="/checkout" className="btn-primary w-full inline-block text-center mt-2">Checkout</Link>
-                        <Link to="/cart" className="mt-2 w-full inline-block text-center text-sm text-blue-700">View full cart</Link>
+                        <Link to="/cart" className="mt-2 w-full inline-block text-center text-sm text-navy-700">View full cart</Link>
                     </div>
                 </div>
             )}

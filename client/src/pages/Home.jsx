@@ -69,6 +69,16 @@ export default function Home() {
 	// Winter warmer fallback image
 	const winterFallbackImage = 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1075&q=80';
 
+	// Static menu highlights (home: show some products only)
+	const menuHighlights = [
+		{ title: 'Strawberry Shake', price: 7.66, section: 'Drinks' },
+		{ title: 'Mango Lassi', price: 5.66, section: 'Drinks' },
+		{ title: 'Indian Chai tea', price: 3.66, section: 'Drinks' },
+		{ title: 'Rasamalai Roll', price: 6.66, section: 'Desserts' },
+		{ title: 'Gulab Jamun Hot', price: 6.66, section: 'Desserts' },
+		{ title: 'Brownie with Vanilla Ice Cream', price: 6.66, section: 'Desserts' },
+	];
+
 	return (
 		<div className="overflow-hidden">
 			<Seo title="Home" description="Mountain spirits, local goods, and friendly faces." />
@@ -163,6 +173,34 @@ export default function Home() {
 				<CategoryStrip />
 			</div>
 
+			{/* Static menu highlights */}
+			<section className="container-pad py-12">
+				<div className="grid md:grid-cols-2 gap-6">
+					<div className="bg-white border rounded-lg p-5">
+						<h3 className="font-serif text-2xl mb-3">Drinks</h3>
+						<ul className="divide-y">
+							{menuHighlights.filter(i=>i.section==='Drinks').map((i)=> (
+								<li key={i.title} className="py-2 flex items-center justify-between text-sm">
+									<span className="font-medium">{i.title}</span>
+									<span className="text-navy-700 font-semibold">${i.price.toFixed(2)}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+					<div className="bg-white border rounded-lg p-5">
+						<h3 className="font-serif text-2xl mb-3">Desserts (House Made)</h3>
+						<ul className="divide-y">
+							{menuHighlights.filter(i=>i.section==='Desserts').map((i)=> (
+								<li key={i.title} className="py-2 flex items-center justify-between text-sm">
+									<span className="font-medium">{i.title}</span>
+									<span className="text-navy-700 font-semibold">${i.price.toFixed(2)}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			</section>
+
 			<section ref={refs.featured} className="container-pad py-16 md:py-24">
 				<motion.div
 					variants={fadeIn}
@@ -215,8 +253,6 @@ export default function Home() {
 					))}
 				</motion.div>
 			</section>
-
-
 
 			<section ref={refs.promotions} className="py-16 md:py-24 relative overflow-hidden">
 				<div className="absolute inset-0 bg-black/30 z-0" /> {/* Reduced overlay opacity */}
