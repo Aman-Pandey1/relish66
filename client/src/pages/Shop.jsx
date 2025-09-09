@@ -24,6 +24,16 @@ export default function Shop() {
 		setFilters((prev) => ({ ...prev, category, q, sort }));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	// keep filters in sync if query params change (e.g., clicked from Home category)
+	useEffect(() => {
+		setFilters((prev) => {
+			const category = searchParams.get('category') || '';
+			const q = searchParams.get('q') || '';
+			const sort = searchParams.get('sort') || '';
+			if (prev.category === category && prev.q === q && prev.sort === sort) return prev;
+			return { ...prev, category, q, sort };
+		});
+	}, [searchParams]);
 	useEffect(() => {
 		api.get('/products', { params: filters }).then((r) => setItems(r.data));
 		api.get('/products', { params: { sort:'popular', limit:6 } }).then(r=> setAlso(r.data));
