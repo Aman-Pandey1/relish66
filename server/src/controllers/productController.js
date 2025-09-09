@@ -1,6 +1,7 @@
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 import XLSX from 'xlsx';
+import allowedCategories, { allowedSlugs, getAllowedSlugForName, ensureAllowedCategoriesExist, toSlug } from '../utils/allowedCategories.js';
 
 export const getProducts = async (req, res, next) => {
 	try {
@@ -53,7 +54,12 @@ export const createProduct = async (req, res, next) => {
 		}
 		const exists = await Product.findOne({ slug: data.slug });
 		if (exists) return res.status(400).json({ message: 'Product exists' });
-		const category = await Category.findOne({ slug: data.categorySlug });
+		await ensureAllowedCategoriesExist(Category);
+		const mappedSlug = getAllowedSlugForName(data.categorySlug);
+		if (!mappedSlug || !allowedSlugs.has(mappedSlug)) {
+			return res.status(400).json({ message: 'Category must match allowed categories' });
+		}
+		const category = await Category.findOne({ slug: mappedSlug });
 		if (category) data.category = category._id;
 		if (!data.category) return res.status(400).json({ message: 'Category is required' });
 		if (!data.price) return res.status(400).json({ message: 'Price is required' });
@@ -72,7 +78,12 @@ export const updateProduct = async (req, res, next) => {
 		if (!req.file && updates.imageUrl) updates.thumbnail = updates.imageUrl;
 		if (typeof updates.discountPercent !== 'undefined') updates.discountPercent = Number(updates.discountPercent) || 0;
 		if (updates.categorySlug) {
-			const category = await Category.findOne({ slug: updates.categorySlug });
+			await ensureAllowedCategoriesExist(Category);
+			const mappedSlug = getAllowedSlugForName(updates.categorySlug);
+			if (!mappedSlug || !allowedSlugs.has(mappedSlug)) {
+				return res.status(400).json({ message: 'Category must match allowed categories' });
+			}
+			const category = await Category.findOne({ slug: mappedSlug });
 			if (category) updates.category = category._id;
 		}
 		const product = await Product.findByIdAndUpdate(req.params.id, updates, { new: true });
@@ -88,14 +99,6 @@ export const deleteProduct = async (req, res, next) => {
 	} catch (err) { next(err); }
 };
 
-function toSlug(value) {
-	return String(value || '')
-		.toLowerCase()
-		.trim()
-		.replace(/[^a-z0-9]+/g, '-')
-		.replace(/(^-|-$)/g, '');
-}
-
 function parsePrice(value) {
 	if (value === null || typeof value === 'undefined') return NaN;
 	if (typeof value === 'number') return value;
@@ -104,14 +107,13 @@ function parsePrice(value) {
 	return isNaN(n) ? NaN : n;
 }
 
-async function ensureCategoryByName(name, cache) {
-	const slug = toSlug(name);
-	if (cache[slug]) return cache[slug];
-	let cat = await Category.findOne({ slug });
-	if (!cat) {
-		cat = await Category.create({ name: name.trim(), slug });
-	}
-	cache[slug] = cat._id;
+async function getAllowedCategoryIdByHeader(name, cache) {
+	const mapped = getAllowedSlugForName(name);
+	if (!mapped || !allowedSlugs.has(mapped)) return null;
+	if (cache[mapped]) return cache[mapped];
+	const cat = await Category.findOne({ slug: mapped });
+	if (!cat) return null;
+	cache[mapped] = cat._id;
 	return cat._id;
 }
 
@@ -120,6 +122,7 @@ export const importProductsFromExcel = async (req, res, next) => {
 		if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 		const workbook = XLSX.readFile(req.file.path);
 		const sheet = workbook.Sheets[workbook.SheetNames[0]];
+		await ensureAllowedCategoriesExist(Category);
 
 		// First try structured import (with headers)
 		const rows = XLSX.utils.sheet_to_json(sheet);
@@ -142,7 +145,8 @@ export const importProductsFromExcel = async (req, res, next) => {
 
 			const categoryTitle = String(categoryName || '').trim();
 			if (!categoryTitle) { skipped++; errors.push({ row: r, reason: 'Missing category' }); continue; }
-			const category = await ensureCategoryByName(categoryTitle, catCache);
+			const categoryId = await getAllowedCategoryIdByHeader(categoryTitle, catCache);
+			if (!categoryId) { skipped++; errors.push({ row: r, reason: 'Category not allowed' }); continue; }
 
 			const parsedPrice = parsePrice(priceVal);
 			if (isNaN(parsedPrice) || parsedPrice < 0) { skipped++; errors.push({ row: r, reason: 'Invalid price' }); continue; }
@@ -152,7 +156,7 @@ export const importProductsFromExcel = async (req, res, next) => {
 				slug,
 				price: Number(parsedPrice),
 				thumbnail: String(imgUrl || '').trim(),
-				category,
+				category: categoryId,
 				isFeatured: false,
 				discountPercent: 0,
 			});
@@ -161,7 +165,7 @@ export const importProductsFromExcel = async (req, res, next) => {
 		if (!docs.length) {
 			// Fallback: menu-style import (section headers + item/price rows)
 			const aoa = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false });
-			const catCache = { ...slugToId };
+			const catCache2 = {};
 			let currentCategoryId = null;
 			for (let i = 0; i < aoa.length; i++) {
 				const row = aoa[i] || [];
@@ -174,8 +178,8 @@ export const importProductsFromExcel = async (req, res, next) => {
 
 				// Section header if first col text and not a price and no second col price
 				if (c0 && isNaN(price0) && (c1 === '' || isNaN(price1))) {
-					// treat as category header
-					currentCategoryId = await ensureCategoryByName(c0, catCache);
+					// treat as category header (allowed only)
+					currentCategoryId = await getAllowedCategoryIdByHeader(c0, catCache2);
 					continue;
 				}
 
@@ -185,8 +189,8 @@ export const importProductsFromExcel = async (req, res, next) => {
 					const price = Number(price1);
 					const slug = toSlug(title);
 					if (await Product.findOne({ slug })) continue;
-					const category = currentCategoryId || (await ensureCategoryByName('General', catCache));
-					docs.push({ title, slug, price, category, isFeatured: false, discountPercent: 0 });
+					if (!currentCategoryId) { skipped++; errors.push({ row: { title }, reason: 'No category header found above' }); continue; }
+					docs.push({ title, slug, price, category: currentCategoryId, isFeatured: false, discountPercent: 0 });
 					continue;
 				}
 
@@ -200,8 +204,8 @@ export const importProductsFromExcel = async (req, res, next) => {
 						const title = c0;
 						const slug = toSlug(title);
 						if (!(await Product.findOne({ slug }))) {
-							const category = currentCategoryId || (await ensureCategoryByName('General', catCache));
-							docs.push({ title, slug, price: nPrice, category, isFeatured: false, discountPercent: 0 });
+							if (!currentCategoryId) { skipped++; errors.push({ row: { title }, reason: 'No category header found above' }); }
+							else { docs.push({ title, slug, price: nPrice, category: currentCategoryId, isFeatured: false, discountPercent: 0 }); }
 						}
 						i++; // consume next row as price row
 						continue;

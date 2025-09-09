@@ -4,27 +4,11 @@ import Category from '../models/Category.js';
 import Product from '../models/Product.js';
 import User from '../models/User.js';
 import Promotion from '../models/Promotion.js';
+import allowedCategories from '../utils/allowedCategories.js';
 
 dotenv.config();
 
-const categories = [
-	{ name: 'Breakfast / Lunch', slug: 'breakfast-lunch', emoji: '🍽️' },
-	{ name: 'Lunch Combo / Thali', slug: 'thali', emoji: '🍱' },
-	{ name: 'Chaat - Cold Items', slug: 'chaat-cold', emoji: '🥗' },
-	{ name: 'Chaat - Tawa Items', slug: 'chaat-tawa', emoji: '🍳' },
-	{ name: 'Chaat - Frying Items', slug: 'chaat-frying', emoji: '🍟' },
-	{ name: 'Veg Appetizers', slug: 'veg-appetizers', emoji: '🥦' },
-	{ name: 'Non Veg Appetizers', slug: 'non-veg-appetizers', emoji: '🍗' },
-	{ name: 'Veg Main Course', slug: 'veg-main-course', emoji: '🥬' },
-	{ name: 'Non Veg Main Course', slug: 'non-veg-main-course', emoji: '🍖' },
-	{ name: 'Rice', slug: 'rice', emoji: '🍚' },
-	{ name: 'Breads', slug: 'breads', emoji: '🥖' },
-	{ name: 'Extras', slug: 'extras', emoji: '🧂' },
-	{ name: 'Soup', slug: 'soup', emoji: '🥣' },
-	{ name: 'Drinks', slug: 'drinks', emoji: '🥤' },
-	{ name: 'Desserts', slug: 'desserts', emoji: '🍰' },
-	{ name: 'Chef Special Menu', slug: 'chef-special', emoji: '👨‍🍳' },
-];
+const categories = allowedCategories;
 
 const products = [
 	{

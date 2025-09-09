@@ -2,6 +2,8 @@ import express from 'express';
 import { requireAuth, requireAdmin } from '../middleware/authMiddleware.js';
 import { stats } from '../controllers/adminController.js';
 import XLSX from 'xlsx';
+import allowedCategories from '../utils/allowedCategories.js';
+import Category from '../models/Category.js';
 
 const router = express.Router();
 
@@ -10,15 +12,12 @@ router.get('/stats', stats);
 
 // Excel template for product import
 router.get('/excel-template/products', (_req, res) => {
-	const rows = [[
-		'name','category','price','imageUrl'
-	],[
-		'Chole Bhature (2 pcs)','Breakfast / Lunch','12.66','https://example.com/images/chole-bhature.jpg'
-	],[
-		'Veg Thali','Lunch Combo / Thali','14.66','https://example.com/images/veg-thali.jpg'
-	],[
-		'Mango Lassi','Drinks','5.66','https://example.com/images/mango-lassi.jpg'
-	]];
+	const rows = [[ 'name','category','price','imageUrl' ]];
+	rows.push(
+		['Chole Bhature (2 pcs)','Breakfast / Lunch','12.66','https://example.com/images/chole-bhature.jpg'],
+		['Veg Thali','Lunch Combo / Thali','14.66','https://example.com/images/veg-thali.jpg'],
+		['Mango Lassi','Drinks','5.66','https://example.com/images/mango-lassi.jpg']
+	);
 	const sheet = XLSX.utils.aoa_to_sheet(rows);
 	const wb = XLSX.utils.book_new();
 	XLSX.utils.book_append_sheet(wb, sheet, 'ProductsTemplate');
@@ -173,6 +172,20 @@ router.get('/excel-template/menu', (_req, res) => {
 	res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 	res.setHeader('Content-Disposition', 'attachment; filename="menu_template.xlsx"');
 	res.send(buf);
+});
+
+// Reset categories to allowed set
+router.post('/categories/reset-to-allowed', async (_req, res, next) => {
+	try {
+		const allowedSlugs = new Set(allowedCategories.map((c) => c.slug));
+		await Category.deleteMany({ slug: { $nin: Array.from(allowedSlugs) } });
+		for (const c of allowedCategories) {
+			const exists = await Category.findOne({ slug: c.slug });
+			if (!exists) await Category.create(c);
+		}
+		const docs = await Category.find({ slug: { $in: Array.from(allowedSlugs) } }).sort({ name: 1 });
+		res.json({ ok: true, categories: docs });
+	} catch (e) { next(e); }
 });
 
 export default router;
