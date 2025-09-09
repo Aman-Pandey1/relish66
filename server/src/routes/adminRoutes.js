@@ -19,8 +19,12 @@ router.get('/excel-template/products', (_req, res) => {
 		['Mango Lassi','Drinks','5.66','https://example.com/images/mango-lassi.jpg']
 	);
 	const sheet = XLSX.utils.aoa_to_sheet(rows);
+	// Add second sheet listing allowed categories
+	const catRows = [['Allowed Categories']].concat(allowedCategories.map(c => [c.name]));
+	const sheet2 = XLSX.utils.aoa_to_sheet(catRows);
 	const wb = XLSX.utils.book_new();
 	XLSX.utils.book_append_sheet(wb, sheet, 'ProductsTemplate');
+	XLSX.utils.book_append_sheet(wb, sheet2, 'Categories');
 	const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
 	res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 	res.setHeader('Content-Disposition', 'attachment; filename="products_template.xlsx"');
