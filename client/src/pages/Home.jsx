@@ -75,14 +75,14 @@ export default function Home() {
 		<div className="overflow-hidden">
 			<Seo title="Home" description="Authentic Indian cuisine and friendly service." />
 			
-			{/* Custom Banner with reduced overlay */}
-			<section className="relative h-screen min-h-[600px] flex items-center justify-center">
+			{/* Custom Banner with responsive height and overlay */}
+			<section className="relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] lg:min-h-[90vh] flex items-center justify-center">
 				<img 
 					src={bannerImage} 
 					alt="Relish Menu" 
 					className="absolute inset-0 w-full h-full object-cover"
 				/>
-				<div className="absolute inset-0 bg-black/20"></div> {/* Reduced overlay opacity */}
+				<div className="absolute inset-0 bg-black/40 sm:bg-black/30 md:bg-black/20"></div>
 				<div className="container-pad relative z-10 text-center text-white">
 					<motion.h1 
 						initial={{ opacity: 0, y: 20 }}
@@ -104,9 +104,9 @@ export default function Home() {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.8, delay: 0.4 }}
-						className="flex flex-col sm:flex-row gap-4 justify-center"
+						className="flex flex-col sm:flex-row gap-4 justify-center px-2"
 					>
-						<Link to="/shop" className="btn-primary text-lg px-8 py-4">Shop Now</Link>
+						<Link to="/shop" className="btn-primary text-base sm:text-lg w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4">Shop Now</Link>
 						{/* <a href="#delivery" className="px-8 py-4 border-2 border-burnt-400 text-burnt-400 rounded-lg hover:bg-burnt-400 hover:text-white transition-all text-lg">Delivery Info</a> */}
 					</motion.div>
 				</div>

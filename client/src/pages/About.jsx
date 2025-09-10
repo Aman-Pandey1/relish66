@@ -97,9 +97,9 @@ export default function About() {
           <h2 className="font-serif text-4xl text-center mb-12 text-neutral-800">Our Story</h2>
           <div className="relative max-w-4xl mx-auto">
             {/* Timeline line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-amber-200"></div>
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-amber-200"></div>
             
-            <div className="space-y-12 relative">
+            <div className="space-y-8 md:space-y-12 relative">
               {[
                 { year: "2015", text: "Doors open with a small but mighty selection." },
                 { year: "2019", text: "Expanded categories and introduced local features." },
@@ -107,16 +107,27 @@ export default function About() {
               ].map((item, index) => (
                 <div 
                   key={index} 
-                  className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center`}
+                  className={`items-center md:flex ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
-                  <div className="w-1/2 pr-8">
+                  {/* Mobile card */}
+                  <div className="md:hidden w-full">
+                    <div className="p-5 bg-white border border-amber-100 rounded-2xl shadow-sm">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                        <div className="font-semibold text-amber-700">{item.year}</div>
+                      </div>
+                      <p className="text-neutral-700">{item.text}</p>
+                    </div>
+                  </div>
+                  {/* Desktop cards with alternating sides */}
+                  <div className="hidden md:block w-1/2 pr-8">
                     <div className="p-6 bg-white border border-amber-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
                       <div className="font-semibold text-amber-700 text-lg mb-2">{item.year}</div>
                       <p className="text-neutral-700">{item.text}</p>
                     </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-amber-500 border-4 border-white z-10"></div>
-                  <div className="w-1/2 pl-8"></div>
+                  <div className="hidden md:block w-8 h-8 rounded-full bg-amber-500 border-4 border-white z-10"></div>
+                  <div className="hidden md:block w-1/2 pl-8"></div>
                 </div>
               ))}
             </div>
