@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import PromoCarousel from '../components/PromoCarousel.jsx';
 import { Seo } from '../components/Seo.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import CategoryStrip from '../components/CategoryStrip.jsx';
@@ -20,7 +19,6 @@ import aboutImage2 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5c
 import aboutImage3 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
 import aboutImage4 from '../assets/banner2.jpg';
 // Replace with an actual winter-themed image
-import winterWarmerImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
 import localImage1 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
 import localImage2 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
 import localImage3 from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
@@ -30,11 +28,9 @@ import faqImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.j
 export default function Home() {
 	const [featured, setFeatured] = useState([]);
 	const [recent, setRecent] = useState([]);
-	const [winterImageError, setWinterImageError] = useState(false);
 	const refs = {
 		featured: useRef(null),
 		categories: useRef(null),
-		promotions: useRef(null),
 		arrivals: useRef(null),
 		services: useRef(null),
 		local: useRef(null),
@@ -64,7 +60,6 @@ export default function Home() {
 	};
 
 	// Winter warmer fallback image
-	const winterFallbackImage = 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1075&q=80';
 
 	// Static menu highlights (home: show some products only)
 	const menuHighlights = [
@@ -226,57 +221,9 @@ export default function Home() {
 				</motion.div>
 			</section>
 
-			{/* Discount Products Section */}
-			<section className="container-pad py-16 md:py-24">
-				<motion.div
-					variants={fadeIn}
-					initial="hidden"
-					animate={inView.featured ? "visible" : "hidden"}
-					className="text-center mb-12"
-				>
-					<h2 className="font-serif text-4xl md:text-5xl mb-4">Discount Products</h2>
-					<p className="text-xl text-gray-600 max-w-3xl mx-auto">Great deals with 10% off or more</p>
-				</motion.div>
-				<motion.div
-					variants={staggerChildren}
-					initial="hidden"
-					animate={inView.featured ? "visible" : "hidden"}
-					className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-				>
-					{recent.filter(p => (p.discountPercent||0) >= 10).slice(0,8).map((p) => (
-						<motion.div key={p._id} variants={fadeIn}>
-							<ProductCard product={p} />
-						</motion.div>
-					))}
-				</motion.div>
-			</section>
+			{/* Discount Products Section removed */}
 
-			<section ref={refs.promotions} className="py-16 md:py-24 relative overflow-hidden">
-				<div className="absolute inset-0 bg-black/30 z-0" /> {/* Reduced overlay opacity */}
-				<img 
-					src={winterImageError ? winterFallbackImage : winterWarmerImage} 
-					alt="Winter Warmer seasonal specials" 
-					className="absolute inset-0 w-full h-full object-cover -z-10"
-					onError={() => setWinterImageError(true)}
-				/>
-				<motion.div
-					variants={fadeIn}
-					initial="hidden"
-					animate={inView.promotions ? "visible" : "hidden"}
-					className="container-pad relative z-10"
-				>
-					<div className="max-w-4xl mx-auto text-center text-white">
-						<h2 className="font-serif text-4xl md:text-5xl mb-6">Winter Warmers</h2>
-						<p className="text-xl mb-8">Cozy up with our seasonal selections perfect for cold winter nights</p>
-						<PromoCarousel />
-						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-							<Link to="/promotions" className="inline-block mt-8 px-8 py-3 bg-burnt-500 hover:bg-burnt-600 text-white rounded-lg transition-all">
-								View All Promotions
-							</Link>
-						</motion.div>
-					</div>
-				</motion.div>
-			</section>
+			{/* Winter Warmers top banner removed */}
 
 			<section ref={refs.arrivals} className="container-pad py-16 md:py-24">
 				<motion.div
@@ -635,19 +582,7 @@ export default function Home() {
 				</motion.div>
 			</section>
 
-			<section ref={refs.cta} className="container-pad py-16 md:py-24 bg-burnt-900 text-white rounded-xl my-12 text-center">
-				<motion.div
-					variants={fadeIn}
-					initial="hidden"
-					animate={inView.cta ? "visible" : "hidden"}
-				>
-					<h3 className="font-serif text-4xl md:text-5xl mb-4">Ready to stock up?</h3>
-					<p className="text-xl mb-8 max-w-2xl mx-auto">Browse our latest arrivals, seasonal specials, and customer favorites</p>
-					<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-						<Link to="/shop" className="btn-primary bg-white text-burnt-900 hover:bg-gray-100 px-8 py-4 text-lg">Shop Now</Link>
-					</motion.div>
-				</motion.div>
-			</section>
+			{/* Post-FAQ CTA removed so footer follows immediately */}
 		</div>
 	);
 }
