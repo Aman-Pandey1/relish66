@@ -16,6 +16,7 @@ import promotionRoutes from './routes/promotionRoutes.js';
 import Category from './models/Category.js';
 import Product from './models/Product.js';
 import Promotion from './models/Promotion.js';
+import allowedCategories from './utils/allowedCategories.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,25 +28,7 @@ import compression from 'compression';
 async function bootstrapData() {
 	const count = await Category.countDocuments();
 	if (count === 0) {
-		const categories = [
-			{ name: 'Breakfast / Lunch', slug: 'breakfast-lunch', emoji: '🍽️' },
-			{ name: 'Lunch Combo / Thali', slug: 'thali', emoji: '🍱' },
-			{ name: 'Chaat - Cold Items', slug: 'chaat-cold', emoji: '🥗' },
-			{ name: 'Chaat - Tawa Items', slug: 'chaat-tawa', emoji: '🍳' },
-			{ name: 'Chaat - Frying Items', slug: 'chaat-frying', emoji: '🍟' },
-			{ name: 'Veg Appetizers', slug: 'veg-appetizers', emoji: '🥦' },
-			{ name: 'Non Veg Appetizers', slug: 'non-veg-appetizers', emoji: '🍗' },
-			{ name: 'Veg Main Course', slug: 'veg-main-course', emoji: '🥬' },
-			{ name: 'Non Veg Main Course', slug: 'non-veg-main-course', emoji: '🍖' },
-			{ name: 'Rice', slug: 'rice', emoji: '🍚' },
-			{ name: 'Breads', slug: 'breads', emoji: '🥖' },
-			{ name: 'Extras', slug: 'extras', emoji: '🧂' },
-			{ name: 'Soup', slug: 'soup', emoji: '🥣' },
-			{ name: 'Drinks', slug: 'drinks', emoji: '🥤' },
-			{ name: 'Desserts', slug: 'desserts', emoji: '🍰' },
-			{ name: 'Chef Special Menu', slug: 'chef-special', emoji: '👨‍🍳' },
-		];
-		const catDocs = await Category.insertMany(categories);
+		const catDocs = await Category.insertMany(allowedCategories);
 		const slugToId = Object.fromEntries(catDocs.map((c) => [c.slug, c._id]));
 		const products = [
 			{
@@ -83,10 +66,12 @@ async function bootstrapData() {
 		await Promotion.create({ title: 'Chef Specials', subtitle: 'Seasonal favorites', image: 'https://images.unsplash.com/photo-1604908554026-3b4b7bdbaff3?q=80&w=1600&auto=format&fit=crop', ctaText: 'View Menu', ctaLink: '/shop', order: 1, active: true });
 		console.log('Bootstrapped initial data');
 	}
-	const adminExists = await User.findOne({ role: 'admin' });
-	if (!adminExists) {
-		await User.create({ name: 'Admin', email: 'admin@relish66.com', password: 'Admin123!', role: 'admin' });
-		console.log('Created default admin user: admin@relish66.com / Admin123!');
+	// Enforce allowed categories only
+	const allowedSlugs = new Set(allowedCategories.map((c) => c.slug));
+	await Category.deleteMany({ slug: { $nin: Array.from(allowedSlugs) } });
+	for (const c of allowedCategories) {
+		const exists = await Category.findOne({ slug: c.slug });
+		if (!exists) await Category.create(c);
 	}
 }
 
