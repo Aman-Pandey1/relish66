@@ -14,19 +14,26 @@ html, body, #root {
 }
 
 body {
-	@apply bg-white text-neutral-900 antialiased;
+	@apply bg-white text-neutral-900 antialiased font-sans;
 }
 
 .btn-primary {
-	@apply inline-flex items-center justify-center bg-navy-700 hover:bg-navy-800 text-white px-5 py-2.5 rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-navy-300;
+	@apply inline-flex items-center justify-center bg-[color:var(--brand-primary)] hover:bg-[color:var(--brand-primary-dark)] text-white px-5 py-2.5 rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary-300)];
 }
 
 .btn-outline {
-	@apply inline-flex items-center justify-center border border-neutral-300 hover:border-navy-500 text-neutral-800 hover:text-navy-700 px-5 py-2.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-navy-300;
+	@apply inline-flex items-center justify-center border border-neutral-300 hover:border-[color:var(--brand-primary)] text-neutral-800 hover:text-[color:var(--brand-primary)] px-5 py-2.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary-300)];
 }
 
 .container-pad {
 	@apply container mx-auto px-4;
+}
+
+:root {
+	--brand-primary: #4F7EEA;
+	--brand-primary-dark: #3f68c1;
+	--brand-primary-300: #8daaf0;
+	--brand-accent: #B91C1C;
 }
 
 @keyframes footerGlow {

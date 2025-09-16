@@ -47,17 +47,20 @@ export default function Footer() {
 					</div>
 				</div>
 
-				{/* Shop Links */}
+				{/* Quick Links */}
 				<div>
-					<h4 className="font-semibold mb-2">Shop</h4>
+					<h4 className="font-semibold mb-2">Explore</h4>
 					<ul className="space-y-1">
 						<li>
-							<a href="/shop" className="text-gray-400 hover:text-white transition-colors">
-								All Products
+							<a href="/order-online" className="text-gray-400 hover:text-white transition-colors">
+								Order Online
 							</a>
 						</li>
 						<li>
 							<a href="/menu" className="text-gray-400 hover:text-white transition-colors">Menu</a>
+						</li>
+						<li>
+							<a href="/catering" className="text-gray-400 hover:text-white transition-colors">Catering</a>
 						</li>
 					</ul>
 				</div>
@@ -110,7 +113,7 @@ export default function Footer() {
 
 			{/* Bottom Footer */}
 			<div className="text-center text-xs text-gray-500 py-6 border-t border-gray-700 relative z-10">
-				© 2025 Relish66 — Crafted with care.
+				© 2025 Relish66 — Crafted with care. Sister company of Chilli Peppers.
 			</div>
 		</footer>
 	);
