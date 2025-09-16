@@ -4,6 +4,7 @@ import api from '../utils/api';
 import ProductCard from '../components/ProductCard.jsx';
 import { Link, useSearchParams } from 'react-router-dom';
 import CartSidebar from '../components/CartSidebar.jsx';
+import CategoryIcon from '../components/CategoryIcon.jsx';
 
 export default function OrderOnline() {
 	const { add } = useCart();
@@ -51,6 +52,22 @@ export default function OrderOnline() {
 			<h1 className="font-serif text-4xl mb-2">Order Online</h1>
 			<p className="text-neutral-600 mb-6">Pickup only • Chef Specials highlighted first</p>
 
+			{categories.length>0 && (
+				<section className="mb-8">
+					<h2 className="font-serif text-2xl md:text-3xl mb-3 text-brandBlue">Browse Categories</h2>
+					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+						{categories.map((c)=> (
+							<button key={c._id} onClick={()=>setFilters({ ...filters, category:c.slug })} className={`group border rounded-2xl p-4 text-center hover:shadow-lg transition bg-white ${filters.category===c.slug? 'ring-2 ring-[color:var(--brand-primary)]' : ''}`}>
+								<div className="w-16 h-16 mx-auto mb-2 rounded-2xl bg-gradient-to-br from-brandBlue/10 to-white border border-brandBlue/20 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+									<CategoryIcon slug={c.slug} />
+								</div>
+								<div className="font-medium group-hover:text-brandBlue">{c.name}</div>
+							</button>
+						))}
+					</div>
+				</section>
+			)}
+
 			{specials.length > 0 && (
 				<section className="mb-8">
 					<h2 className="font-serif text-2xl md:text-3xl mb-3 text-brandBlue">Chef Specials</h2>
@@ -80,9 +97,12 @@ export default function OrderOnline() {
 						</div>
 					</div>
 					<div className="flex gap-2 flex-wrap mb-4">
-						<button className={`px-3 py-1 border rounded ${filters.category===''?'bg-neutral-900 text-white':''}`} onClick={()=>setFilters({ ...filters, category:'' })}>All</button>
+						<button className={`px-3 py-1.5 border rounded ${filters.category===''?'bg-neutral-900 text-white':''}`} onClick={()=>setFilters({ ...filters, category:'' })}>All</button>
 						{categories.map((c)=> (
-							<button key={c._id} className={`px-3 py-1 border rounded ${filters.category===c.slug?'bg-neutral-900 text-white':''}`} onClick={()=>setFilters({ ...filters, category:c.slug })}>{c.emoji} {c.name}</button>
+							<button key={c._id} className={`px-3 py-1.5 border rounded flex items-center gap-2 ${filters.category===c.slug?'bg-neutral-900 text-white':''}`} onClick={()=>setFilters({ ...filters, category:c.slug })}>
+								<span className="inline-flex items-center justify-center w-6 h-6"><CategoryIcon slug={c.slug} /></span>
+								<span className="whitespace-nowrap">{c.name}</span>
+							</button>
 						))}
 					</div>
 					<div className="grid grid-cols-2 md:grid-cols-3 gap-4">

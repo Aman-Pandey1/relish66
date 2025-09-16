@@ -19,7 +19,7 @@ export default function Header() {
 				<Link to="/" className="font-serif text-2xl font-bold tracking-wide flex items-center gap-2">
 					<span className="text-brandBlue">Relish</span><span className="text-red">66</span>
 				</Link>
-				<nav className="hidden md:flex items-center gap-6">
+				<nav className="hidden md:flex items-center gap-6 md:flex-1 md:justify-center">
 					<NavLink to="/" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Home</NavLink>
 					<NavLink to="/about" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>About Us</NavLink>
 					<NavLink to="/menu" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Menu</NavLink>
@@ -28,9 +28,6 @@ export default function Header() {
 					<NavLink to="/testimonials" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Testimonials</NavLink>
 					<NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Contact Us</NavLink>
 					{user && <NavLink to="/orders" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Orders</NavLink>}
-					<form className="ml-4" onSubmit={(e)=>{ e.preventDefault(); const q=e.currentTarget.elements.q.value.trim(); if(q) navigate(`/order-online?q=${encodeURIComponent(q)}`); }}>
-						<input name="q" className="border rounded px-3 py-1.5 text-sm" placeholder="Search dishes..." />
-					</form>
 				</nav>
 				<div className="flex items-center gap-3">
 					<Link to="/wishlist" className="relative text-2xl" aria-label="Wishlist">❤
@@ -53,7 +50,6 @@ export default function Header() {
 					) : (
 						<div className="hidden md:flex items-center gap-2">
 							<Link to="/login" className="px-3 py-2 border rounded">Login</Link>
-							<Link to="/signup" className="btn-primary">Sign Up</Link>
 						</div>
 					)}
 					<button className="md:hidden px-3 py-2 border rounded" onClick={()=>setOpen(v=>!v)} aria-label="Toggle Menu">☰</button>
@@ -78,7 +74,6 @@ export default function Header() {
 						) : (
 							<>
 								<Link to="/login" onClick={()=>setOpen(false)}>Login</Link>
-								<Link to="/signup" onClick={()=>setOpen(false)}>Sign Up</Link>
 							</>
 						)}
 					</div>

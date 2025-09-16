@@ -15,7 +15,7 @@ export default function About() {
         subtitle="Mountain roots. Curated selection. Friendly faces."
         image="https://images.unsplash.com/photo-1542000550-85cd0f37f13b?q=80&w=1600&auto=format&fit=crop"
         height="h-[40vh]"
-        overlay="bg-black/40"
+        overlay="bg-[color:var(--brand-primary)]/40"
       />
       
       {/* Introduction Section */}
@@ -37,7 +37,7 @@ export default function About() {
       </section>
       
       {/* Values Section */}
-      <section className="bg-gradient-to-br from-neutral-50 to-amber-50 py-16">
+      <section className="bg-gradient-to-br from-brandBlue/5 to-white py-16">
         <div className="container-pad">
           <h2 className="font-serif text-4xl text-center mb-12 text-neutral-800">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -60,10 +60,10 @@ export default function About() {
             ].map((value, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-2xl border border-amber-100 bg-white shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 group"
+                className="p-6 rounded-2xl border border-brandBlue/20 bg-white shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2 group"
               >
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{value.icon}</div>
-                <h3 className="font-semibold text-xl mb-3 text-amber-700">{value.title}</h3>
+                <h3 className="font-semibold text-xl mb-3 text-brandBlue">{value.title}</h3>
                 <p className="text-neutral-600 group-hover:text-neutral-800 transition-colors">{value.desc}</p>
               </div>
             ))}
@@ -75,18 +75,18 @@ export default function About() {
       <section className="container-pad py-16">
         <h2 className="font-serif text-4xl text-center mb-12 text-neutral-800">Mission & Vision</h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="p-8 border border-amber-100 rounded-2xl bg-gradient-to-b from-white to-amber-50 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+          <div className="p-8 border border-brandBlue/20 rounded-2xl bg-gradient-to-b from-white to-brandBlue/5 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
             <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
               <span className="text-2xl">🎯</span>
             </div>
-            <h3 className="font-semibold text-xl mb-4 text-amber-700">Our Mission</h3>
+            <h3 className="font-semibold text-xl mb-4 text-brandBlue">Our Mission</h3>
             <p className="text-neutral-700">To bring the best of mountain culture to our community with a curated selection and exceptional hospitality.</p>
           </div>
-          <div className="p-8 border border-amber-100 rounded-2xl bg-gradient-to-b from-white to-amber-50 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+          <div className="p-8 border border-brandBlue/20 rounded-2xl bg-gradient-to-b from-white to-brandBlue/5 shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
             <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
               <span className="text-2xl">🔭</span>
             </div>
-            <h3 className="font-semibold text-xl mb-4 text-amber-700">Our Vision</h3>
+            <h3 className="font-semibold text-xl mb-4 text-brandBlue">Our Vision</h3>
             <p className="text-neutral-700">To be the go-to general store for locals and visitors alike, celebrating quality, community, and the outdoors.</p>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function About() {
           <h2 className="font-serif text-4xl text-center mb-12 text-neutral-800">Our Story</h2>
           <div className="relative max-w-4xl mx-auto">
             {/* Timeline line */}
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-amber-200"></div>
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-brandBlue/30"></div>
             
             <div className="space-y-8 md:space-y-12 relative">
               {[
@@ -112,22 +112,22 @@ export default function About() {
                 >
                   {/* Mobile card */}
                   <div className="md:hidden w-full">
-                    <div className="p-5 bg-white border border-amber-100 rounded-2xl shadow-sm">
+                    <div className="p-5 bg-white border border-brandBlue/20 rounded-2xl shadow-sm">
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                        <div className="font-semibold text-amber-700">{item.year}</div>
+                        <div className="w-3 h-3 rounded-full bg-brandBlue"></div>
+                        <div className="font-semibold text-brandBlue">{item.year}</div>
                       </div>
                       <p className="text-neutral-700">{item.text}</p>
                     </div>
                   </div>
                   {/* Desktop cards with alternating sides */}
                   <div className="hidden md:block w-1/2 pr-8">
-                    <div className="p-6 bg-white border border-amber-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
-                      <div className="font-semibold text-amber-700 text-lg mb-2">{item.year}</div>
+                    <div className="p-6 bg-white border border-brandBlue/20 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+                      <div className="font-semibold text-brandBlue text-lg mb-2">{item.year}</div>
                       <p className="text-neutral-700">{item.text}</p>
                     </div>
                   </div>
-                  <div className="hidden md:block w-8 h-8 rounded-full bg-amber-500 border-4 border-white z-10"></div>
+                  <div className="hidden md:block w-8 h-8 rounded-full bg-brandBlue border-4 border-white z-10"></div>
                   <div className="hidden md:block w-1/2 pl-8"></div>
                 </div>
               ))}
@@ -182,11 +182,11 @@ export default function About() {
       </section>
       
       {/* Footer timings already in global footer; CTA retained */}
-      <section className="bg-amber-600 text-white py-16">
+      <section className="bg-brandBlue text-white py-16">
         <div className="container-pad text-center">
           <h2 className="font-serif text-3xl mb-6">Visit Us Today</h2>
-          <p className="max-w-2xl mx-auto mb-8 text-amber-100">Experience the Relish66 difference. We're more than just a store—we're your neighbors, your friends, and your partners in finding the perfect products for any occasion.</p>
-          <button className="bg-white text-amber-700 px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+          <p className="max-w-2xl mx-auto mb-8 text-white/80">Experience the Relish66 difference. We're more than just a store—we're your neighbors, your friends, and your partners in finding the perfect products for any occasion.</p>
+          <button className="bg-white text-brandBlue px-8 py-3 rounded-full font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
             Plan Your Visit
           </button>
         </div>
