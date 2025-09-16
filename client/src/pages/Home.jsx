@@ -100,15 +100,7 @@ export default function Home() {
 					>
 						
 					</motion.p>
-					<motion.div 
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.8, delay: 0.4 }}
-						className="flex flex-col sm:flex-row gap-4 justify-center px-2"
-					>
-						<Link to="/order-online" className="btn-primary text-base sm:text-lg w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4">Order Online</Link>
-						{/* <a href="#delivery" className="px-8 py-4 border-2 border-burnt-400 text-burnt-400 rounded-lg hover:bg-burnt-400 hover:text-white transition-all text-lg">Delivery Info</a> */}
-					</motion.div>
+					{/* CTA removed per request */}
 				</div>
 			</section>
 
