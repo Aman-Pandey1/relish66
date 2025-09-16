@@ -16,28 +16,31 @@ export default function Header() {
 	return (
 		<header className="border-b sticky top-0 bg-white/90 backdrop-blur z-20">
 			<div className="container-pad flex items-center justify-between h-16">
-				<Link to="/" className="font-serif text-2xl font-bold tracking-wide">
-					<span className="text-black">Relish66</span>
+				<Link to="/" className="font-serif text-2xl font-bold tracking-wide flex items-center gap-2">
+					<span className="text-brandBlue">Relish</span><span className="text-red">66</span>
 				</Link>
 				<nav className="hidden md:flex items-center gap-6">
-					<NavLink to="/shop" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Shop</NavLink>
-					<NavLink to="/menu" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Menu</NavLink>
-					<NavLink to="/about" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>About</NavLink>
-					<NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Contact</NavLink>
-					{user && <NavLink to="/orders" className={({ isActive }) => (isActive ? 'text-navy-700' : 'text-neutral-700')}>Orders</NavLink>}
-					<form className="ml-4" onSubmit={(e)=>{ e.preventDefault(); const q=e.currentTarget.elements.q.value.trim(); if(q) navigate(`/shop?q=${encodeURIComponent(q)}`); }}>
-						<input name="q" className="border rounded px-3 py-1.5 text-sm" placeholder="Search products..." />
+					<NavLink to="/" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Home</NavLink>
+					<NavLink to="/about" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>About Us</NavLink>
+					<NavLink to="/menu" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Menu</NavLink>
+					<NavLink to="/order-online" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Order Online</NavLink>
+					<NavLink to="/catering" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Catering</NavLink>
+					<NavLink to="/testimonials" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Testimonials</NavLink>
+					<NavLink to="/contact" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Contact Us</NavLink>
+					{user && <NavLink to="/orders" className={({ isActive }) => (isActive ? 'text-brandBlue' : 'text-neutral-700 hover:text-brandBlue')}>Orders</NavLink>}
+					<form className="ml-4" onSubmit={(e)=>{ e.preventDefault(); const q=e.currentTarget.elements.q.value.trim(); if(q) navigate(`/order-online?q=${encodeURIComponent(q)}`); }}>
+						<input name="q" className="border rounded px-3 py-1.5 text-sm" placeholder="Search dishes..." />
 					</form>
 				</nav>
 				<div className="flex items-center gap-3">
 					<Link to="/wishlist" className="relative text-2xl" aria-label="Wishlist">❤
-						{wishlistCount>0 && <span className="absolute -top-2 -right-2 bg-navy-700 text-white text-xs rounded-full px-1.5">{wishlistCount}</span>}
+						{wishlistCount>0 && <span className="absolute -top-2 -right-2 bg-brandBlue text-white text-xs rounded-full px-1.5">{wishlistCount}</span>}
 					</Link>
 
 					<Link to="/cart" className="relative text-2xl" aria-label="Cart">
 						<span role="img" aria-label="cart">🛒</span>
 						{cartCount > 0 && (
-							<span className="absolute -top-2 -right-2 bg-navy-700 text-white text-xs rounded-full px-1.5">
+							<span className="absolute -top-2 -right-2 bg-brandBlue text-white text-xs rounded-full px-1.5">
 								{cartCount}
 							</span>
 						)}
@@ -59,9 +62,13 @@ export default function Header() {
 			{open && (
 				<div className="md:hidden border-t bg-white">
 					<div className="container-pad py-3 flex flex-col gap-2">
-						<Link to="/shop" onClick={()=>setOpen(false)}>Shop</Link>
-						<Link to="/about" onClick={()=>setOpen(false)}>About</Link>
-						<Link to="/contact" onClick={()=>setOpen(false)}>Contact</Link>
+						<Link to="/" onClick={()=>setOpen(false)}>Home</Link>
+						<Link to="/about" onClick={()=>setOpen(false)}>About Us</Link>
+						<Link to="/menu" onClick={()=>setOpen(false)}>Menu</Link>
+						<Link to="/order-online" onClick={()=>setOpen(false)}>Order Online</Link>
+						<Link to="/catering" onClick={()=>setOpen(false)}>Catering</Link>
+						<Link to="/testimonials" onClick={()=>setOpen(false)}>Testimonials</Link>
+						<Link to="/contact" onClick={()=>setOpen(false)}>Contact Us</Link>
 						<Link to="/wishlist" onClick={()=>setOpen(false)}>Wishlist</Link>
 						{user? (
 							<>

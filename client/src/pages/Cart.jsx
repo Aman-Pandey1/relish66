@@ -10,7 +10,7 @@ export default function Cart() {
 			{safeItems.length === 0 ? (
 				<div>
 					<p>Your cart is empty.</p>
-					<Link to="/shop" className="btn-primary mt-3 inline-block">Continue Shopping</Link>
+					<Link to="/order-online" className="btn-primary mt-3 inline-block">Continue Ordering</Link>
 				</div>
 			) : (
 				<div className="grid md:grid-cols-3 gap-6">

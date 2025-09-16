@@ -3,7 +3,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 // AgeGate removed per requirements
 import Home from './pages/Home.jsx';
-import Shop from './pages/Shop.jsx';
+import OrderOnline from './pages/OrderOnline.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
@@ -23,6 +23,8 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 // Membership and Rewards removed
 import Menu from './pages/Menu.jsx';
 import Orders from './pages/Orders.jsx';
+import Testimonials from './pages/Testimonials.jsx';
+import Catering from './pages/Catering.jsx';
 
 export default function App() {
 	return (
@@ -33,7 +35,7 @@ export default function App() {
 				<motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.3 }}>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/shop" element={<Shop />} />
+						<Route path="/order-online" element={<OrderOnline />} />
 						<Route path="/product/:slug" element={<ProductDetail />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/wishlist" element={<Wishlist />} />
@@ -50,6 +52,8 @@ export default function App() {
 						<Route path="/admin/products" element={<AdminProducts />} />
 						<Route path="/admin/products/:id" element={<AdminProductForm />} />
 						<Route path="/menu" element={<Menu />} />
+						<Route path="/testimonials" element={<Testimonials />} />
+						<Route path="/catering" element={<Catering />} />
 						<Route path="/orders" element={<Orders />} />
 					</Routes>
 				</motion.div>

@@ -106,7 +106,7 @@ export default function Home() {
 						transition={{ duration: 0.8, delay: 0.4 }}
 						className="flex flex-col sm:flex-row gap-4 justify-center px-2"
 					>
-						<Link to="/shop" className="btn-primary text-base sm:text-lg w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4">Shop Now</Link>
+						<Link to="/order-online" className="btn-primary text-base sm:text-lg w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4">Order Online</Link>
 						{/* <a href="#delivery" className="px-8 py-4 border-2 border-burnt-400 text-burnt-400 rounded-lg hover:bg-burnt-400 hover:text-white transition-all text-lg">Delivery Info</a> */}
 					</motion.div>
 				</div>
@@ -237,8 +237,8 @@ export default function Home() {
 						<p className="text-xl text-gray-600">Fresh selections just added to our collection</p>
 					</div>
 					<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-						<Link to="/shop" className="mt-4 md:mt-0 px-6 py-3 border-2 border-burnt-900 text-burnt-900 rounded-lg hover:bg-burnt-900 hover:text-white transition-all">
-							Browse All
+						<Link to="/order-online" className="mt-4 md:mt-0 px-6 py-3 border-2 border-[color:var(--brand-primary)] text-[color:var(--brand-primary)] rounded-lg hover:bg-[color:var(--brand-primary)] hover:text-white transition-all">
+							Browse Menu
 						</Link>
 					</motion.div>
 				</motion.div>
@@ -277,50 +277,32 @@ export default function Home() {
 						animate={inView.services ? "visible" : "hidden"}
 						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
 					>
-						<motion.div 
-							variants={fadeIn} 
-							whileHover={{ y: -10, transition: { duration: 0.3 } }}
-							className="bg-white p-8 rounded-xl shadow-md text-center"
-						>
-							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-								<LocalShippingIcon className="text-amber-600 text-2xl" />
-							</div>
-							<h3 className="font-semibold text-xl mb-3">Local Delivery</h3>
-							<p className="text-gray-600">Same-day delivery within Golden, BC on eligible orders over $50.</p>
-						</motion.div>
-						<motion.div 
-							variants={fadeIn} 
-							whileHover={{ y: -10, transition: { duration: 0.3 } }}
-							className="bg-white p-8 rounded-xl shadow-md text-center"
-						>
-							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-								<span className="text-2xl">🍽️</span>
-							</div>
-							<h3 className="font-semibold text-xl mb-3">Curated Dishes</h3>
-							<p className="text-gray-600">Handpicked specials prepared with our house-made chutneys and masalas.</p>
-						</motion.div>
-						<motion.div 
-							variants={fadeIn} 
-							whileHover={{ y: -10, transition: { duration: 0.3 } }}
-							className="bg-white p-8 rounded-xl shadow-md text-center"
-						>
-							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-								<GroupsIcon className="text-amber-600 text-2xl" />
-							</div>
-							<h3 className="font-semibold text-xl mb-3">Community Focus</h3>
-							<p className="text-gray-600">We support local makers and community events throughout the year.</p>
-						</motion.div>
-						<motion.div 
-							variants={fadeIn} 
-							whileHover={{ y: -10, transition: { duration: 0.3 } }}
-							className="bg-white p-8 rounded-xl shadow-md text-center"
-						>
-							<div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-								<StorefrontIcon className="text-amber-600 text-2xl" />
-							</div>
-							<h3 className="font-semibold text-xl mb-3">Expert Staff</h3>
-							<p className="text-gray-600">Knowledgeable team ready to help you find the perfect spirit for any occasion.</p>
-						</motion.div>
+						{[
+							{ title:'Tiffin services', icon:'🍱' },
+							{ title:'Catering', icon:'🍽️' },
+							{ title:'Live Indian kitchen', icon:'👨‍🍳' },
+							{ title:'Chaat bars', icon:'🥙' },
+							{ title:'Street foods', icon:'🌮' },
+							{ title:'Live tandoor', icon:'🔥' },
+							{ title:'Upscale dining', icon:'🍷' },
+							{ title:'Live music', icon:'🎵' },
+							{ title:'Open mic', icon:'🎤' },
+							{ title:'Bar', icon:'🍸' },
+							{ title:'Bottle service', icon:'🍾' },
+							{ title:'Tandoor specialty', icon:'🍢' },
+							{ title:'Brunch, Lunch, Dinner', icon:'🍳' },
+						].map((s, idx)=> (
+							<motion.div key={idx}
+								variants={fadeIn}
+								whileHover={{ y: -10, transition: { duration: 0.3 } }}
+								className="bg-white p-8 rounded-xl shadow-md text-center"
+							>
+								<div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 border border-brandBlue/20 bg-brandBlue/5 text-brandBlue text-2xl">
+									<span>{s.icon}</span>
+								</div>
+								<h3 className="font-semibold text-lg">{s.title}</h3>
+							</motion.div>
+						))}
 					</motion.div>
 				</div>
 			</section>
@@ -501,15 +483,15 @@ export default function Home() {
 						className="grid md:grid-cols-2 gap-8 items-center"
 					>
 						<div>
-							<h3 className="font-serif text-3xl mb-4">Questions or Catering?</h3>
-							<p className="text-neutral-600 mb-6">Call (604) 555-0123 or email hello@relish66.com. We're happy to help.</p>
-							<Link to="/contact" className="btn-primary px-6 py-3 inline-block w-max">Contact Us</Link>
+							<h3 className="font-serif text-3xl mb-4">Made in Canada</h3>
+							<p className="text-neutral-600 mb-6">Proudly Canadian — crafted with local ingredients and community spirit.</p>
+							<Link to="/testimonials" className="btn-primary px-6 py-3 inline-block w-max">Read Testimonials</Link>
 						</div>
 						<motion.img 
 							whileHover={{ scale: 1.02 }}
 							className="rounded-xl shadow-md" 
 							src={newsletterImage} 
-							alt="Contact Relish66" 
+							alt="Made in Canada" 
 						/>
 					</motion.div>
 				</div>

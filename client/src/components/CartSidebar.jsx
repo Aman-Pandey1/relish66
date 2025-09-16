@@ -10,7 +10,7 @@ export default function CartSidebar(){
             {safeItems.length === 0 ? (
                 <div>
                     <p className="text-sm text-neutral-600">Your cart is empty.</p>
-                    <Link to="/shop" className="btn-primary mt-3 inline-block">Shop Products</Link>
+                    <Link to="/order-online" className="btn-primary mt-3 inline-block">Order Online</Link>
                 </div>
             ) : (
                 <div className="space-y-3">
