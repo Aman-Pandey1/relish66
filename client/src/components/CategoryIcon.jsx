@@ -1,5 +1,5 @@
 export default function CategoryIcon({ slug }){
-	const common = 'w-7 h-7 text-navy-700';
+	const common = 'w-7 h-7 text-brandBlue';
 	switch ((slug||'').toLowerCase()){
 		case 'breakfast-lunch':
 			return (

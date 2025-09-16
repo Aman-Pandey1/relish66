@@ -7,6 +7,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
+                brandBlue: '#4F7EEA',
 				blue: {
 					DEFAULT: '#001F3F',
 					50: '#F0F4F8',
@@ -39,7 +40,7 @@ export default {
 			},
 			fontFamily: {
 				serif: ['"Merriweather"', 'serif'],
-				sans: ['"Inter"', 'system-ui', 'sans-serif'],
+				sans: ['"Poppins"', '"Lato"', 'system-ui', 'sans-serif'],
 			},
 		},
 	},

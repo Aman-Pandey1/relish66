@@ -24,6 +24,7 @@ export default function About() {
           <h2 className="font-serif text-3xl text-neutral-800">Welcome to Our Mountain Home</h2>
           <p className="text-lg">Rooted in the spirit of the mountains, Relish66 is a community hub for quality food and everyday staples. From local craft producers to global classics, we curate our shelves with care and hospitality.</p>
           <p className="text-lg">We believe great stores are built on great relationships. Our team is here to help you find the perfect bottle, snack, or gift for any occasion.</p>
+          <p className="text-lg font-semibold text-brandBlue">Sister company of Chilli Peppers.</p>
         </div>
         <div className="relative group">
           <div className="absolute -inset-2 bg-gradient-to-r from-amber-400 to-amber-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
@@ -180,7 +181,7 @@ export default function About() {
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* Footer timings already in global footer; CTA retained */}
       <section className="bg-amber-600 text-white py-16">
         <div className="container-pad text-center">
           <h2 className="font-serif text-3xl mb-6">Visit Us Today</h2>

@@ -14,7 +14,7 @@ export default function CategoryStrip(){
 			<div className="-mx-4 px-4 md:mx-0 md:px-0">
 				<div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2">
 					{cats.map(c=> (
-						<Link key={c._id} to={`/shop?category=${c.slug}`} className="snap-start min-w-[9rem] flex-1 group border rounded-2xl p-4 text-center hover:shadow-lg transition bg-white">
+						<Link key={c._id} to={`/order-online?category=${c.slug}`} className="snap-start min-w-[9rem] flex-1 group border rounded-2xl p-4 text-center hover:shadow-lg transition bg-white">
 							<div className="w-14 h-14 mx-auto mb-2 rounded-full bg-gradient-to-br from-navy-50 to-white border border-navy-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
 								<CategoryIcon slug={c.slug} />
 							</div>
@@ -24,7 +24,7 @@ export default function CategoryStrip(){
 				</div>
 				<div className="hidden md:grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
 					{cats.map(c=> (
-						<Link key={c._id} to={`/shop?category=${c.slug}`} className="group border rounded-2xl p-5 text-center hover:shadow-lg transition bg-white">
+						<Link key={c._id} to={`/order-online?category=${c.slug}`} className="group border rounded-2xl p-5 text-center hover:shadow-lg transition bg-white">
 							<div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-navy-50 to-white border border-navy-100 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
 								<CategoryIcon slug={c.slug} />
 							</div>

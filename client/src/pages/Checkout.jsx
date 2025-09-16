@@ -14,7 +14,7 @@ export default function Checkout() {
 	const [placing, setPlacing] = useState(false);
 	const [errors, setErrors] = useState({});
 	const tax = Math.round((subtotal - discount) * 0.05 * 100) / 100;
-	const deliveryFee = (fulfillment.type === 'delivery' ? 5 : 0);
+	const deliveryFee = 0;
 	const total = Math.max(0, subtotal - discount + tax + deliveryFee);
 
 	const validate = () => {
@@ -82,11 +82,8 @@ export default function Checkout() {
 					</section>
 
 					<section className="border rounded p-4">
-						<h3 className="font-semibold mb-2">Delivery or Pickup</h3>
-						<div className="flex gap-4">
-							<label className="flex items-center gap-2"><input type="radio" checked={fulfillment.type==='pickup'} onChange={() => setFulfillment({ type: 'pickup' })} /> Pickup</label>
-							<label className="flex items-center gap-2"><input type="radio" checked={fulfillment.type==='delivery'} onChange={() => setFulfillment({ type: 'delivery' })} /> Delivery</label>
-						</div>
+						<h3 className="font-semibold mb-2">Pickup</h3>
+						<div className="text-sm text-neutral-600">Orders are available for pickup only.</div>
 					</section>
 
 					<section className="border rounded p-4">

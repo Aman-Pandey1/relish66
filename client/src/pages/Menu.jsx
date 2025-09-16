@@ -2,18 +2,18 @@ import { Seo } from '../components/Seo.jsx';
 
 const Section = ({ title, children }) => (
 	<section className="mb-8">
-		<h2 className="font-serif text-2xl md:text-3xl mb-3 text-navy-700">{title}</h2>
-		<div className="bg-white border rounded-lg p-4">{children}</div>
+		<h2 className="font-serif text-3xl md:text-4xl mb-4 text-brandBlue font-semibold">{title}</h2>
+		<div className="bg-white border rounded-xl p-5 md:p-6 shadow-sm hover:shadow transition">{children}</div>
 	</section>
 );
 
 const Item = ({ name, note, qty, price }) => (
-	<div className="flex items-start justify-between py-1 text-sm md:text-base">
+	<div className="grid grid-cols-[1fr_auto] gap-4 py-2 text-base md:text-lg">
 		<div>
-			<div className="font-medium">{name}{qty? ` ${qty}`:''}</div>
-			{note && <div className="text-neutral-500 text-xs">{note}</div>}
+			<div className="font-semibold">{name}{qty? ` ${qty}`:''}</div>
+			{note && <div className="text-neutral-500 text-sm">{note}</div>}
 		</div>
-		{price && <div className="text-red-600 font-semibold">${price}</div>}
+		{price && <div className="text-red-600 font-bold">${price}</div>}
 	</div>
 );
 
@@ -41,9 +41,9 @@ export default function Menu(){
 			</Section>
 
 			<Section title="Chaat Bar">
-				<div className="grid md:grid-cols-2 gap-4">
+				<div className="grid md:grid-cols-2 gap-6">
 					<div>
-						<h3 className="font-semibold text-navy-700 mb-2">Cold Items</h3>
+						<h3 className="font-semibold text-brandBlue mb-3 text-xl">Cold Items</h3>
 						<Item name="Chaat Papadi" price="7.66" />
 						<Item name="Bhel Puri" price="5.66" />
 						<Item name="Dahi Bhalla (4)" price="8.66" />
@@ -52,7 +52,7 @@ export default function Menu(){
 						<Item name="Rajbhog 4pcs" price="9.66" />
 					</div>
 					<div>
-						<h3 className="font-semibold text-navy-700 mb-2">Tawa Items</h3>
+						<h3 className="font-semibold text-brandBlue mb-3 text-xl">Tawa Items</h3>
 						<Item name="Pav Bhaji" price="9.66" />
 						<Item name="Tawa Tikki Chaat (2)" price="7.66" />
 						<Item name="Tawa Tikki Chole (2)" price="7.66" />
