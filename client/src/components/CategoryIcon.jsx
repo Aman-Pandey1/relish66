@@ -1,4 +1,4 @@
-import { MdBreakfastDining, MdSetMeal, MdSalad, MdOutdoorGrill, MdKebabDining, MdLocalDining, MdDinnerDining, MdRiceBowl, MdAddCircleOutline, MdSoupKitchen, MdLocalDrink, MdRestaurantMenu, MdStarRate } from 'react-icons/md';
+import { MdBreakfastDining, MdSetMeal, MdFastfood , MdOutdoorGrill, MdKebabDining, MdLocalDining, MdDinnerDining, MdRiceBowl, MdAddCircleOutline, MdSoupKitchen, MdLocalDrink, MdRestaurantMenu, MdStarRate } from 'react-icons/md';
 import { FaLeaf, FaDrumstickBite, FaBreadSlice, FaIceCream } from 'react-icons/fa6';
 
 export default function CategoryIcon({ slug }){
@@ -9,7 +9,7 @@ export default function CategoryIcon({ slug }){
 		case 'thali':
 			return <MdSetMeal className={common} />;
 		case 'chaat-cold':
-			return <MdSalad className={common} />;
+			return <MdFastfood  className={common} />;
 		case 'chaat-tawa':
 			return <MdOutdoorGrill className={common} />;
 		case 'chaat-frying':
