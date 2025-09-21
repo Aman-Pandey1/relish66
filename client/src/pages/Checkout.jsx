@@ -6,7 +6,7 @@ import api from '../utils/api';
 export default function Checkout() {
 	const { items, subtotal, clear } = useCart();
 	const { user } = useAuth();
-	const [customer, setCustomer] = useState({ name: '', email: '', phone: '', address: '' });
+	const [customer, setCustomer] = useState({ name: '', email: '', phone: '' });
 	const [fulfillment, setFulfillment] = useState({ type: 'pickup' });
 	const [payment, setPayment] = useState({ method: 'cash' });
 	const [couponCode, setCouponCode] = useState('');
@@ -14,14 +14,12 @@ export default function Checkout() {
 	const [placing, setPlacing] = useState(false);
 	const [errors, setErrors] = useState({});
 	const tax = Math.round((subtotal - discount) * 0.05 * 100) / 100;
-	const deliveryFee = 0;
-	const total = Math.max(0, subtotal - discount + tax + deliveryFee);
+	const total = Math.max(0, subtotal - discount + tax);
 
 	const validate = () => {
 		const e = {};
 		if (!customer.name) e.name = 'Name required';
 		if (!customer.email) e.email = 'Email required';
-		if (!customer.address && fulfillment.type==='delivery') e.address = 'Address required for delivery';
 		setErrors(e);
 		return Object.keys(e).length === 0;
 	};
@@ -74,16 +72,14 @@ export default function Checkout() {
 								{errors.email && <div className="text-red-600 text-sm mt-1">{errors.email}</div>}
 							</div>
 							<input className="border rounded px-3 py-2 w-full" placeholder="Phone" value={customer.phone} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} />
-							<div className="md:col-span-2">
-								<input className="border rounded px-3 py-2 w-full" placeholder="Address" value={customer.address} onChange={(e) => setCustomer({ ...customer, address: e.target.value })} />
-								{errors.address && <div className="text-red-600 text-sm mt-1">{errors.address}</div>}
-							</div>
 						</div>
 					</section>
 
 					<section className="border rounded p-4">
-						<h3 className="font-semibold mb-2">Pickup</h3>
-						<div className="text-sm text-neutral-600">Orders are available for pickup only.</div>
+						<h3 className="font-semibold mb-2">Pickup Only</h3>
+						<div className="text-sm text-neutral-600">
+							All orders are pickup only at: 6933 Ellerslie Road SW, Edmonton, AB T6X 2A1.
+						</div>
 					</section>
 
 					<section className="border rounded p-4">
@@ -108,10 +104,9 @@ export default function Checkout() {
 					<div className="space-y-1 text-sm">
 						<div className="flex justify-between"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
 						<div className="flex justify-between"><span>Discount</span><span>-${discount.toFixed(2)}</span></div>
-
 						<div className="flex justify-between"><span>Tax</span><span>${tax.toFixed(2)}</span></div>
-						<div className="flex justify-between"><span>Delivery</span><span>${deliveryFee.toFixed(2)}</span></div>
 						<div className="flex justify-between font-semibold border-t pt-2"><span>Total</span><span>${total.toFixed(2)}</span></div>
+						<div className="text-xs text-neutral-500 pt-1">Pickup only at our Edmonton location.</div>
 						<button disabled={placing} className="btn-primary w-full mt-3" onClick={placeOrder}>{placing ? 'Placing...' : 'Place Order'}</button>
 					</div>
 				</aside>

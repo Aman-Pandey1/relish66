@@ -1,6 +1,8 @@
 import PageBanner from '../components/PageBanner.jsx';
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Seo } from '../components/Seo.jsx';
+import { Link } from 'react-router-dom';
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,9 +46,10 @@ export default function About() {
 
   return (
     <div className="overflow-hidden">
+      <Seo title="About Relish on 66" description="Authentic Indian flavors in Edmonton — live tandoor, street food, upscale dining." />
       <PageBanner
-        title="About Relish66"
-        subtitle="Mountain roots. Curated selection. Friendly faces."
+        title="About Relish on 66"
+        subtitle="Mountain roots. Authentic flavors. Modern vibes."
         image="https://images.unsplash.com/photo-1542000550-85cd0f37f13b?q=80&w=1600&auto=format&fit=crop"
         height="h-[40vh]"
         overlay="bg-gradient-to-r from-[#06507D]/50 to-[#D42127]/50"
@@ -61,16 +64,16 @@ export default function About() {
           className="space-y-6 text-gray-700 leading-relaxed"
         >
           <h2 className="font-serif text-3xl md:text-4xl text-gray-800 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-            Welcome to Our Mountain Home
+            Welcome to Our Indian Kitchen
           </h2>
           <p className="text-lg">
-            Rooted in the spirit of the mountains, Relish66 is a community hub for quality food and everyday staples. From local craft producers to global classics, we curate our shelves with care and hospitality.
+            Rooted in the heart of Edmonton, Relish on 66 is more than just a restaurant – it’s a culinary hub for authentic Indian food and modern dining experiences. From live tandoor specialties to curated Indian street food and upscale dining, our kitchen celebrates both tradition and innovation.
           </p>
           <p className="text-lg">
-            We believe great stores are built on great relationships. Our team is here to help you find the perfect bottle, snack, or gift for any occasion.
+            We are proud to be the sister company of Chilli Peppers, known across Edmonton for authentic Indo-Chinese Hakka cuisine, Delhi-style chole bhature, and street-food favorites.
           </p>
           <p className="text-lg font-semibold text-[#D42127]">
-            Sister company of Chilli Peppers.
+            📍 6933 Ellerslie Road SW, Edmonton, AB T6X 2A1
           </p>
         </motion.div>
         <motion.div 
@@ -114,19 +117,19 @@ export default function About() {
             {[
               {
                 title: "Community",
-                desc: "Celebrating local makers and giving back to our mountain town.",
+                desc: "Celebrating local vendors and supporting Edmonton’s farmers’ markets.",
                 icon: "👥",
                 color: "from-[#06507D]/10 to-[#D42127]/10"
               },
               {
                 title: "Quality",
-                desc: "Curated selection of authentic Indian dishes and daily essentials.",
+                desc: "Authentic Indian cuisine crafted with fresh, carefully selected ingredients.",
                 icon: "⭐",
                 color: "from-[#D42127]/10 to-[#06507D]/10"
               },
               {
                 title: "Hospitality",
-                desc: "Friendly, knowledgeable service to make every visit easy.",
+                desc: "Warm, friendly, and knowledgeable service that makes every visit special.",
                 icon: "🤝",
                 color: "from-[#06507D]/10 to-[#D42127]/10"
               }
@@ -177,7 +180,7 @@ export default function About() {
               <span className="text-2xl text-white">🎯</span>
             </div>
             <h3 className="font-semibold text-xl mb-4 text-[#06507D] relative z-10">Our Mission</h3>
-            <p className="text-gray-700 relative z-10">To bring the best of mountain culture to our community with a curated selection and exceptional hospitality.</p>
+            <p className="text-gray-700 relative z-10">To bring authentic Indian flavors, street-style delights, and upscale dining to the Edmonton community with curated experiences and heartfelt hospitality.</p>
           </motion.div>
           <motion.div 
             variants={fadeIn}
@@ -189,7 +192,7 @@ export default function About() {
               <span className="text-2xl text-white">🔭</span>
             </div>
             <h3 className="font-semibold text-xl mb-4 text-[#D42127] relative z-10">Our Vision</h3>
-            <p className="text-gray-700 relative z-10">To be the go-to general store for locals and visitors alike, celebrating quality, community, and the outdoors.</p>
+            <p className="text-gray-700 relative z-10">To be Edmonton’s go-to Indian kitchen – where food, culture, and community come together through modern dining and traditional tastes.</p>
           </motion.div>
         </motion.div>
       </section>
@@ -217,9 +220,9 @@ export default function About() {
               className="space-y-8 md:space-y-12 relative"
             >
               {[
-                { year: "2015", text: "Doors open with a small but mighty selection." },
-                { year: "2019", text: "Expanded categories and introduced local features." },
-                { year: "2024", text: "Launched online shopping with pickup & delivery." }
+                { year: "2015", text: "Launched with a small but mighty menu rooted in authentic Indian street food." },
+                { year: "2019", text: "Expanded offerings to include catering, live tandoor, and chaat bars." },
+                { year: "2024", text: "Introduced upscale dining, live music nights, and launched online ordering with pickup & delivery across Edmonton." }
               ].map((item, index) => (
                 <motion.div 
                   key={index}
@@ -276,24 +279,9 @@ export default function About() {
         >
           {[
             { 
-              src: "https://images.unsplash.com/photo-1558944351-5f8c0d0b3c4b?q=80&w=800&auto=format&fit=crop", 
-              name: "Sarah Johnson",
-              role: "Founder & Curator"
-            },
-            { 
-              src: "https://images.unsplash.com/photo-1544717305-996b815c338c?q=80&w=800&auto=format&fit=crop", 
-              name: "Michael Chen",
-              role: "Head of Hospitality"
-            },
-            { 
-              src: "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?q=80&w=800&auto=format&fit=crop", 
-              name: "Emma Rodriguez",
-              role: "Head Chef"
-            },
-            { 
-              src: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800&auto=format&fit=crop", 
-              name: "James Wilson",
-              role: "Operations Manager"
+              src: "https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=800&auto=format&fit=crop", 
+              name: "Chef Karan Sarna",
+              role: "Executive Chef"
             }
           ].map((member, index) => (
             <motion.div 
@@ -328,6 +316,9 @@ export default function About() {
             </motion.div>
           ))}
         </motion.div>
+        <p className="text-center max-w-3xl mx-auto text-neutral-700 mt-8">
+          Chef Karan Sarna – The culinary mind behind Relish on 66, specializing in live Indian kitchens, tandoor artistry, and street food innovation. With years of experience, Chef Karan curates every menu to balance authentic flavors with modern dining vibes.
+        </p>
       </section>
       
       {/* CTA Section */}
@@ -349,7 +340,9 @@ export default function About() {
             transition={{ delay: 0.2 }}
             className="max-w-2xl mx-auto mb-8 text-white/90 text-lg"
           >
-            Experience the Relish66 difference. We're more than just a store—we're your neighbors, your friends, and your partners in finding the perfect products for any occasion.
+            Experience the Relish on 66 difference – not just a meal, but a journey through authentic Indian cuisine, live cooking, and community spirit.
+            <br />📍 6933 Ellerslie Road SW, Edmonton, AB T6X 2A1
+            <br />📞 (Add Contact Number)
           </motion.p>
           <motion.div 
             variants={fadeIn}
@@ -360,9 +353,9 @@ export default function About() {
             whileTap={{ scale: 0.95 }}
             className="inline-block"
           >
-            <button className="bg-white text-[#06507D] px-8 py-4 rounded-full font-semibold shadow-2xl hover:shadow-white/50 transition-all duration-300 text-lg">
+            <Link to="/contact" className="bg-white text-[#06507D] px-8 py-4 rounded-full font-semibold shadow-2xl hover:shadow-white/50 transition-all duration-300 text-lg">
               Plan Your Visit
-            </button>
+            </Link>
           </motion.div>
         </div>
       </section>
