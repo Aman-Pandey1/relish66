@@ -55,7 +55,9 @@ const drinks = [
 	const slugToId = Object.fromEntries(catDocs.map((c) => [c.slug, c._id]));
 	const toInsert = products.concat(drinks).map((p) => ({ ...p, category: slugToId[p.categorySlug] }));
 	await Product.insertMany(toInsert);
-	await User.create({ name: 'Admin', email: 'admin@relish66.com', password: 'Admin123!', role: 'admin' });
+	const adminEmail = process.env.ADMIN_EMAIL || 'admin@relish66.com';
+	const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+	await User.create({ name: 'Admin', email: adminEmail, password: adminPassword, role: 'admin' });
 	await Promotion.create({ title: 'Chef Specials', subtitle: 'Seasonal favorites', image: 'https://images.unsplash.com/photo-1604908554026-3b4b7bdbaff3?q=80&w=1600&auto=format&fit=crop', ctaText: 'View Menu', ctaLink: '/shop', order: 1, active: true });
 	console.log('Seeded categories, products, admin user, and promotions');
 	process.exit(0);
