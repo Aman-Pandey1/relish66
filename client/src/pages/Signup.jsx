@@ -8,10 +8,13 @@ export default function Signup(){
 	const [name,setName]=useState('');
 	const [email,setEmail]=useState('');
 	const [password,setPassword]=useState('');
+	const [error,setError]=useState('');
 	const submit=async(e)=>{
 		e.preventDefault();
+		setError('');
 		const res = await register({ name, email, password });
 		if(res.ok){ navigate('/'); }
+		else setError(res.error || 'Register failed');
 	};
 	if(user) return null;
 	return (
@@ -21,6 +24,7 @@ export default function Signup(){
 				<input className="border rounded px-3 py-2 w-full" value={name} onChange={e=>setName(e.target.value)} placeholder="Name" />
 				<input className="border rounded px-3 py-2 w-full" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email" />
 				<input type="password" className="border rounded px-3 py-2 w-full" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password" />
+				{error? <div className="text-red-600 text-sm">{error}</div> : null}
 				<button className="btn-primary" disabled={status==='loading'}>{status==='loading'?'Creating...':'Create account'}</button>
 			</form>
 			<p className="text-sm mt-3">Have an account? <Link to="/login" className="underline">Log in</Link></p>
