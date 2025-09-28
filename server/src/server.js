@@ -75,6 +75,25 @@ async function bootstrapData() {
 	}
 }
 
+async function bootstrapAdminAccount() {
+	// Ensure there is at least one admin user so that admin login does not 401 on fresh installs
+	const targetEmail = process.env.ADMIN_EMAIL || 'admin@relish66.com';
+	const targetPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+	let admin = await User.findOne({ role: 'admin' });
+	if (!admin) {
+		admin = await User.create({ name: 'Admin', email: targetEmail, password: targetPassword, role: 'admin' });
+		console.log(`Admin account created for ${targetEmail}`);
+	} else {
+		let changed = false;
+		if (admin.email !== targetEmail) { admin.email = targetEmail; changed = true; }
+		if (process.env.ADMIN_PASSWORD) { admin.password = targetPassword; changed = true; }
+		if (changed) {
+			await admin.save();
+			console.log('Admin account synchronized with environment variables');
+		}
+	}
+}
+
 dotenv.config();
 
 const app = express();
@@ -129,6 +148,7 @@ const PORT = process.env.PORT || 5000;
 connectDB()
 	.then(async () => {
 		await bootstrapData();
+		await bootstrapAdminAccount();
 		app.listen(PORT, () => console.log(`Server listening on :${PORT}`));
 	})
 	.catch((err) => {

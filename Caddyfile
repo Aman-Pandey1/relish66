@@ -1,0 +1,10 @@
+{
+  email admin@relish66.com
+}
+
+relish66.com, www.relish66.com {
+  encode zstd gzip
+  @static path 
+  reverse_proxy  server:5000
+}
+
