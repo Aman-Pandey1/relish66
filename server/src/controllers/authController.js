@@ -22,9 +22,15 @@ export const login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
 		const user = await User.findOne({ email }).select('+password');
-		if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+		if (!user) {
+			const verbose = String(process.env.AUTH_VERBOSE_ERRORS || '').toLowerCase() === 'true';
+			return res.status(401).json({ message: verbose ? 'Email not found' : 'Invalid credentials' });
+		}
 		const ok = await user.comparePassword(password);
-		if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
+		if (!ok) {
+			const verbose = String(process.env.AUTH_VERBOSE_ERRORS || '').toLowerCase() === 'true';
+			return res.status(401).json({ message: verbose ? 'Incorrect password' : 'Invalid credentials' });
+		}
 		const token = sign(user);
 		res.json({ token, user: publicUser(user) });
 	} catch (e) {
