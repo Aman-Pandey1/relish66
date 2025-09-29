@@ -169,15 +169,13 @@ export default function Header() {
 					
 					{/* User Actions with Color Theme */}
 					{user ? (
-						<div className="hidden md:flex items-center gap-3">
-							{user.role === 'admin' && (
-								<Link 
-									to="/admin" 
-									className="px-4 py-2 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300"
-								>
-									Dashboard
-								</Link>
-							)}
+					<div className="hidden md:flex items-center gap-3">
+						<Link 
+							to="/admin" 
+							className="px-4 py-2 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300"
+						>
+							Dashboard
+						</Link>
 							<button 
 								onClick={() => { logout(); navigate('/'); }} 
 								className="px-4 py-2 bg-white border-2 border-[#D42127] text-[#D42127] rounded-full font-semibold text-sm hover:bg-[#D42127] hover:text-white transition-all duration-300 shadow-sm"
@@ -285,15 +283,13 @@ export default function Header() {
 						
 						{user ? (
 							<>
-								{user.role === 'admin' && (
-									<Link 
-										to="/admin" 
-										onClick={() => setOpen(false)}
-										className="py-3 px-4 text-lg font-semibold bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 mt-2"
-									>
-										Dashboard
-									</Link>
-								)}
+								<Link 
+									to="/admin" 
+									onClick={() => setOpen(false)}
+									className="py-3 px-4 text-lg font-semibold bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 mt-2"
+								>
+									Dashboard
+								</Link>
 								<button 
 									onClick={() => { 
 										logout(); 
