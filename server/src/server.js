@@ -134,7 +134,8 @@ if (process.env.NODE_ENV === 'production') {
     const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
     if (fs.existsSync(clientDist)) {
         app.use(express.static(clientDist));
-        app.get('*', (_req, res) => {
+        // Express v5 uses path-to-regexp v6. Use '/*' instead of '*' to avoid parse error
+        app.get('/*', (_req, res) => {
             res.sendFile(path.join(clientDist, 'index.html'));
         });
     }
