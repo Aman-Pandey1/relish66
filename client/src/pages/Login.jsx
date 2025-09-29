@@ -12,7 +12,15 @@ export default function Login(){
 		e.preventDefault();
 		setError('');
 		const res = await login({ email, password });
-		if(res.ok){ navigate('/'); }
+		if(res.ok){
+			// If user is admin, send to admin panel, else to home
+			setTimeout(() => {
+				try {
+					const cached = JSON.parse(localStorage.getItem('kh_user')||'null');
+					if (cached?.role === 'admin') navigate('/admin'); else navigate('/');
+				} catch { navigate('/'); }
+			}, 0);
+		}
 		else setError(res.error || 'Login failed');
 	};
 	if(user) return null;
