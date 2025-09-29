@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, register } from '../controllers/authController.js';
+import { login, register, me } from '../controllers/authController.js';
 import { requireAuth } from '../middleware/authMiddleware.js';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post('/login', login);
 router.post('/register', register);
+router.get('/me', requireAuth, me);
 // membership removed
 
 export default router;

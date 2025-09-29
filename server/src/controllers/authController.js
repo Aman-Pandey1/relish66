@@ -37,3 +37,10 @@ export const login = async (req, res, next) => {
 		next(e);
 	}
 };
+
+export const me = async (req, res, next) => {
+	try {
+		// req.user populated by requireAuth
+		res.json({ id: req.user._id, name: req.user.name, email: req.user.email, role: req.user.role });
+	} catch (e) { next(e); }
+};

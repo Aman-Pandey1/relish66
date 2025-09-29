@@ -18,6 +18,23 @@ export function AuthProvider({ children }){
 		else delete api.defaults.headers.common['Authorization'];
 	}, [token]);
 
+	// When token changes, refresh user from server to capture latest role
+	useEffect(() => {
+		let cancelled = false;
+		const refresh = async () => {
+			if (!token) return;
+			try {
+				const { data } = await api.get('/auth/me');
+				if (!cancelled) {
+					setUser(data);
+					localStorage.setItem(USER_KEY, JSON.stringify(data));
+				}
+			} catch {}
+		};
+		refresh();
+		return () => { cancelled = true; };
+	}, [token]);
+
 	const saveSession = (newToken, newUser) => {
 		setToken(newToken);
 		setUser(newUser);
@@ -35,6 +52,8 @@ export function AuthProvider({ children }){
 		try {
 			const { data } = await api.post('/auth/login', payload);
 			saveSession(data.token, data.user);
+			// Fetch fresh user with current role
+			try { const me = await api.get('/auth/me'); updateUser(me.data); } catch {}
 			setStatus('succeeded');
 			return { ok: true };
 		} catch (e) {
