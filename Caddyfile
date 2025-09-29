@@ -2,9 +2,8 @@
   email admin@relish66.com
 }
 
-relish66.com, www.relish66.com {
+relish66.com, www.relish66.com, relishon66.ca, www.relishon66.ca {
   encode zstd gzip
-  @static path 
-  reverse_proxy  server:5000
+  reverse_proxy server:5000
 }
 
