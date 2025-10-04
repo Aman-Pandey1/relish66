@@ -50,7 +50,8 @@ export function AuthProvider({ children }){
 	const login = async (payload) => {
 		setStatus('loading');
 		try {
-			const { data } = await api.post('/auth/login', payload);
+			const safePayload = { ...payload, email: String(payload?.email || '').trim().toLowerCase() };
+			const { data } = await api.post('/auth/login', safePayload);
 			saveSession(data.token, data.user);
 			// Fetch fresh user with current role
 			try { const me = await api.get('/auth/me'); updateUser(me.data); } catch {}
@@ -65,7 +66,8 @@ export function AuthProvider({ children }){
 	const register = async (payload) => {
 		setStatus('loading');
 		try {
-			const { data } = await api.post('/auth/register', payload);
+			const safePayload = { ...payload, email: String(payload?.email || '').trim().toLowerCase() };
+			const { data } = await api.post('/auth/register', safePayload);
 			saveSession(data.token, data.user);
 			setStatus('succeeded');
 			return { ok: true };
