@@ -119,8 +119,16 @@ async function getAllowedCategoryIdByHeader(name, cache) {
 
 export const importProductsFromExcel = async (req, res, next) => {
 	try {
-		if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-		const workbook = XLSX.readFile(req.file.path);
+        if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+        // Support both memory and disk storage
+        let workbook;
+        if (req.file.buffer) {
+            workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+        } else if (req.file.path) {
+            workbook = XLSX.readFile(req.file.path);
+        } else {
+            return res.status(400).json({ message: 'Invalid file payload' });
+        }
 		const sheet = workbook.Sheets[workbook.SheetNames[0]];
 		await ensureAllowedCategoriesExist(Category);
 
@@ -214,7 +222,11 @@ export const importProductsFromExcel = async (req, res, next) => {
 			}
 		}
 
-		if (docs.length) await Product.insertMany(docs);
-		res.json({ inserted: docs.length, skipped, errors });
+        if (docs.length) await Product.insertMany(docs);
+        // Best-effort cleanup if multer wrote a temp file
+        if (req.file && req.file.path) {
+            try { await fs.promises.unlink(req.file.path); } catch {}
+        }
+        res.json({ inserted: docs.length, skipped, errors });
 	} catch (e) { next(e); }
 };

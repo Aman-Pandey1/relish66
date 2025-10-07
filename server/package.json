@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "start:pm2": "pm2-runtime src/server.js --name relish66-server --max-memory-restart 350M",
     "seed": "node src/seed/seed.js",
     "gen:excel": "node src/seed/generate-products-xlsx-from-menu.js",
     "import:excel:http": "node -e \"(async()=>{const fetch=global.fetch|| (await import('node-fetch')).default; const url=process.env.API_URL||'http://localhost:5000/api/products/import'; const token=process.env.ADMIN_TOKEN||''; const path=require('path'); const fs=require('fs'); const filePath=path.resolve(__dirname,'uploads','menu_products_with_images.xlsx'); if(!fs.existsSync(filePath)){ console.error('File not found',filePath); process.exit(1);} const FormData = (await import('form-data')).default; const formData = new FormData(); formData.append('file', fs.createReadStream(filePath)); const res = await fetch(url,{ method:'POST', headers: token? { Authorization: 'Bearer '+token }:{}, body: formData }); const text = await res.text(); console.log(res.status, text); })()\"",

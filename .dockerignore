@@ -1,0 +1,35 @@
+# Node modules and caches
+node_modules
+**/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store
+
+# Vite/Build artifacts
+client/dist
+client/.vite
+
+# Git
+.git
+.gitignore
+
+# Local env
+.env
+.env*
+.DS_Store
+
+# Editor
+.vscode
+.idea
+
+# Uploads and samples (mounted via volume at runtime)
+server/uploads
+uploads
+*.xlsx
+*.xls
+*.csv
+
+# Docker
+Dockerfile*
+!.dockerignore

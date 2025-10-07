@@ -25,6 +25,11 @@ COPY --from=builder /app/client/dist /app/client/dist
 COPY server/package*.json ./server/
 RUN npm ci --omit=dev --prefix server
 
+# Install pm2 for robust runtime restarts
+RUN npm i -g pm2@5
+
 EXPOSE 5000
-CMD ["node","server/src/server.js"]
+# Use pm2-runtime so the process is supervised inside Docker
+# Auto-restart on memory leaks and keep a stable process name
+CMD ["pm2-runtime", "server/src/server.js", "--name", "relish66-server", "--max-memory-restart", "350M"]
 
