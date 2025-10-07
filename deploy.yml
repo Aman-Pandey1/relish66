@@ -1,67 +1,35 @@
-name: Deploy to VPS
-on:
-  push:
-    branches: [ main ]
+version: 1
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# Helper one-shot tasks you can run on the VPS
+# Usage examples:
+#   docker compose -f deploy.yml run --rm janitor prune
+#   docker compose -f deploy.yml run --rm janitor logs-du
+#   docker compose -f deploy.yml run --rm janitor cleanup-uploads 30  # delete files older than 30 days
 
-      - name: Deploy remotely (pull repo, sync, rebuild)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            set -euxo pipefail
-            APP_DIR=/opt/apps/relishon66
-            REPO_URL="https://github.com/Aman-Pandey1/relish66.git"
+services:
+  janitor:
+    image: alpine:3.20
+    working_dir: /work
+    volumes:
+      - ./:/work
+      - /var/run/docker.sock:/var/run/docker.sock
+      - uploads:/uploads
+      - mongo_data:/var/lib/mongo
+    entrypoint: ["/bin/sh","-lc"]
+    command: "echo 'See labels for tasks'"
+    labels:
+      janitor.tasks: |
+        prune: docker system prune -af --volumes
+        logs-du: |
+          echo 'Docker logs size:';
+          du -sh /var/lib/docker/containers/*/*-json.log 2>/dev/null | sort -h | tail -n 20 || true;
+          echo '\nUploads:'; du -sh /uploads || true;
+          echo '\nMongo data:'; du -sh /var/lib/mongo || true
+        cleanup-uploads: |
+          DAYS=${1:-30};
+          echo "Deleting files older than $DAYS days from /uploads";
+          find /uploads -type f -mtime +$DAYS -print -delete || true
 
-            apt-get update -y && apt-get install -y git rsync
-
-            if [ -d "$APP_DIR/repo/.git" ]; then
-              git -C "$APP_DIR/repo" fetch --all
-              git -C "$APP_DIR/repo" reset --hard origin/main || git -C "$APP_DIR/repo" reset --hard origin/master || true
-            else
-              rm -rf "$APP_DIR/repo"
-              git clone --depth 1 "$REPO_URL" "$APP_DIR/repo"
-            fi
-
-            REPO_ROOT="$APP_DIR/repo"
-
-            FRONTEND_SRC=""
-            for d in frontend client web app ui; do
-              [ -f "$REPO_ROOT/$d/package.json" ] && FRONTEND_SRC="$d" && break
-            done
-            [ -z "$FRONTEND_SRC" ] && [ -f "$REPO_ROOT/package.json" ] && FRONTEND_SRC="."
-
-            BACKEND_SRC=""
-            for d in backend server api; do
-              [ -f "$REPO_ROOT/$d/package.json" ] && BACKEND_SRC="$d" && break
-            done
-            [ -z "$BACKEND_SRC" ] && { echo "Backend folder not found"; ls -la "$REPO_ROOT"; exit 1; }
-
-            rsync -a --delete "$REPO_ROOT/$BACKEND_SRC/" "$APP_DIR/backend/"
-            rsync -a --delete "$REPO_ROOT/$FRONTEND_SRC/" "$APP_DIR/frontend/"
-
-            if [ -f "$APP_DIR/frontend/package.json" ] && grep -qi '"next"' "$APP_DIR/frontend/package.json"; then
-              sed -i 's/reverse_proxy frontend:80/reverse_proxy frontend:3000/' "$APP_DIR/proxy/Caddyfile" || true
-            else
-              sed -i 's/reverse_proxy frontend:3000/reverse_proxy frontend:80/' "$APP_DIR/proxy/Caddyfile" || true
-            fi
-
-            cd "$APP_DIR"
-            docker compose build
-            docker compose up -d --remove-orphans
-            docker compose restart caddy || true
-            docker compose ps
-
-
-
-            SERVER_HOST: 82.197.93.109
-SERVER_USER: root
-SERVER_PASSWORD: Mastermindsjunior123@
-SERVER_PATH: /opt/apps/relishon66
+volumes:
+  uploads:
+  mongo_data:
