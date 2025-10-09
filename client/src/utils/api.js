@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-// Prefer same-origin '/api' in production to avoid hardcoded localhost URLs
-const runtimeHost = typeof window !== 'undefined' ? window.location.hostname : '';
-const envUrl = (import.meta.env.VITE_API_URL || '').trim();
-const isLocalHost = /^(localhost|127\.0\.0\.1)$/i.test(runtimeHost || '');
-const baseURL = !isLocalHost ? '/api' : (envUrl || '/api');
+// Single source of truth for API base URL
+// If VITE_API_URL is provided, use it in all environments.
+// Otherwise, default to same-origin '/api' which works with dev proxy and production reverse proxy.
+const baseURL = (import.meta.env.VITE_API_URL || '').trim() || '/api';
 
 const api = axios.create({
 	baseURL,
