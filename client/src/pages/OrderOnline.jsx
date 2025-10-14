@@ -192,12 +192,11 @@ export default function OrderOnline() {
 				</motion.section>
 			)}
 
-			{/* Filters */}
+		{/* Filters */}
 			<motion.div
 				variants={staggerChildren}
 				initial="hidden"
-				whileInView="visible"
-				viewport={{ once: true, margin: "-100px" }}
+				animate="visible"
 				className="flex gap-3 mb-6 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-[#06507D]/10"
 			>
 				<motion.button 
@@ -249,8 +248,7 @@ export default function OrderOnline() {
 				<motion.section
 					variants={staggerChildren}
 					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, margin: "-100px" }}
+					animate="visible"
 				>
 					{/* Search and Filters */}
 					<motion.div
