@@ -1,4 +1,4 @@
-import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 import api from "../utils/api";
 
 export default function Footer() {
@@ -12,8 +12,8 @@ export default function Footer() {
 				{/* Store Info */}
 				<div>
 					<h3 className="font-serif text-xl mb-2">Relish66</h3>
-					<p className="text-gray-400">123 Mountain Rd, Golden, BC</p>
-					<p className="text-gray-400">(604) 555-0123 • hello@relish66.com</p>
+					<p className="text-gray-400">6933 Ellerslie Road SW, Edmonton, AB T6X 2A1</p>
+					<p className="text-gray-400">+17806905888 • Info.relishon66@gmail.com</p>
 					<div className="mt-3">
 						<h4 className="font-semibold mb-1">Hours</h4>
 						<ul className="text-gray-400 space-y-0.5">
@@ -24,25 +24,13 @@ export default function Footer() {
 					</div>
 					<div className="flex gap-4 mt-3 text-xl">
 						<a
-							href="#"
+							href="https://www.instagram.com/relishon66?igsh=MTQwa3F3MWVvNW42dQ=="
+							target="_blank"
+							rel="noopener noreferrer"
 							aria-label="Instagram"
 							className="text-gray-400 hover:text-white transition-colors"
 						>
 							<FaInstagram />
-						</a>
-						<a
-							href="#"
-							aria-label="Facebook"
-							className="text-gray-400 hover:text-white transition-colors"
-						>
-							<FaFacebookF />
-						</a>
-						<a
-							href="#"
-							aria-label="Twitter"
-							className="text-gray-400 hover:text-white transition-colors"
-						>
-							<FaTwitter />
 						</a>
 					</div>
 				</div>
