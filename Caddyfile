@@ -7,3 +7,14 @@ relish66.com, www.relish66.com, relishon66.ca, www.relishon66.ca {
   reverse_proxy server:5000
 }
 
+# SPA fallback for client-side routing when serving static build via Express
+# Express already sends index.html for unknown paths in production (see server/src/server.js)
+# If in future we serve static directly from Caddy, uncomment below to enable rewrites:
+# @static {
+#   file
+#   path "/client/dist/*"
+# }
+# handle_path /* {
+#   try_files {path} {path}/ /client/dist/index.html
+# }
+
