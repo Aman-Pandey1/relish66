@@ -1,6 +1,7 @@
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 import XLSX from 'xlsx';
+import fs from 'fs';
 import allowedCategories, { allowedSlugs, getAllowedSlugForName, ensureAllowedCategoriesExist, toSlug } from '../utils/allowedCategories.js';
 
 export const getProducts = async (req, res, next) => {
