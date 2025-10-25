@@ -83,9 +83,14 @@ export default function Shop() {
 					<div className="mt-10">
 						<h3 className="font-serif text-2xl mb-3">You May Also Like</h3>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-							{also.map(p=> (
+                            {also.map(p=> (
 								<Link key={p._id} to={`/product/${p.slug}`} className="border rounded overflow-hidden flex flex-col hover:shadow">
-									{p.thumbnail && <img src={p.thumbnail} alt={p.title} className="w-full h-32 object-cover" />}
+                                    <img 
+                                        src={p.thumbnail || 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=800&auto=format&fit=crop'} 
+                                        alt={p.title} 
+                                        onError={(e)=>{ const f='https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=800&auto=format&fit=crop'; if(e.currentTarget.src!==f){ e.currentTarget.src=f; } }}
+                                        className="w-full h-32 object-cover" 
+                                    />
 									<div className="p-3">
 										<div className="font-medium line-clamp-1">{p.title}</div>
 										<div className="text-navy-700 font-semibold">${p.price.toFixed(2)}</div>
