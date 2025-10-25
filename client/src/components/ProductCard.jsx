@@ -124,12 +124,13 @@ export default function ProductCard({ product, special = false }) {
 				transition={{ duration: 0.6 }}
 			>
 				<Link to={`/product/${product.slug}`} className="block w-full h-full relative">
-					<img 
-						loading="lazy" 
-						src={product.thumbnail || fallbackImg} 
-						alt={product.title} 
-						className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
-					/>
+                    <img 
+                        loading="lazy" 
+                        src={product.thumbnail || fallbackImg} 
+                        alt={product.title} 
+                        onError={(e)=>{ if(e.currentTarget.src !== fallbackImg){ e.currentTarget.src = fallbackImg; } }}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+                    />
 					{/* Image Shine Effect */}
 					<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 opacity-0 group-hover:opacity-100 z-10"></div>
 				</Link>
