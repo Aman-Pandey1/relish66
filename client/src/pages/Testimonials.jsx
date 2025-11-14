@@ -1,6 +1,5 @@
 import PageBanner from '../components/PageBanner.jsx';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 export default function Testimonials() {
 	const containerVariants = {
@@ -471,15 +470,17 @@ export default function Testimonials() {
 									initial={{ y: 10 }}
 									whileHover={{ y: 0 }}
 								>
-									<Link 
-										to="/order-online"
+									<a 
+										href="https://shoppage.onrender.com/s/Relishon66"
+										target="_blank"
+										rel="noreferrer"
 										className="text-sm font-medium text-[#D42127] hover:underline flex items-center gap-1"
 									>
 										Order Now
 										<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
 										</svg>
-									</Link>
+									</a>
 								</motion.div>
 							</div>
 						</motion.div>
@@ -520,16 +521,19 @@ export default function Testimonials() {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.4 }}
 				>
-					<motion.button
+					<motion.a
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
+						href="https://shoppage.onrender.com/s/Relishon66"
+						target="_blank"
+						rel="noreferrer"
 						className="bg-gradient-to-r from-[#06507D] to-[#D42127] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
 					>
 						Order Online
 						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
 						</svg>
-					</motion.button>
+					</motion.a>
 					
 					<motion.button
 						whileHover={{ scale: 1.05, rotate: [0, -3, 3, -3, 0] }}
