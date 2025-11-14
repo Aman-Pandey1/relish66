@@ -1,19 +1,13 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useCart } from '../context/CartContext.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useWishlist } from '../context/WishlistContext.jsx';
 
 // Import your logo image
 import logoImage from '../assets/relishlogo.jpg'; // Update this path to your actual logo
 
 export default function Header() {
-	const { items: cartItems } = useCart();
-	const { items: wishlistItems } = useWishlist();
 	const { user, logout } = useAuth();
 	const navigate = useNavigate();
-	const cartCount = cartItems.reduce((s,it)=> s + (it.quantity||1), 0);
-	const wishlistCount = wishlistItems.length;
 	const [open,setOpen]=useState(false);
 
 	return (
@@ -72,19 +66,15 @@ export default function Header() {
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
 					</NavLink>
 					
-					<NavLink 
-						to="/order-online" 
-						className={({ isActive }) => 
-							`relative group font-medium transition-all duration-300 px-3 py-2 ${
-								isActive 
-									? 'text-[#D42127] font-semibold' 
-									: 'text-gray-700 hover:text-[#06507D]'
-							}`
-						}
+					<a 
+						href="https://shoppage.onrender.com/s/Relishon66"
+						target="_blank"
+						rel="noreferrer"
+						className="relative group font-medium transition-all duration-300 px-3 py-2 text-gray-700 hover:text-[#06507D]"
 					>
 						Order Online
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
-					</NavLink>
+					</a>
 					
 					<NavLink 
 						to="/catering" 
@@ -147,26 +137,6 @@ export default function Header() {
 				
 				{/* Right Section with Color Theme */}
 				<div className="flex items-center gap-4">
-					{/* Wishlist with Color Theme */}
-					<Link to="/wishlist" className="relative p-2 rounded-full bg-gradient-to-br from-[#06507D]/10 to-[#D42127]/10 text-[#06507D] hover:bg-[#06507D]/20 transition-all duration-300 group" aria-label="Wishlist">
-						<span className="text-xl">❤</span>
-						{wishlistCount > 0 && (
-							<span className="absolute -top-1 -right-1 bg-gradient-to-br from-[#D42127] to-[#06507D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg">
-								{wishlistCount > 99 ? '99+' : wishlistCount}
-							</span>
-						)}
-					</Link>
-
-					{/* Cart with Color Theme */}
-					<Link to="/cart" className="relative p-2 rounded-full bg-gradient-to-br from-[#06507D]/10 to-[#D42127]/10 text-[#06507D] hover:bg-[#06507D]/20 transition-all duration-300 group" aria-label="Cart">
-						<span role="img" aria-label="cart" className="text-xl">🛒</span>
-						{cartCount > 0 && (
-							<span className="absolute -top-1 -right-1 bg-gradient-to-br from-[#D42127] to-[#06507D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold shadow-lg">
-								{cartCount > 99 ? '99+' : cartCount}
-							</span>
-						)}
-					</Link>
-					
 					{/* User Actions with Color Theme */}
 					{user ? (
 					<div className="hidden md:flex items-center gap-3">
@@ -185,16 +155,7 @@ export default function Header() {
 								Logout
 							</button>
 						</div>
-					) : (
-						<div className="hidden md:flex items-center gap-2">
-							<Link 
-								to="/login" 
-								className="px-4 py-2 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300"
-							>
-								Login
-							</Link>
-						</div>
-					)}
+					) : null}
 					
 					{/* Mobile Menu Button with Color Theme */}
 					<button 
@@ -238,14 +199,16 @@ export default function Header() {
 							Menu
 						</Link>
 						
-						<Link 
-							to="/order-online" 
+						<a 
+							href="https://shoppage.onrender.com/s/Relishon66"
+							target="_blank"
+							rel="noreferrer"
 							onClick={() => setOpen(false)}
 							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
 						>
 							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 							Order Online
-						</Link>
+						</a>
 						
 						<Link 
 							to="/catering" 
@@ -274,15 +237,6 @@ export default function Header() {
 							Contact Us
 						</Link>
 						
-						<Link 
-							to="/wishlist" 
-							onClick={() => setOpen(false)}
-							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
-						>
-							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-							Wishlist
-						</Link>
-						
 						{user ? (
 							<>
 								{user && user.role === 'admin' && (
@@ -305,15 +259,7 @@ export default function Header() {
 									Logout
 								</button>
 							</>
-						) : (
-							<Link 
-								to="/login" 
-								onClick={() => setOpen(false)}
-								className="py-3 px-4 text-lg font-semibold bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
-							>
-								Login
-							</Link>
-						)}
+						) : null}
 					</div>
 				</div>
 			)}

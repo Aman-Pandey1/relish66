@@ -1,16 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Seo } from '../components/Seo.jsx';
-import ProductCard from '../components/ProductCard.jsx';
-import CategoryStrip from '../components/CategoryStrip.jsx';
-import api from '../utils/api';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import GroupsIcon from '@mui/icons-material/Groups';
-import PageBanner from '../components/PageBanner.jsx';
 // Import local images
 import bannerImage from '../assets/b2.jpg';
 import aboutImage1 from '../assets/banner2.jpg';
@@ -25,20 +18,14 @@ import newsletterImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43d
 import faqImage from '../assets/relishlogo.jpg';
 
 export default function Home() {
-  const [featured, setFeatured] = useState([]);
-  const [recent, setRecent] = useState([]);
   const [currentBannerText, setCurrentBannerText] = useState(0);
   
   const refs = {
-    featured: useRef(null),
-    categories: useRef(null),
-    arrivals: useRef(null),
     services: useRef(null),
     local: useRef(null),
     testimonials: useRef(null),
     newsletter: useRef(null),
-    faq: useRef(null),
-    cta: useRef(null)
+    faq: useRef(null)
   };
   
   const inView = {};
@@ -47,9 +34,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    api.get('/products', { params: { featured: true } }).then(r => setFeatured(r.data));
-    api.get('/products', { params: { sort: 'newest', limit: 8 } }).then(r => setRecent(r.data));
-   
     // Text rotation for banner
     const interval = setInterval(() => {
       setCurrentBannerText(prev => (prev + 1) % bannerTexts.length);
@@ -131,25 +115,27 @@ export default function Home() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto"
+              >
+                {bannerTexts[currentBannerText].subheading}
+              </motion.p>
+            </AnimatePresence>
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
             >
-              {bannerTexts[currentBannerText].subheading}
-            </motion.p>
-          </AnimatePresence>
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.6 }}
-          >
-            <Link
-              to="/order-online"
-              className="px-8 py-4 bg-gradient-to-r from-[#D42127] to-[#06507D] text-white rounded-full shadow-2xl hover:shadow-red-500/25 transition-all duration-300 font-semibold text-lg inline-flex items-center gap-2 hover:scale-105"
-            >
-              Order Now
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
+              <a
+                href="https://shoppage.onrender.com/s/Relishon66"
+                target="_blank"
+                rel="noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-[#D42127] to-[#06507D] text-white rounded-full shadow-2xl hover:shadow-red-500/25 transition-all duration-300 font-semibold text-lg inline-flex items-center gap-2 hover:scale-105"
+              >
+                Order Now
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </motion.div>
         </div>
       </section>
 
@@ -220,10 +206,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div ref={refs.categories}>
-        <CategoryStrip />
-      </div>
-
       {/* Static menu highlights */}
       <section className="container-pad py-16 bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5">
         <motion.div
@@ -286,83 +268,6 @@ export default function Home() {
               ))}
             </ul>
           </motion.div>
-        </motion.div>
-      </section>
-
-      <section ref={refs.featured} className="container-pad py-16 md:py-24 bg-gradient-to-br from-white to-gray-50/50">
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate={inView.featured ? "visible" : "hidden"}
-          className="text-center mb-12"
-        >
-          <h2 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-            Chef Specials
-          </h2>
-          <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover our handpicked seasonal favorites and house specials
-          </p>
-        </motion.div>
-        <motion.div
-          variants={staggerChildren}
-          initial="hidden"
-          animate={inView.featured ? "visible" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-        >
-          {featured.map((p) => (
-            <motion.div
-              key={p._id}
-              variants={fadeIn}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            >
-              <ProductCard product={p} />
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      <section ref={refs.arrivals} className="container-pad py-16 md:py-24">
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate={inView.arrivals ? "visible" : "hidden"}
-          className="flex flex-col md:flex-row items-start justify-between mb-12"
-        >
-          <div>
-            <h2 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-              New Arrivals
-            </h2>
-            <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
-            <p className="text-xl text-gray-600">Fresh selections just added to our collection</p>
-          </div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/order-online"
-              className="mt-4 md:mt-0 px-8 py-4 bg-gradient-to-r from-[#D42127] to-[#06507D] text-white rounded-full shadow-xl hover:shadow-red-500/25 transition-all duration-300 font-semibold inline-flex items-center gap-2"
-            >
-              Browse Full Menu
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
-        </motion.div>
-        <motion.div
-          variants={staggerChildren}
-          initial="hidden"
-          animate={inView.arrivals ? "visible" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-        >
-          {recent.map((p) => (
-            <motion.div
-              key={p._id}
-              variants={fadeIn}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            >
-              <ProductCard product={p} />
-            </motion.div>
-          ))}
         </motion.div>
       </section>
 
@@ -695,15 +600,17 @@ export default function Home() {
               Join us for an unforgettable culinary journey through the flavors of India
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/order-online"
+              <a
+                href="https://shoppage.onrender.com/s/Relishon66"
+                target="_blank"
+                rel="noreferrer"
                 className="px-10 py-4 bg-white text-[#06507D] rounded-full shadow-2xl font-bold text-lg hover:shadow-white/50 transition-all duration-300 inline-flex items-center gap-3 hover:scale-105"
               >
                 Order Online Now
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </a>
               <Link
                 to="/reservations"
                 className="px-10 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-[#06507D] transition-all duration-300 inline-flex items-center gap-3"

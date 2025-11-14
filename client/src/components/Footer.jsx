@@ -1,5 +1,4 @@
 import { FaInstagram } from "react-icons/fa";
-import api from "../utils/api";
 
 export default function Footer() {
 	return (
@@ -40,7 +39,12 @@ export default function Footer() {
 					<h4 className="font-semibold mb-2">Explore</h4>
 					<ul className="space-y-1">
 						<li>
-							<a href="/order-online" className="text-gray-400 hover:text-white transition-colors">
+							<a 
+								href="https://shoppage.onrender.com/s/Relishon66" 
+								target="_blank" 
+								rel="noreferrer" 
+								className="text-gray-400 hover:text-white transition-colors"
+							>
 								Order Online
 							</a>
 						</li>
