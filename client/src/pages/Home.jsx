@@ -63,9 +63,32 @@ export default function Home() {
   };
 
   const bannerTexts = [
-    { heading: "Authentic Indian Cuisine", subheading: "Experience the rich flavors of India" },
-    { heading: "Crafted with Passion", subheading: "Every dish tells a story of tradition" },
-    { heading: "A Culinary Journey", subheading: "From street food to fine dining" }
+    { 
+      heading: "Experience India's Rich History & Cuisine", 
+      subheading: "Relish on 66 invites you to savor live Indian cooking in Edmonton." 
+    },
+    { 
+      heading: "Our Story, Our Heart", 
+      subheading: "Family traditions, warm hospitality, and dishes crafted with love." 
+    },
+    { 
+      heading: "Live Tandoor · Tawa · Chaat", 
+      subheading: "Chef Karan Sarna and team bring the vibrant streets of India to life." 
+    }
+  ];
+
+  const visitDetails = [
+    { label: "Address", value: "6933 Ellerslie Road SW, Edmonton, AB" },
+    { label: "Hours", value: "Every day · 11:00 am – 11:00 pm" },
+    { label: "Breakfast / Lunch", value: "11:00 am – 3:00 pm" },
+    { label: "Phone", value: "Coming soon" }
+  ];
+
+  const experienceHighlights = [
+    "Live tandoor and sizzling tawa stations",
+    "Interactive chaat bar that celebrates street flavors",
+    "Chef-driven classics with modern twists",
+    "Warm, family-friendly dining for every occasion"
   ];
 
   // Static menu highlights (home: show some products only)
@@ -148,15 +171,25 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             viewport={{ once: true, margin: "-100px" }}
           >
+            <p className="text-xs uppercase tracking-[0.3em] text-[#D42127] mb-4">Invitation to experience the rich history, culture, and exceptional cuisine of India</p>
             <h2 className="font-serif text-4xl md:text-5xl mb-6 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-              About Relish66
+              Our Story, Our Heart
             </h2>
-            <div className="space-y-4 mb-8">
-              <p className="text-gray-700 leading-relaxed">
-                Serving authentic Indian food with house-made chutneys and masalas. From breakfast specials to chef's tasting menus, enjoy fresh, flavorful dishes all day.
+            <div className="space-y-4 mb-8 text-gray-700 leading-relaxed">
+              <p>
+                At Relish on 66, we're more than just a restaurant – we're a family. We believe that food brings people together, and we're passionate about sharing our culture and traditions with you.
               </p>
-              <p className="text-gray-700 leading-relaxed">
-                Our friendly team is here to help you find the perfect bottle or gift for any occasion — whether you're exploring new flavors or stocking up on favorites.
+              <p>
+                Growing up, our family gatherings were filled with laughter, love, and the most delicious aromas wafting from the kitchen. Everyone had a role, everyone contributed, and everyone was welcomed with open arms.
+              </p>
+              <p>
+                That's the same energy you experience when you step into Relish on 66. Our team is dedicated to making you feel like part of the family, where every guest is treated like the most important person in the room.
+              </p>
+              <p>
+                We pour our hearts into every dish, every moment, and every interaction. We want you to feel at home, to relax, and to savor every bite.
+              </p>
+              <p className="font-semibold text-[#06507D]">
+                Come, join us, and let's relish every moment together!
               </p>
             </div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -201,6 +234,66 @@ export default function Home() {
               className="rounded-2xl h-48 w-full object-cover mt-8 shadow-lg border-2 border-white/50 hover:border-[#06507D]/30 transition-all duration-300"
               src={aboutImage4}
               alt="Community"
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Live Indian Kitchen Overview */}
+      <section className="container-pad py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="space-y-6"
+          >
+            <div>
+              <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-2">Relish on 66 Live Indian Kitchen</p>
+              <h2 className="font-serif text-4xl md:text-5xl bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
+                Experience the Flavors of India
+              </h2>
+            </div>
+            <div className="space-y-4 text-gray-700 leading-relaxed">
+              <p>Relish on 66 is a must-visit destination for food lovers and anyone seeking a unique dining experience. Our live tandoor, sizzling tawa stations, and bustling chaat bar bring the vibrant streets of India to Edmonton.</p>
+              <p>Indulge in authentic yet redefined Indian cuisine crafted with passion and innovation by Chef Karan Sarna and our dedicated kitchen team. From beloved classics to modern twists, every menu is designed to take you on a culinary journey.</p>
+              <p>Join us for a warm and welcoming dining experience—perfect for families, friends, and colleagues. Our attentive staff will guide you through the menu and ensure every visit feels special.</p>
+              <p>Come visit us today and taste the rich flavors of India, reimagined for the modern palate.</p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4 pt-4">
+              {experienceHighlights.map((highlight, idx) => (
+                <div key={idx} className="p-4 rounded-2xl border border-[#06507D]/15 bg-white/80 shadow-md hover:shadow-lg transition-all duration-300 flex items-start gap-3">
+                  <span className="text-[#D42127] text-xl">✦</span>
+                  <p className="text-gray-800 text-sm font-medium">{highlight}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="space-y-6"
+          >
+            <div className="grid gap-4">
+              {visitDetails.map((detail) => (
+                <div key={detail.label} className="p-5 rounded-2xl bg-white/90 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-1">{detail.label}</p>
+                  <p className="text-lg font-semibold text-[#06507D]">{detail.value}</p>
+                </div>
+              ))}
+            </div>
+            <motion.img
+              initial={{ scale: 1.05, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.02 }}
+              className="rounded-3xl shadow-2xl border-4 border-white/40"
+              src={aboutImage3}
+              alt="Relish on 66 live kitchen"
             />
           </motion.div>
         </div>
@@ -283,9 +376,9 @@ export default function Home() {
               Why Choose Us
             </h2>
             <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Experience the difference of our premium service and curated selections
-            </p>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Experience a live Indian kitchen, heartfelt hospitality, and chef-driven menus designed for every gathering.
+          </p>
           </motion.div>
           <motion.div
             variants={staggerChildren}
@@ -298,14 +391,14 @@ export default function Home() {
               { title:'Catering', icon:'🍽️' },
               { title:'Live Indian kitchen', icon:'👨‍🍳' },
               { title:'Chaat bars', icon:'🥙' },
-              { title:'Street foods', icon:'🌮' },
+            { title:'Street food favorites', icon:'🌯' },
               { title:'Live tandoor', icon:'🔥' },
-              { title:'Upscale dining', icon:'🍷' },
-              { title:'Live music', icon:'🎵' },
-              { title:'Open mic', icon:'🎤' },
-              { title:'Bar', icon:'🍸' },
-              { title:'Bottle service', icon:'🍾' },
-              { title:'Tandoor specialty', icon:'🍢' },
+            { title:'Upscale dining', icon:'🕯️' },
+            { title:'Live music nights', icon:'🎵' },
+            { title:'Open mic evenings', icon:'🎤' },
+            { title:'Family celebrations', icon:'👨‍👩‍👧‍👦' },
+            { title:'Chef-led tastings', icon:'🥘' },
+            { title:'Tandoor specialties', icon:'🍢' },
               { title:'Brunch, Lunch, Dinner', icon:'🍳' },
             ].map((s, idx)=> (
               <motion.div
@@ -339,11 +432,11 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-              Local Highlights
+              Live Kitchen Highlights
             </h2>
             <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Showcasing the best of our regional producers and distilleries
+              From tandoor flames to chaat theatrics, every station celebrates the vibrant spirit of Indian streets.
             </p>
           </motion.div>
           <motion.div
@@ -353,9 +446,9 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
             {[
-              { img: localImage1, title: "BC Craft Distilleries", desc: "Supporting local producers across British Columbia", color: "from-[#06507D]" },
-              { img: localImage2, title: "Family Dining", desc: "Comforting meals perfect for sharing", color: "from-[#D42127]" },
-              { img: localImage3, title: "Warm Hospitality", desc: "Friendly service and memorable experiences", color: "from-[#06507D]" }
+              { img: localImage1, title: "Live Tandoor Action", desc: "Watch skewers and breads kissed by the flames right before they reach your table.", color: "from-[#06507D]" },
+              { img: localImage2, title: "Tawa & Chaat Theater", desc: "Savor sizzling tawa delicacies and tangy chaat inspired by the streets of India.", color: "from-[#D42127]" },
+              { img: localImage3, title: "Warm Hospitality", desc: "Settle in for heartfelt service, cozy ambiance, and family-style sharing.", color: "from-[#06507D]" }
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -478,11 +571,11 @@ export default function Home() {
               className="relative"
             >
               <h3 className="font-serif text-4xl mb-6 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-                Made in Canada
+                Relish Every Moment
               </h3>
               <div className="inline-block w-20 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-6"></div>
               <p className="text-gray-700 mb-8 text-lg leading-relaxed">
-                Proudly Canadian — crafted with local ingredients and community spirit.
+                Every visit should feel like walking into a family gathering—welcoming smiles, comforting aromas, and dishes cooked with intention. Whether you're planning an intimate dinner or a lively celebration, we'll guide you through the menu and customize the experience to suit your table.
               </p>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
@@ -535,24 +628,24 @@ export default function Home() {
           <div className="space-y-4">
             {[
               {
-                question: "What are your delivery options?",
-                answer: "We offer local pickup and delivery within Golden, BC. Delivery fees apply based on distance. Orders over $50 qualify for free delivery within a 5km radius."
+                question: "What are your hours?",
+                answer: "We are open every day from 11:00 am to 11:00 pm, making it easy to join us for lunch, dinner, or late-night cravings."
+              },
+              {
+                question: "Do you have a breakfast or lunch menu?",
+                answer: "Yes! Our breakfast and lunch menu runs daily from 11:00 am to 3:00 pm with lighter plates, chaat favorites, and refreshing beverages."
+              },
+              {
+                question: "What makes your live kitchen special?",
+                answer: "Our live tandoor, tawa stations, and chaat bar showcase fresh cooking in action, so you can see, smell, and taste the energy of Indian street food."
               },
               {
                 question: "Do you offer catering or group bookings?",
-                answer: "Yes, we provide catering and group bookings. Contact us with your menu preferences and headcount."
+                answer: "Absolutely. From office lunches to milestone celebrations, we tailor menus, portion sizes, and service to suit your gathering."
               },
               {
-                question: "Can I change or cancel my pre-order?",
-                answer: "We accept changes to pre-orders up to 24 hours before pickup or delivery. Please contact us for assistance."
-              },
-              {
-                question: "Do you have vegan, gluten-free, or dairy-free options?",
-                answer: "Yes. Please ask your server — many dishes can be prepared vegan, gluten-free, or dairy-free."
-              },
-              {
-                question: "How spicy are your dishes?",
-                answer: "We can prepare dishes mild, medium, hot, or extra hot. Let us know your preference."
+                question: "Are there vegetarian or gluten-free options?",
+                answer: "Many of our dishes can be customized vegetarian, vegan, or gluten-free. Let our team know your preference and we’ll guide you."
               }
             ].map((faq, idx) => (
               <Accordion 

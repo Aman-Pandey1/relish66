@@ -8,6 +8,7 @@ export default function About() {
   const [isVisible, setIsVisible] = useState(false);
   const refs = {
     intro: useRef(null),
+    experience: useRef(null),
     values: useRef(null),
     mission: useRef(null),
     timeline: useRef(null),
@@ -44,12 +45,26 @@ export default function About() {
     }
   };
 
+  const visitDetails = [
+    { label: "Address", value: "6933 Ellerslie Road SW, Edmonton, AB" },
+    { label: "Hours", value: "Every day · 11:00 am – 11:00 pm" },
+    { label: "Breakfast / Lunch", value: "11:00 am – 3:00 pm" },
+    { label: "Phone", value: "Coming soon" }
+  ];
+
+  const experienceHighlights = [
+    "Live tandoor & sizzling tawa stations",
+    "Interactive chaat bar experiences",
+    "Chef Karan Sarna’s modern Indian twists",
+    "Family-friendly dining and celebrations"
+  ];
+
   return (
     <div className="overflow-hidden">
       <Seo title="About Relish on 66" description="Authentic Indian flavors in Edmonton — live tandoor, street food, upscale dining." />
       <PageBanner
         title="About Relish on 66"
-        subtitle="Mountain roots. Authentic flavors. Modern vibes."
+        subtitle="Invitation to experience the rich history, culture, and cuisine of India."
         image="https://images.unsplash.com/photo-1542000550-85cd0f37f13b?q=80&w=1600&auto=format&fit=crop"
         height="h-[40vh]"
         overlay="bg-gradient-to-r from-[#06507D]/50 to-[#D42127]/50"
@@ -63,17 +78,24 @@ export default function About() {
           animate={inView.intro ? "visible" : "hidden"}
           className="space-y-6 text-gray-700 leading-relaxed"
         >
+          <p className="text-xs uppercase tracking-[0.35em] text-[#D42127]">Invitation to experience the rich history, culture, and exceptional cuisine of India</p>
           <h2 className="font-serif text-3xl md:text-4xl text-gray-800 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-            Welcome to Our Indian Kitchen
+            Our Story, Our Heart
           </h2>
           <p className="text-lg">
-            Rooted in the heart of Edmonton, Relish on 66 is more than just a restaurant – it’s a culinary hub for authentic Indian food and modern dining experiences. From live tandoor specialties to curated Indian street food and upscale dining, our kitchen celebrates both tradition and innovation.
+            At Relish on 66, we're more than just a restaurant – we're a family. We believe that food is a way to bring people together, and we're passionate about sharing our culture and traditions with you.
           </p>
           <p className="text-lg">
-            We are proud to be the sister company of Chilli Peppers, known across Edmonton for authentic Indo-Chinese Hakka cuisine, Delhi-style chole bhature, and street-food favorites.
+            Growing up, our family gatherings were filled with laughter, love, and the most delicious aromas wafting from the kitchen. Everyone had a role, everyone contributed, and everyone was welcomed with open arms.
           </p>
-          <p className="text-lg font-semibold text-[#D42127]">
-            📍 6933 Ellerslie Road SW, Edmonton, AB T6X 2A1
+          <p className="text-lg">
+            That's the same energy you experience when you step into Relish on 66. Our team is dedicated to making you feel like part of the family, where every guest is treated like the most important person in the room.
+          </p>
+          <p className="text-lg">
+            We pour our hearts into every dish, every moment, and every interaction. We want you to feel at home, to relax, and to savor every bite.
+          </p>
+          <p className="text-lg font-semibold text-[#06507D]">
+            Come, join us, and let's relish every moment together!
           </p>
         </motion.div>
         <motion.div 
@@ -94,6 +116,63 @@ export default function About() {
             whileHover={{ scale: 1.05 }}
           />
         </motion.div>
+      </section>
+
+      {/* Live Indian Kitchen Overview */}
+      <section ref={refs.experience} className="container-pad py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            animate={inView.experience ? "visible" : "hidden"}
+            className="space-y-5"
+          >
+            <div>
+              <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-2">Relish on 66 Live Indian Kitchen</p>
+              <h2 className="font-serif text-4xl text-[#06507D]">
+                Experience the Flavors of India
+              </h2>
+            </div>
+            <div className="space-y-4 text-gray-700 leading-relaxed">
+              <p>Relish on 66 is a must-visit destination for foodies and anyone looking for a unique dining experience. Our live tandoor, tawa stations, and chaat bar bring the vibrant streets of India to Edmonton.</p>
+              <p>Indulge in authentic, redefined Indian cuisine crafted with passion and innovation by Chef Karan Sarna and our team. From classic dishes to modern twists, the menu is designed to take you on a culinary journey.</p>
+              <p>Join us for a warm and welcoming atmosphere, perfect for families, friends, and colleagues. Our professional and attentive staff will guide you through the menu and ensure an exceptional experience.</p>
+              <p>Come visit us today and taste the rich flavors of India, reimagined for the modern palate.</p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4 pt-4">
+              {experienceHighlights.map((highlight, idx) => (
+                <div key={idx} className="p-4 rounded-2xl border border-[#06507D]/15 bg-white shadow-sm hover:shadow-lg transition-all duration-300 flex items-start gap-3">
+                  <span className="text-[#D42127] text-xl">✦</span>
+                  <p className="text-gray-800 text-sm font-medium">{highlight}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            animate={inView.experience ? "visible" : "hidden"}
+            transition={{ delay: 0.1 }}
+            className="space-y-6"
+          >
+            <div className="grid gap-4">
+              {visitDetails.map((detail) => (
+                <div key={detail.label} className="p-5 rounded-2xl bg-white/90 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-1">{detail.label}</p>
+                  <p className="text-lg font-semibold text-[#06507D]">{detail.value}</p>
+                </div>
+              ))}
+            </div>
+            <motion.img
+              initial={{ scale: 1.05, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="rounded-3xl shadow-2xl border-4 border-white/40"
+              src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=1200&auto=format&fit=crop"
+              alt="Relish on 66 live kitchen"
+            />
+          </motion.div>
+        </div>
       </section>
       
       {/* Values Section */}
@@ -341,8 +420,9 @@ export default function About() {
             className="max-w-2xl mx-auto mb-8 text-white/90 text-lg"
           >
             Experience the Relish on 66 difference – not just a meal, but a journey through authentic Indian cuisine, live cooking, and community spirit.
-            <br />📍 6933 Ellerslie Road SW, Edmonton, AB T6X 2A1
-            <br />📞 (Add Contact Number)
+            <br />📍 6933 Ellerslie Road SW, Edmonton, AB
+            <br />🕒 Open daily 11:00 am – 11:00 pm · Breakfast & lunch menu 11:00 am – 3:00 pm
+            <br />📞 Phone: Coming soon
           </motion.p>
           <motion.div 
             variants={fadeIn}
