@@ -19,11 +19,18 @@ export default function AdminProducts(){
 	const doImport=async(e)=>{
 		e.preventDefault();
 		if(!file) return;
-		const fd=new FormData();
-		fd.append('file', file);
-		const { data } = await api.post('/products/import', fd, { headers:{ 'Content-Type':'multipart/form-data' } });
-		setImportMsg(`Imported ${data.inserted} products`);
-		const r=await api.get('/products'); setItems(r.data);
+		try{
+			const fd=new FormData();
+			fd.append('file', file);
+			// Do not set Content-Type manually; let the browser add the multipart boundary
+			const { data } = await api.post('/products/import', fd);
+			setImportMsg(`Imported ${data.inserted} products${typeof data.skipped!== 'undefined' ? `, skipped ${data.skipped}` : ''}`);
+			const r=await api.get('/products'); setItems(r.data);
+		}catch(err){
+			const msg = err?.response?.data?.message || 'Import failed';
+			setImportMsg(msg);
+			console.error('Import error', err);
+		}
 	};
 	const filtered = items.filter(p=>{
 		const okQ = q? (p.title?.toLowerCase().includes(q.toLowerCase())) : true;

@@ -73,13 +73,11 @@ export default function ProductDetail() {
 					whileHover={{ scale: 1.02 }}
 				>
 					<div className="absolute inset-0 bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-					{product.thumbnail && (
-						<ProductImageZoom 
-							src={product.thumbnail} 
-							alt={product.title}
-							className="w-full h-[500px] object-cover rounded-3xl"
-						/>
-					)}
+                    <ProductImageZoom 
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="w-full h-[500px] object-cover rounded-3xl"
+                    />
 					<div className="absolute top-4 right-4 bg-gradient-to-br from-[#D42127] to-[#06507D] text-white px-3 py-1 rounded-full text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300">
 						Quick Zoom
 					</div>
@@ -378,13 +376,12 @@ export default function ProductDetail() {
 									>
 										<Link to={`/product/${p.slug}`}>
 											<div className="relative overflow-hidden aspect-w-4 aspect-h-3">
-												{p.thumbnail && (
-													<img 
-														src={p.thumbnail} 
-														alt={p.title} 
-														className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-													/>
-												)}
+                                                <img 
+                                                    src={p.thumbnail || 'https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=800&auto=format&fit=crop'} 
+                                                    alt={p.title} 
+                                                    onError={(e)=>{ const f='https://images.unsplash.com/photo-1514362545857-3bc16c4c76ef?q=80&w=800&auto=format&fit=crop'; if(e.currentTarget.src!==f){ e.currentTarget.src=f; } }}
+                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                                />
 												<div className="absolute inset-0 bg-gradient-to-t from-[#06507D]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 											</div>
 											<div className="p-3 bg-gradient-to-b from-white/80 to-transparent">

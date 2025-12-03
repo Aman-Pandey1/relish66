@@ -37,14 +37,14 @@ export default function Contact() {
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-[#06507D]/20">
             <h2 className="font-serif text-2xl mb-6 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">Visit Our Store</h2>
             
-            <div className="space-y-4">
+          <div className="space-y-4">
               <div className="flex items-start p-4 rounded-xl bg-gradient-to-r from-[#06507D]/5 to-[#D42127]/5 hover:from-[#06507D]/10 hover:to-[#D42127]/10 transition-colors duration-300 border border-[#06507D]/10">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
                   <span className="text-white">📍</span>
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Address</div>
-                  <div className="font-medium text-gray-800">123 Mountain Rd, Golden, BC</div>
+                  <div className="font-medium text-gray-800">6933 Ellerslie Road SW, Edmonton, AB T6X 2A1</div>
                 </div>
               </div>
               
@@ -54,7 +54,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Phone</div>
-                  <div className="font-medium text-gray-800">(604) 555-0123</div>
+                  <div className="font-medium text-gray-800">+17806905888</div>
                 </div>
               </div>
               
@@ -64,7 +64,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Email</div>
-                  <div className="font-medium text-gray-800">hello@relish66.com</div>
+                  <div className="font-medium text-gray-800">Info.relishon66@gmail.com</div>
                 </div>
               </div>
             </div>
@@ -88,20 +88,15 @@ export default function Contact() {
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-[#06507D]/20">
             <h2 className="font-serif text-2xl mb-6 bg-gradient-to-r from-[#D42127] via-[#06507D] to-[#D42127] bg-clip-text text-transparent">Follow Us</h2>
             <div className="flex space-x-4">
-              {[
-                { platform: 'Instagram', icon: '📷', color: 'from-[#D42127]' },
-                { platform: 'Facebook', icon: '📘', color: 'from-[#06507D]' },
-                { platform: 'Twitter', icon: '🐦', color: 'from-[#D42127]' }
-              ].map((social) => (
-                <a 
-                  key={social.platform}
-                  href="#" 
-                  className={`w-12 h-12 ${social.color} rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg`}
-                  aria-label={`Follow us on ${social.platform}`}
-                >
-                  <span className="text-xl">{social.icon}</span>
-                </a>
-              ))}
+              <a 
+                href="https://www.instagram.com/relishon66?igsh=MTQwa3F3MWVvNW42dQ==" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 from-[#D42127] rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg"
+                aria-label="Follow us on Instagram"
+              >
+                <span className="text-xl">📷</span>
+              </a>
             </div>
           </div>
         </div>

@@ -1,0 +1,60 @@
+name: Deploy to VPS
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy remotely (pull repo, build, up)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            set -euxo pipefail
+            APP_DIR=/opt/apps/relishon66
+            REPO_URL="https://github.com/${{ github.repository }}.git"
+
+            apt-get update -y && apt-get install -y git curl docker.io docker-compose-plugin
+            systemctl enable --now docker
+
+            mkdir -p "$APP_DIR"
+            if [ -d "$APP_DIR/repo/.git" ]; then
+              git -C "$APP_DIR/repo" fetch --all
+              git -C "$APP_DIR/repo" reset --hard origin/main
+            else
+              rm -rf "$APP_DIR/repo"
+              git clone --depth 1 "$REPO_URL" "$APP_DIR/repo"
+            fi
+
+            cd "$APP_DIR/repo"
+
+            # Write .env for docker compose variables
+            cat > .env <<'ENV'
+JWT_SECRET=${{ secrets.JWT_SECRET }}
+CLIENT_URL=${{ secrets.CLIENT_URL }}
+ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}
+ADMIN_BOOTSTRAP_SECRET=${{ secrets.ADMIN_BOOTSTRAP_SECRET }}
+ENV
+
+            docker compose down || true
+            docker builder prune -af || true
+            docker compose build --no-cache server
+            docker compose up -d mongo server
+
+            # health check loop (30s max)
+            for i in $(seq 1 30); do
+              if curl -sSf http://localhost:5000/api/health >/dev/null; then
+                break
+              fi
+              sleep 1
+            done
+
+            docker compose up -d caddy
+            docker compose ps

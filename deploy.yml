@@ -1,0 +1,35 @@
+version: 1
+
+# Helper one-shot tasks you can run on the VPS
+# Usage examples:
+#   docker compose -f deploy.yml run --rm janitor prune
+#   docker compose -f deploy.yml run --rm janitor logs-du
+#   docker compose -f deploy.yml run --rm janitor cleanup-uploads 30  # delete files older than 30 days
+
+services:
+  janitor:
+    image: alpine:3.20
+    working_dir: /work
+    volumes:
+      - ./:/work
+      - /var/run/docker.sock:/var/run/docker.sock
+      - uploads:/uploads
+      - mongo_data:/var/lib/mongo
+    entrypoint: ["/bin/sh","-lc"]
+    command: "echo 'See labels for tasks'"
+    labels:
+      janitor.tasks: |
+        prune: docker system prune -af --volumes
+        logs-du: |
+          echo 'Docker logs size:';
+          du -sh /var/lib/docker/containers/*/*-json.log 2>/dev/null | sort -h | tail -n 20 || true;
+          echo '\nUploads:'; du -sh /uploads || true;
+          echo '\nMongo data:'; du -sh /var/lib/mongo || true
+        cleanup-uploads: |
+          DAYS=${1:-30};
+          echo "Deleting files older than $DAYS days from /uploads";
+          find /uploads -type f -mtime +$DAYS -print -delete || true
+
+volumes:
+  uploads:
+  mongo_data:

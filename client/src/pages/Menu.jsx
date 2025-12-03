@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Seo } from '../components/Seo.jsx';
 
@@ -336,12 +335,17 @@ export default function Menu() {
 					whileHover={{ scale: 1.05 }}
 					className="mt-6 inline-flex items-center gap-2 text-[#06507D] font-semibold"
 				>
-					<Link to="/order-online" className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-[#06507D]/20">
+					<a 
+						href="https://shoppage.onrender.com/s/Relishon66" 
+						target="_blank" 
+						rel="noreferrer"
+						className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-[#06507D]/20"
+					>
 						Order Online
 						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
 						</svg>
-					</Link>
+					</a>
 				</motion.div>
 			</motion.div>
 

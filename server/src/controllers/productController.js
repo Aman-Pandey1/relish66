@@ -1,7 +1,20 @@
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 import XLSX from 'xlsx';
+import fs from 'fs';
 import allowedCategories, { allowedSlugs, getAllowedSlugForName, ensureAllowedCategoriesExist, toSlug } from '../utils/allowedCategories.js';
+
+function normalizeThumbnail(input) {
+    if (!input) return '';
+    const url = String(input).trim();
+    // Support relative '/uploads/...'
+    if (url.startsWith('/uploads/')) return url;
+    // Ensure http(s) protocol; many sheets omit protocol
+    if (/^https?:\/\//i.test(url)) return url;
+    if (/^\/?uploads\//i.test(url)) return '/' + url.replace(/^\/?/, '');
+    // Default to https if protocol-less URL
+    return 'https://' + url.replace(/^\/+/, '');
+}
 
 export const getProducts = async (req, res, next) => {
 	try {
@@ -45,8 +58,14 @@ export const getProductBySlug = async (req, res, next) => {
 export const createProduct = async (req, res, next) => {
 	try {
 		const data = req.body;
-		if (req.file) data.thumbnail = `/uploads/${req.file.filename}`;
-		if (!req.file && data.imageUrl) data.thumbnail = data.imageUrl;
+        if (req.file) data.thumbnail = `/uploads/${req.file.filename}`;
+        // Accept imageUrl from form, but sanitize and normalize protocol
+        if (!req.file) {
+            const url = typeof data.imageUrl === 'string' ? data.imageUrl.trim() : '';
+            if (url) data.thumbnail = normalizeThumbnail(url);
+        }
+        // Remove non-schema field to avoid storing unknown props
+        if (Object.prototype.hasOwnProperty.call(data, 'imageUrl')) delete data.imageUrl;
 		if (typeof data.discountPercent !== 'undefined') data.discountPercent = Number(data.discountPercent) || 0;
 		if (typeof data.isFeatured !== 'undefined') {
 			const v = String(data.isFeatured).trim().toLowerCase();
@@ -74,8 +93,12 @@ export const createProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
 	try {
 		const updates = { ...req.body };
-		if (req.file) updates.thumbnail = `/uploads/${req.file.filename}`;
-		if (!req.file && updates.imageUrl) updates.thumbnail = updates.imageUrl;
+        if (req.file) updates.thumbnail = `/uploads/${req.file.filename}`;
+        if (!req.file) {
+            const url = typeof updates.imageUrl === 'string' ? updates.imageUrl.trim() : '';
+            if (url) updates.thumbnail = normalizeThumbnail(url);
+        }
+        if (Object.prototype.hasOwnProperty.call(updates, 'imageUrl')) delete updates.imageUrl;
 		if (typeof updates.discountPercent !== 'undefined') updates.discountPercent = Number(updates.discountPercent) || 0;
 		if (updates.categorySlug) {
 			await ensureAllowedCategoriesExist(Category);
@@ -119,8 +142,16 @@ async function getAllowedCategoryIdByHeader(name, cache) {
 
 export const importProductsFromExcel = async (req, res, next) => {
 	try {
-		if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-		const workbook = XLSX.readFile(req.file.path);
+        if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+        // Support both memory and disk storage
+        let workbook;
+        if (req.file.buffer) {
+            workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+        } else if (req.file.path) {
+            workbook = XLSX.readFile(req.file.path);
+        } else {
+            return res.status(400).json({ message: 'Invalid file payload' });
+        }
 		const sheet = workbook.Sheets[workbook.SheetNames[0]];
 		await ensureAllowedCategoriesExist(Category);
 
@@ -214,7 +245,11 @@ export const importProductsFromExcel = async (req, res, next) => {
 			}
 		}
 
-		if (docs.length) await Product.insertMany(docs);
-		res.json({ inserted: docs.length, skipped, errors });
+        if (docs.length) await Product.insertMany(docs);
+        // Best-effort cleanup if multer wrote a temp file
+        if (req.file && req.file.path) {
+            try { await fs.promises.unlink(req.file.path); } catch {}
+        }
+        res.json({ inserted: docs.length, skipped, errors });
 	} catch (e) { next(e); }
 };
