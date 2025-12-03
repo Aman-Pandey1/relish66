@@ -1,0 +1,9 @@
+cd /opt/apps/relishon66/repo
+git fetch --all && git reset --hard origin/main
+docker compose down
+docker compose build --no-cache server
+docker compose up -d mongo server caddy
+curl -sS http://localhost:5000/api/health
+
+admin@relish66.com
+Admin123!
