@@ -10,7 +10,7 @@ export default function Cart() {
 			{safeItems.length === 0 ? (
 				<div>
 					<p>Your cart is empty.</p>
-					<a href="https://shoppage.onrender.com/s/Relishon66" target="_blank" rel="noreferrer" className="btn-primary mt-3 inline-block">Continue Ordering</a>
+					<Link to="/menu" className="btn-primary mt-3 inline-block">Browse Menu</Link>
 				</div>
 			) : (
 				<div className="grid md:grid-cols-3 gap-6">

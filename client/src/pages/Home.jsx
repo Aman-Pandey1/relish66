@@ -1,30 +1,43 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Seo } from '../components/Seo.jsx';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  MdLunchDining,
+  MdRoomService,
+  MdLocalDining,
+  MdFastfood,
+  MdRestaurant,
+  MdOutdoorGrill,
+  MdCelebration,
+  MdMic,
+  MdFamilyRestroom,
+  MdBrunchDining,
+  MdStars
+} from 'react-icons/md';
+import { FaMusic, FaUtensils } from 'react-icons/fa6';
 // Import local images
-import bannerImage from '../assets/b2.jpg';
 import aboutImage1 from '../assets/banner2.jpg';
 import aboutImage2 from '../assets/b1.png';
 import aboutImage3 from '../assets/b3.jpg';
 import aboutImage4 from '../assets/b4.jpg';
+import newBanner1 from '../assets/newbanner1.jpeg';
+import newBanner2 from '../assets/newbanner2.jpeg';
 // Replace with an actual winter-themed image
 import localImage1 from '../assets/Chicken Biryani.jpg';
 import localImage2 from '../assets/b2.jpg';
 import localImage3 from '../assets/b4.jpg';
-import newsletterImage from '../assets/WhatsApp Image 2025-08-26 at 22.44.10_43dce5cf.jpg';
 import faqImage from '../assets/relishlogo.jpg';
 
 export default function Home() {
-  const [currentBannerText, setCurrentBannerText] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
   
   const refs = {
     services: useRef(null),
     local: useRef(null),
     testimonials: useRef(null),
-    newsletter: useRef(null),
     faq: useRef(null)
   };
   
@@ -33,14 +46,26 @@ export default function Home() {
     inView[key] = useInView(refs[key], { once: true, margin: "-100px" });
   });
 
+  // Banner carousel data
+  const bannerSlides = [
+    {
+      image: newBanner1,
+      showText: false
+    },
+    {
+      image: newBanner2,
+      showText: false
+    }
+  ];
+
+  // Auto-slide functionality
   useEffect(() => {
-    // Text rotation for banner
     const interval = setInterval(() => {
-      setCurrentBannerText(prev => (prev + 1) % bannerTexts.length);
-    }, 4000);
-   
+      setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+    }, 5000); // Change slide every 5 seconds
+
     return () => clearInterval(interval);
-  }, []);
+  }, [bannerSlides.length]);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
@@ -62,26 +87,11 @@ export default function Home() {
     }
   };
 
-  const bannerTexts = [
-    { 
-      heading: "Experience India's Rich History & Cuisine", 
-      subheading: "Relish on 66 invites you to savor live Indian cooking in Edmonton." 
-    },
-    { 
-      heading: "Our Story, Our Heart", 
-      subheading: "Family traditions, warm hospitality, and dishes crafted with love." 
-    },
-    { 
-      heading: "Live Tandoor · Tawa · Chaat", 
-      subheading: "Chef Karan Sarna and team bring the vibrant streets of India to life." 
-    }
-  ];
-
   const visitDetails = [
-    { label: "Address", value: "6933 Ellerslie Road SW, Edmonton, AB" },
-    { label: "Hours", value: "Every day · 11:00 am – 11:00 pm" },
-    { label: "Breakfast / Lunch", value: "11:00 am – 3:00 pm" },
-    { label: "Phone", value: "Coming soon" }
+    { label: "Address", value: "6933 Ellerslie Road SW, Edmonton, AB T6X 2A1" },
+    { label: "Days", value: "Mon - Sun" },
+    { label: "Hours", value: "11:00 am - 11:00 pm" },
+    { label: "Phone", value: "+1 (780) 690-0746" }
   ];
 
   const experienceHighlights = [
@@ -91,93 +101,111 @@ export default function Home() {
     "Warm, family-friendly dining for every occasion"
   ];
 
-  // Static menu highlights (home: show some products only)
-  const menuHighlights = [
-    { title: 'Strawberry Shake', price: 7.66, section: 'Drinks' },
-    { title: 'Mango Lassi', price: 5.66, section: 'Drinks' },
-    { title: 'Indian Chai tea', price: 3.66, section: 'Drinks' },
-    { title: 'Rasamalai Roll', price: 6.66, section: 'Desserts' },
-    { title: 'Gulab Jamun Hot', price: 6.66, section: 'Desserts' },
-    { title: 'Brownie with Vanilla Ice Cream', price: 6.66, section: 'Desserts' },
+  const serviceCards = [
+    { title:'Tiffin services', icon: MdLunchDining },
+    { title:'Catering', icon: MdRoomService },
+    { title:'Live kitchen', icon: MdLocalDining },
+    { title:'Chaat bars', icon: MdFastfood },
+    { title:'Street food favorites', icon: MdRestaurant },
+    { title:'Live tandoor', icon: MdOutdoorGrill },
+    { title:'Upscale dining', icon: FaUtensils },
+    { title:'Live music nights', icon: FaMusic },
+    { title:'Open mic evenings', icon: MdMic },
+    { title:'Family celebrations', icon: MdFamilyRestroom },
+    { title:'Chef-led tastings', icon: MdCelebration },
+    { title:'Tandoor specialties', icon: MdOutdoorGrill },
+    { title:'Brunch, Lunch, Dinner', icon: MdBrunchDining },
   ];
 
   return (
     <div className="overflow-hidden">
-      <Seo title="Home" description="Authentic Indian cuisine and friendly service." />
+      <Seo title="Home" description="Authentic cuisine at Relish on 66 Restaurant and Bar." />
      
-      {/* Custom Banner with responsive height and overlay */}
-      <section className="relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] lg:min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <motion.img
-          src={bannerImage}
-          alt="Relish Menu"
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 10, ease: "easeOut" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/60"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#06507D]/20 to-[#D42127]/20"></div>
-        <div className="container-pad relative z-10 text-center text-white">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentBannerText}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8 }}
-              className="font-serif text-4xl md:text-6xl lg:text-7xl mb-4 font-bold bg-gradient-to-r from-[#D42127] to-[#06507D] bg-clip-text text-transparent"
-            >
-              {bannerTexts[currentBannerText].heading}
-            </motion.div>
-          </AnimatePresence>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={currentBannerText}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto"
-              >
-                {bannerTexts[currentBannerText].subheading}
-              </motion.p>
-            </AnimatePresence>
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.6 }}
-            >
-              <a
-                href="https://shoppage.onrender.com/s/Relishon66"
-                target="_blank"
-                rel="noreferrer"
-                className="px-8 py-4 bg-gradient-to-r from-[#D42127] to-[#06507D] text-white rounded-full shadow-2xl hover:shadow-red-500/25 transition-all duration-300 font-semibold text-lg inline-flex items-center gap-2 hover:scale-105"
-              >
-                Order Now
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </motion.div>
+      {/* Hero: width-first (w-full h-auto) = edge-to-edge; height follows banner aspect so top/bottom stay uncropped */}
+      <section className="relative w-full min-h-[200px] overflow-hidden bg-black">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="relative w-full leading-none"
+          >
+            <img
+              src={bannerSlides[currentSlide].image}
+              alt="Relish Banner"
+              className="block w-full h-auto"
+            />
+          </motion.div>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/25"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#06507D]/10 to-[#D42127]/10"></div>
+        
+        {/* Banner Content */}
+        {bannerSlides[currentSlide].showText && (
+          <div className="relative z-10 w-full max-w-7xl mx-auto text-center text-white px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
+            <div className="flex flex-col items-center justify-center min-h-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.8 }}
+                  className="font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-2 sm:mb-3 md:mb-4 font-bold text-white drop-shadow-2xl leading-tight break-words"
+                  style={{ wordBreak: 'break-word', hyphens: 'auto' }}
+                >
+                  {bannerSlides[currentSlide].heading}
+                </motion.div>
+              </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl mb-3 sm:mb-4 md:mb-6 max-w-xl sm:max-w-2xl mx-auto text-white drop-shadow-lg leading-relaxed break-words px-1"
+                  style={{ wordBreak: 'break-word' }}
+                >
+                  {bannerSlides[currentSlide].subheading}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+          </div>
+        )}
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-3 sm:bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 z-10 flex gap-1.5 sm:gap-2">
+          {bannerSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1.5 sm:h-2 md:h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-white w-5 sm:w-6 md:w-8' : 'bg-white/50 w-1.5 sm:w-2 md:w-3'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
       {/* About Relish66 Section */}
       <section className="container-pad py-16 md:py-24 bg-gradient-to-br from-gray-50/50 to-white">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-xs uppercase tracking-[0.3em] text-[#D42127] mb-4">Invitation to experience the rich history, culture, and exceptional cuisine of India</p>
             <h2 className="font-serif text-4xl md:text-5xl mb-6 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
               Our Story, Our Heart
             </h2>
             <div className="space-y-4 mb-8 text-gray-700 leading-relaxed">
               <p>
-                At Relish on 66, we're more than just a restaurant – we're a family. We believe that food brings people together, and we're passionate about sharing our culture and traditions with you.
+                At Relish on 66 Restaurant and Bar, we're more than just a restaurant - we're a family. We believe that food brings people together, and we're passionate about sharing our culture and traditions with you.
               </p>
               <p>
                 Growing up, our family gatherings were filled with laughter, love, and the most delicious aromas wafting from the kitchen. Everyone had a role, everyone contributed, and everyone was welcomed with open arms.
@@ -192,17 +220,6 @@ export default function Home() {
                 Come, join us, and let's relish every moment together!
               </p>
             </div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/about"
-                className="px-8 py-4 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full shadow-xl hover:shadow-red-500/25 transition-all duration-300 inline-flex items-center gap-2 font-semibold"
-              >
-                Discover Our Story
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-            </motion.div>
           </motion.div>
           <motion.div
             className="grid grid-cols-2 gap-4 relative"
@@ -213,25 +230,25 @@ export default function Home() {
           >
             <motion.img
               whileHover={{ scale: 1.05, rotate: 1 }}
-              className="rounded-2xl h-48 w-full object-cover shadow-lg border-2 border-white/50 hover:border-[#D42127]/30 transition-all duration-300"
+              className="rounded-2xl h-48 w-full object-contain md:object-cover bg-white shadow-lg border-2 border-white/50 hover:border-[#D42127]/30 transition-all duration-300"
               src={aboutImage1}
               alt="Store"
             />
             <motion.img
               whileHover={{ scale: 1.05, rotate: -1 }}
-              className="rounded-2xl h-48 w-full object-cover mt-8 shadow-lg border-2 border-white/50 hover:border-[#06507D]/30 transition-all duration-300"
+              className="rounded-2xl h-48 w-full object-contain md:object-cover bg-white mt-8 shadow-lg border-2 border-white/50 hover:border-[#06507D]/30 transition-all duration-300"
               src={aboutImage2}
               alt="Team"
             />
             <motion.img
               whileHover={{ scale: 1.05, rotate: -1 }}
-              className="rounded-2xl h-48 w-full object-cover shadow-lg border-2 border-white/50 hover:border-[#D42127]/30 transition-all duration-300"
+              className="rounded-2xl h-48 w-full object-contain md:object-cover bg-white shadow-lg border-2 border-white/50 hover:border-[#D42127]/30 transition-all duration-300"
               src={aboutImage3}
               alt="Cuisine"
             />
             <motion.img
               whileHover={{ scale: 1.05, rotate: 1 }}
-              className="rounded-2xl h-48 w-full object-cover mt-8 shadow-lg border-2 border-white/50 hover:border-[#06507D]/30 transition-all duration-300"
+              className="rounded-2xl h-48 w-full object-contain md:object-cover bg-white mt-8 shadow-lg border-2 border-white/50 hover:border-[#06507D]/30 transition-all duration-300"
               src={aboutImage4}
               alt="Community"
             />
@@ -239,7 +256,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Live Indian Kitchen Overview */}
+      {/* Live Kitchen Overview */}
       <section className="container-pad py-16 md:py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -250,21 +267,21 @@ export default function Home() {
             className="space-y-6"
           >
             <div>
-              <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-2">Relish on 66 Live Indian Kitchen</p>
+              <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-2">Relish on 66 Restaurant and Bar</p>
               <h2 className="font-serif text-4xl md:text-5xl bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-                Experience the Flavors of India
+                Experience the Flavors
               </h2>
             </div>
             <div className="space-y-4 text-gray-700 leading-relaxed">
-              <p>Relish on 66 is a must-visit destination for food lovers and anyone seeking a unique dining experience. Our live tandoor, sizzling tawa stations, and bustling chaat bar bring the vibrant streets of India to Edmonton.</p>
-              <p>Indulge in authentic yet redefined Indian cuisine crafted with passion and innovation by Chef Karan Sarna and our dedicated kitchen team. From beloved classics to modern twists, every menu is designed to take you on a culinary journey.</p>
+              <p>Relish on 66 is a must-visit destination for food lovers and anyone seeking a unique dining experience. Our live tandoor, sizzling tawa stations, and bustling chaat bar bring vibrant street flavors to Edmonton.</p>
+              <p>Indulge in authentic yet redefined cuisine crafted with passion and innovation by Chef Karan Sarna and our dedicated kitchen team. From beloved classics to modern twists, every menu is designed to take you on a culinary journey.</p>
               <p>Join us for a warm and welcoming dining experience—perfect for families, friends, and colleagues. Our attentive staff will guide you through the menu and ensure every visit feels special.</p>
-              <p>Come visit us today and taste the rich flavors of India, reimagined for the modern palate.</p>
+              <p>Come visit us today and taste rich flavors, reimagined for the modern palate.</p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4 pt-4">
               {experienceHighlights.map((highlight, idx) => (
                 <div key={idx} className="p-4 rounded-2xl border border-[#06507D]/15 bg-white/80 shadow-md hover:shadow-lg transition-all duration-300 flex items-start gap-3">
-                  <span className="text-[#D42127] text-xl">✦</span>
+                  <MdStars className="text-[#D42127] text-xl mt-0.5" />
                   <p className="text-gray-800 text-sm font-medium">{highlight}</p>
                 </div>
               ))}
@@ -299,71 +316,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Static menu highlights */}
-      <section className="container-pad py-16 bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5">
-        <motion.div
-          className="grid md:grid-cols-2 gap-8"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.div 
-            whileHover={{ y: -5, transition: { duration: 0.3 } }}
-            className="bg-white/80 backdrop-blur-sm border border-[#06507D]/20 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group relative"
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#06507D] to-[#D42127]"></div>
-            <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-[#06507D]/10 group-hover:bg-[#06507D]/20 transition-all duration-500"></div>
-            <h3 className="font-serif text-3xl mb-6 text-[#06507D] font-bold relative z-10">Refreshing Drinks</h3>
-            <ul className="divide-y divide-[#06507D]/10 space-y-3">
-              {menuHighlights.filter(i=>i.section==='Drinks').map((i, idx)=> (
-                <motion.li
-                  key={i.title}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="py-4 flex items-center justify-between text-base group/item"
-                  whileHover={{ x: 10, transition: { duration: 0.2 } }}
-                >
-                  <span className="font-medium text-gray-800 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127]"></span>
-                    {i.title}
-                  </span>
-                  <span className="text-[#D42127] font-bold text-lg">${i.price.toFixed(2)}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-          
-          <motion.div 
-            whileHover={{ y: -5, transition: { duration: 0.3 } }}
-            className="bg-white/80 backdrop-blur-sm border border-[#D42127]/20 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden group relative"
-          >
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D42127] to-[#06507D]"></div>
-            <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-[#D42127]/10 group-hover:bg-[#D42127]/20 transition-all duration-500"></div>
-            <h3 className="font-serif text-3xl mb-6 text-[#D42127] font-bold relative z-10">Sweet Delights</h3>
-            <ul className="divide-y divide-[#D42127]/10 space-y-3">
-              {menuHighlights.filter(i=>i.section==='Desserts').map((i, idx)=> (
-                <motion.li
-                  key={i.title}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="py-4 flex items-center justify-between text-base group/item"
-                  whileHover={{ x: 10, transition: { duration: 0.2 } }}
-                >
-                  <span className="font-medium text-gray-800 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#D42127] to-[#06507D]"></span>
-                    {i.title}
-                  </span>
-                  <span className="text-[#06507D] font-bold text-lg">${i.price.toFixed(2)}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        </motion.div>
-      </section>
-
       <section ref={refs.services} className="bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5 py-16 md:py-24">
         <div className="container-pad">
           <motion.div
@@ -377,7 +329,7 @@ export default function Home() {
             </h2>
             <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Experience a live Indian kitchen, heartfelt hospitality, and chef-driven menus designed for every gathering.
+            Experience a live kitchen, heartfelt hospitality, and chef-driven menus designed for every experience.
           </p>
           </motion.div>
           <motion.div
@@ -386,21 +338,7 @@ export default function Home() {
             animate={inView.services ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
           >
-            {[
-              { title:'Tiffin services', icon:'🍱' },
-              { title:'Catering', icon:'🍽️' },
-              { title:'Live Indian kitchen', icon:'👨‍🍳' },
-              { title:'Chaat bars', icon:'🥙' },
-            { title:'Street food favorites', icon:'🌯' },
-              { title:'Live tandoor', icon:'🔥' },
-            { title:'Upscale dining', icon:'🕯️' },
-            { title:'Live music nights', icon:'🎵' },
-            { title:'Open mic evenings', icon:'🎤' },
-            { title:'Family celebrations', icon:'👨‍👩‍👧‍👦' },
-            { title:'Chef-led tastings', icon:'🥘' },
-            { title:'Tandoor specialties', icon:'🍢' },
-              { title:'Brunch, Lunch, Dinner', icon:'🍳' },
-            ].map((s, idx)=> (
+            {serviceCards.map((s, idx)=> (
               <motion.div
                 key={idx}
                 variants={fadeIn}
@@ -413,7 +351,7 @@ export default function Home() {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-gradient-to-br from-[#06507D] to-[#D42127] text-white text-2xl shadow-lg relative z-10">
-                  {s.icon}
+                  <s.icon className="w-7 h-7" />
                 </div>
                 <h3 className="font-semibold text-gray-800 text-lg relative z-10">{s.title}</h3>
                 <div className="absolute bottom-2 left-2 right-2 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:h-0.5"></div>
@@ -436,7 +374,7 @@ export default function Home() {
             </h2>
             <div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From tandoor flames to chaat theatrics, every station celebrates the vibrant spirit of Indian streets.
+              From tandoor flames to chaat theatrics, every station celebrates the vibrant spirit of street food.
             </p>
           </motion.div>
           <motion.div
@@ -447,7 +385,7 @@ export default function Home() {
           >
             {[
               { img: localImage1, title: "Live Tandoor Action", desc: "Watch skewers and breads kissed by the flames right before they reach your table.", color: "from-[#06507D]" },
-              { img: localImage2, title: "Tawa & Chaat Theater", desc: "Savor sizzling tawa delicacies and tangy chaat inspired by the streets of India.", color: "from-[#D42127]" },
+              { img: localImage2, title: "Tawa & Chaat Theater", desc: "Savor sizzling tawa delicacies and tangy chaat inspired by vibrant street food.", color: "from-[#D42127]" },
               { img: localImage3, title: "Warm Hospitality", desc: "Settle in for heartfelt service, cozy ambiance, and family-style sharing.", color: "from-[#06507D]" }
             ].map((item, idx) => (
               <motion.div
@@ -538,7 +476,6 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-800 text-lg">{testimonial.name}</h4>
-                  <p className={`text-[${testimonial.color}] font-medium text-sm`}>{testimonial.tag} Customer</p>
                 </div>
               </div>
               
@@ -555,56 +492,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section ref={refs.newsletter} className="bg-gradient-to-br from-[#D42127]/10 to-[#06507D]/10">
-        <div className="container-pad py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid md:grid-cols-2 gap-12 items-center"
-          >
-            <motion.div 
-              initial={{ x: -20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative"
-            >
-              <h3 className="font-serif text-4xl mb-6 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent">
-                Relish Every Moment
-              </h3>
-              <div className="inline-block w-20 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-6"></div>
-              <p className="text-gray-700 mb-8 text-lg leading-relaxed">
-                Every visit should feel like walking into a family gathering—welcoming smiles, comforting aromas, and dishes cooked with intention. Whether you're planning an intimate dinner or a lively celebration, we'll guide you through the menu and customize the experience to suit your table.
-              </p>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/testimonials"
-                  className="px-8 py-4 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full shadow-xl hover:shadow-red-500/25 transition-all duration-300 inline-flex items-center gap-2 font-semibold text-lg"
-                >
-                  Read More Stories
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </motion.div>
-              <div className="absolute -bottom-4 left-0 w-32 h-32 bg-[#06507D]/5 rounded-full blur-xl"></div>
-            </motion.div>
-            
-            <motion.img
-              initial={{ x: 20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              className="rounded-2xl shadow-2xl border-4 border-white/30"
-              src={newsletterImage}
-              alt="Made in Canada"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      <section ref={refs.faq} className="container-pad py-16 md:py-24 bg-gradient-to-br from-white to-gray-50/50">
+<section ref={refs.faq} className="container-pad py-16 md:py-24 bg-gradient-to-br from-white to-gray-50/50">
         <motion.div
           variants={fadeIn}
           initial="hidden"
@@ -628,24 +516,20 @@ export default function Home() {
           <div className="space-y-4">
             {[
               {
-                question: "What are your hours?",
-                answer: "We are open every day from 11:00 am to 11:00 pm, making it easy to join us for lunch, dinner, or late-night cravings."
+                question: "Do you offer local delivery?",
+                answer: "Yes! We offer delivery and pickup services. Please contact us or order online for more details."
               },
               {
-                question: "Do you have a breakfast or lunch menu?",
-                answer: "Yes! Our breakfast and lunch menu runs daily from 11:00 am to 3:00 pm with lighter plates, chaat favorites, and refreshing beverages."
+                question: "Can I special order products?",
+                answer: "Absolutely! We're happy to special order products we don't regularly stock."
               },
               {
-                question: "What makes your live kitchen special?",
-                answer: "Our live tandoor, tawa stations, and chaat bar showcase fresh cooking in action, so you can see, smell, and taste the energy of Indian street food."
+                question: "Book your Birthday or family parties with us.",
+                answer: "We'd love to host your special celebrations! Contact us to book your birthday or family party."
               },
               {
-                question: "Do you offer catering or group bookings?",
-                answer: "Absolutely. From office lunches to milestone celebrations, we tailor menus, portion sizes, and service to suit your gathering."
-              },
-              {
-                question: "Are there vegetarian or gluten-free options?",
-                answer: "Many of our dishes can be customized vegetarian, vegan, or gluten-free. Let our team know your preference and we’ll guide you."
+                question: "Do you offer catering and takeout?",
+                answer: "Yes! We offer catering services and takeout options. Please contact us for more details."
               }
             ].map((faq, idx) => (
               <Accordion 
@@ -690,25 +574,14 @@ export default function Home() {
               Ready to Savor?
             </h2>
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-              Join us for an unforgettable culinary journey through the flavors of India
+              Join us for an unforgettable culinary journey through rich flavors
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="https://shoppage.onrender.com/s/Relishon66"
-                target="_blank"
-                rel="noreferrer"
-                className="px-10 py-4 bg-white text-[#06507D] rounded-full shadow-2xl font-bold text-lg hover:shadow-white/50 transition-all duration-300 inline-flex items-center gap-3 hover:scale-105"
-              >
-                Order Online Now
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
               <Link
-                to="/reservations"
+                to="/menu"
                 className="px-10 py-4 border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white hover:text-[#06507D] transition-all duration-300 inline-flex items-center gap-3"
               >
-                Book a Table
+                View Menu
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

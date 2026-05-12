@@ -1,4 +1,4 @@
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
 	return (
@@ -10,20 +10,27 @@ export default function Footer() {
 			<div className="container-pad py-16 md:py-20 grid md:grid-cols-4 gap-8 text-sm relative z-10">
 				{/* Store Info */}
 				<div>
-					<h3 className="font-serif text-xl mb-2">Relish66</h3>
+					<h3 className="font-serif text-xl mb-2">RelishOn66</h3>
 					<p className="text-gray-400">6933 Ellerslie Road SW, Edmonton, AB T6X 2A1</p>
-					<p className="text-gray-400">+17806905888 • Info.relishon66@gmail.com</p>
+					<p className="text-gray-400">+1 (780) 690-0746 • Info.relishon66@gmail.com</p>
 					<div className="mt-3">
 						<h4 className="font-semibold mb-1">Hours</h4>
 						<ul className="text-gray-400 space-y-0.5">
-							<li>Mon–Thu: 11am – 9pm</li>
-							<li>Fri–Sat: 11am – 10pm</li>
-							<li>Sun: 11am – 8pm</li>
+							<li>Mon - Sun: 11am - 11pm</li>
 						</ul>
 					</div>
 					<div className="flex gap-4 mt-3 text-xl">
 						<a
-							href="https://www.instagram.com/relishon66?igsh=MTQwa3F3MWVvNW42dQ=="
+							href="https://www.facebook.com/profile.php?id=61579174366831"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Facebook"
+							className="text-gray-400 hover:text-white transition-colors"
+						>
+							<FaFacebook />
+						</a>
+						<a
+							href="https://www.instagram.com/relishon66"
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label="Instagram"
@@ -38,16 +45,6 @@ export default function Footer() {
 				<div>
 					<h4 className="font-semibold mb-2">Explore</h4>
 					<ul className="space-y-1">
-						<li>
-							<a 
-								href="https://shoppage.onrender.com/s/Relishon66" 
-								target="_blank" 
-								rel="noreferrer" 
-								className="text-gray-400 hover:text-white transition-colors"
-							>
-								Order Online
-							</a>
-						</li>
 						<li>
 							<a href="/menu" className="text-gray-400 hover:text-white transition-colors">Menu</a>
 						</li>
@@ -84,28 +81,20 @@ export default function Footer() {
 					</ul>
 				</div>
 
-				{/* Newsletter + Payments */}
+				{/* Payments */}
 				<div>
-					<h4 className="font-semibold mb-2">Stay in the loop</h4>
-					<form className="flex gap-2">
-						<input type="email" placeholder="Your email" className="bg-neutral-900 text-white placeholder:text-neutral-500 rounded px-3 py-2 w-full" />
-						<button type="button" className="btn-primary">Subscribe</button>
-					</form>
-					<div className="mt-4">
-						<h5 className="font-semibold mb-1">We accept</h5>
-						<div className="flex gap-2 text-xs text-gray-400">
-							<span className="px-2 py-1 border border-neutral-700 rounded">Visa</span>
-							<span className="px-2 py-1 border border-neutral-700 rounded">Mastercard</span>
-							<span className="px-2 py-1 border border-neutral-700 rounded">Amex</span>
-							<span className="px-2 py-1 border border-neutral-700 rounded">Interac</span>
-						</div>
+					<h5 className="font-semibold mb-1">We accept</h5>
+					<div className="flex gap-2 text-xs text-gray-400">
+						<span className="px-2 py-1 border border-neutral-700 rounded">Visa</span>
+						<span className="px-2 py-1 border border-neutral-700 rounded">Mastercard</span>
 					</div>
 				</div>
 			</div>
 
 			{/* Bottom Footer */}
 			<div className="text-center text-xs text-gray-500 py-6 border-t border-gray-700 relative z-10">
-				© 2025 Relish66 — Crafted with care. Sister company of Chilli Peppers.
+				<p>© 2025 Relish66 — Crafted with care. Sister company of Chilli Peppers.</p>
+				<p className="mt-2">Designed and developed by MasterMinds Junior</p>
 			</div>
 		</footer>
 	);

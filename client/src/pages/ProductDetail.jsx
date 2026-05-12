@@ -6,6 +6,7 @@ import { useWishlist } from '../context/WishlistContext.jsx';
 import api from '../utils/api';
 import ProductImageZoom from '../components/ProductImageZoom.jsx';
 import { toast } from 'react-hot-toast';
+import { FaStar, FaFacebookF, FaTwitter, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 
 export default function ProductDetail() {
 	const { slug } = useParams();
@@ -167,7 +168,7 @@ export default function ProductDetail() {
 							whileTap={{ scale: 0.95 }}
 							onClick={() => { 
 								add({ slug: product.slug, title: product.title, price: priceNumber, thumbnail: product.thumbnail, quantity: qty }); 
-								toast.success('Added to cart! 🛒', {
+								toast.success('Added to cart!', {
 									style: {
 										background: 'linear-gradient(90deg, #06507D 0%, #D42127 100%)',
 										color: 'white',
@@ -191,7 +192,7 @@ export default function ProductDetail() {
 							whileTap={{ scale: 0.95 }}
 							onClick={() => { 
 								toggle(product._id); 
-								toast.success(inWishlist ? 'Removed from wishlist ❤️' : 'Added to wishlist ❤️', {
+								toast.success(inWishlist ? 'Removed from wishlist' : 'Added to wishlist', {
 									style: {
 										background: 'linear-gradient(90deg, #D42127 0%, #06507D 100%)',
 										color: 'white',
@@ -333,7 +334,7 @@ export default function ProductDetail() {
 								<div className="space-y-2">
 									<div className="flex justify-center gap-1 mb-2">
 										{[...Array(5)].map((_, i) => (
-											<span key={i} className="text-2xl text-[#D42127]">⭐</span>
+											<FaStar key={i} className="text-2xl text-[#D42127]" />
 										))}
 									</div>
 									<p className="text-gray-600 text-sm">Reviews coming soon. Be the first to share your experience!</p>
@@ -427,7 +428,7 @@ export default function ProductDetail() {
 									className="w-full bg-gradient-to-r from-[#06507D] to-[#D42127] text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
 									onClick={() => { 
 										add({ slug: product.slug, title: product.title, price: priceNumber, thumbnail: product.thumbnail, quantity: qty }); 
-										toast.success('Added to cart! 🛒');
+										toast.success('Added to cart!');
 									}}
 								>
 									<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -443,10 +444,10 @@ export default function ProductDetail() {
 									onClick={() => {
 										if (inWishlist) {
 											toggle(product._id);
-											toast.success('Removed from wishlist ❤️');
+											toast.success('Removed from wishlist');
 										} else {
 											toggle(product._id);
-											toast.success('Added to wishlist ❤️');
+											toast.success('Added to wishlist');
 										}
 									}}
 								>
@@ -489,10 +490,10 @@ export default function ProductDetail() {
 						animate={{ opacity: 1, y: 0 }}
 					>
 						{[
-							{ platform: 'Facebook', icon: '📘', color: 'from-[#06507D]' },
-							{ platform: 'Twitter', icon: '🐦', color: 'from-[#D42127]' },
-							{ platform: 'WhatsApp', icon: '💬', color: 'from-[#06507D]' },
-							{ platform: 'Email', icon: '✉️', color: 'from-[#D42127]' }
+							{ platform: 'Facebook', icon: FaFacebookF, color: 'from-[#06507D]' },
+							{ platform: 'Twitter', icon: FaTwitter, color: 'from-[#D42127]' },
+							{ platform: 'WhatsApp', icon: FaWhatsapp, color: 'from-[#06507D]' },
+							{ platform: 'Email', icon: FaEnvelope, color: 'from-[#D42127]' }
 						].map((share) => (
 							<motion.button
 								key={share.platform}
@@ -500,7 +501,7 @@ export default function ProductDetail() {
 								whileTap={{ scale: 0.95 }}
 								className={`w-12 h-12 ${share.color} rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300`}
 							>
-								<span className="text-xl">{share.icon}</span>
+								<share.icon className="text-xl" />
 							</motion.button>
 						))}
 					</motion.div>

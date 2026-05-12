@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 // AgeGate removed per requirements
 import Home from './pages/Home.jsx';
-import OrderOnline from './pages/OrderOnline.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
@@ -25,17 +25,19 @@ import Menu from './pages/Menu.jsx';
 import Orders from './pages/Orders.jsx';
 import Testimonials from './pages/Testimonials.jsx';
 import Catering from './pages/Catering.jsx';
+import Gallery from './pages/Gallery.jsx';
+import Reservation from './pages/Reservation.jsx';
 
 export default function App() {
 	return (
 		<div className="min-h-full flex flex-col">
 			{/* AgeGate removed */}
+			<ScrollToTop />
 			<Header />
 			<main className="flex-1">
 				<motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.3 }}>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/order-online" element={<OrderOnline />} />
 						<Route path="/product/:slug" element={<ProductDetail />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/wishlist" element={<Wishlist />} />
@@ -52,6 +54,8 @@ export default function App() {
 						<Route path="/admin/products" element={<AdminProducts />} />
 						<Route path="/admin/products/:id" element={<AdminProductForm />} />
 						<Route path="/menu" element={<Menu />} />
+						<Route path="/gallery" element={<Gallery />} />
+						<Route path="/reservation" element={<Reservation />} />
 						<Route path="/testimonials" element={<Testimonials />} />
 						<Route path="/catering" element={<Catering />} />
 						<Route path="/orders" element={<Orders />} />

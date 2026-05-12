@@ -24,7 +24,7 @@ export default function ProductCard({ product, special = false }) {
 			thumbnail: product.thumbnail || fallbackImg,
 			quantity: 1 
 		});
-		toast.success('Added to cart! 🛒', {
+		toast.success('Added to cart!', {
 			style: {
 				background: 'linear-gradient(90deg, #06507D 0%, #D42127 100%)',
 				color: 'white',
@@ -41,7 +41,7 @@ export default function ProductCard({ product, special = false }) {
 		e.preventDefault();
 		e.stopPropagation();
 		toggle(product._id);
-		toast.success(inWishlist ? 'Removed from wishlist ❤️' : 'Added to wishlist ❤️', {
+		toast.success(inWishlist ? 'Removed from wishlist' : 'Added to wishlist', {
 			style: {
 				background: 'linear-gradient(90deg, #D42127 0%, #06507D 100%)',
 				color: 'white',

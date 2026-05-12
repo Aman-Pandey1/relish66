@@ -18,7 +18,7 @@ export default function Header() {
 					<img 
 						src={logoImage} 
 						alt="Relish66" 
-						className="h-14 md:h-16 object-contain" 
+						className="h-16 md:h-20 object-contain" 
 					/>
 				</Link>
 				
@@ -65,16 +65,20 @@ export default function Header() {
 						Menu
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
 					</NavLink>
-					
-					<a 
-						href="https://shoppage.onrender.com/s/Relishon66"
-						target="_blank"
-						rel="noreferrer"
-						className="relative group font-medium transition-all duration-300 px-3 py-2 text-gray-700 hover:text-[#06507D]"
+
+					<NavLink 
+						to="/gallery" 
+						className={({ isActive }) => 
+							`relative group font-medium transition-all duration-300 px-3 py-2 ${
+								isActive 
+									? 'text-[#D42127] font-semibold' 
+									: 'text-gray-700 hover:text-[#06507D]'
+							}`
+						}
 					>
-						Order Online
+						Gallery
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
-					</a>
+					</NavLink>
 					
 					<NavLink 
 						to="/catering" 
@@ -87,6 +91,20 @@ export default function Header() {
 						}
 					>
 						Catering
+						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
+					</NavLink>
+
+					<NavLink 
+						to="/reservation" 
+						className={({ isActive }) => 
+							`relative group font-medium transition-all duration-300 px-3 py-2 ${
+								isActive 
+									? 'text-[#D42127] font-semibold' 
+									: 'text-gray-700 hover:text-[#06507D]'
+							}`
+						}
+					>
+						Reservation
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
 					</NavLink>
 					
@@ -198,17 +216,15 @@ export default function Header() {
 							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 							Menu
 						</Link>
-						
-						<a 
-							href="https://shoppage.onrender.com/s/Relishon66"
-							target="_blank"
-							rel="noreferrer"
+
+						<Link 
+							to="/gallery" 
 							onClick={() => setOpen(false)}
 							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
 						>
 							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-							Order Online
-						</a>
+							Gallery
+						</Link>
 						
 						<Link 
 							to="/catering" 
@@ -217,6 +233,15 @@ export default function Header() {
 						>
 							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 							Catering
+						</Link>
+
+						<Link 
+							to="/reservation" 
+							onClick={() => setOpen(false)}
+							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
+						>
+							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+							Reservation
 						</Link>
 						
 						<Link 

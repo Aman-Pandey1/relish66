@@ -104,7 +104,7 @@ export default function CategoryStrip() {
 							className="snap-start flex-shrink-0 w-[85vw] max-w-[200px]"
 						>
 							<Link 
-								to={`/order-online?category=${c.slug}`} 
+								to={`/menu?category=${c.slug}`} 
 								className={`block h-full group border rounded-2xl p-5 text-center transition-all duration-500 bg-white/90 backdrop-blur-sm shadow-md hover:shadow-xl ${
 									activeCategory === c.slug 
 										? 'ring-2 ring-[#D42127]/50 bg-gradient-to-br from-[#06507D]/10 to-[#D42127]/10 shadow-[#D42127]/20' 
@@ -178,7 +178,7 @@ export default function CategoryStrip() {
 							className="group relative"
 						>
 							<Link 
-								to={`/order-online?category=${c.slug}`} 
+								to={`/menu?category=${c.slug}`} 
 								className={`block h-full border rounded-2xl p-4 sm:p-5 text-center transition-all duration-500 bg-white/90 backdrop-blur-sm shadow-md hover:shadow-xl ${
 									activeCategory === c.slug 
 										? 'ring-2 ring-[#D42127]/50 bg-gradient-to-br from-[#06507D]/10 to-[#D42127]/10 shadow-[#D42127]/20 border-[#D42127]/30 transform scale-105' 

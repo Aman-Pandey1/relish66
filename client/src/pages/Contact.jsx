@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import api from '../utils/api';
+import { FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaCheck } from 'react-icons/fa';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
@@ -40,7 +41,7 @@ export default function Contact() {
           <div className="space-y-4">
               <div className="flex items-start p-4 rounded-xl bg-gradient-to-r from-[#06507D]/5 to-[#D42127]/5 hover:from-[#06507D]/10 hover:to-[#D42127]/10 transition-colors duration-300 border border-[#06507D]/10">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
-                  <span className="text-white">📍</span>
+                  <FaMapMarkerAlt className="text-white" />
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Address</div>
@@ -50,17 +51,17 @@ export default function Contact() {
               
               <div className="flex items-start p-4 rounded-xl bg-gradient-to-r from-[#06507D]/5 to-[#D42127]/5 hover:from-[#06507D]/10 hover:to-[#D42127]/10 transition-colors duration-300 border border-[#06507D]/10">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
-                  <span className="text-white">📞</span>
+                  <FaPhoneAlt className="text-white" />
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Phone</div>
-                  <div className="font-medium text-gray-800">+17806905888</div>
+                  <div className="font-medium text-gray-800">+1 (780) 690-0746</div>
                 </div>
               </div>
               
               <div className="flex items-start p-4 rounded-xl bg-gradient-to-r from-[#06507D]/5 to-[#D42127]/5 hover:from-[#06507D]/10 hover:to-[#D42127]/10 transition-colors duration-300 border border-[#06507D]/10">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
-                  <span className="text-white">✉️</span>
+                  <FaEnvelope className="text-white" />
                 </div>
                 <div>
                   <div className="text-sm text-[#06507D]/70">Email</div>
@@ -73,12 +74,8 @@ export default function Contact() {
               <h3 className="font-semibold mb-2 bg-gradient-to-r from-[#06507D] to-[#D42127] bg-clip-text text-transparent">Store Hours</h3>
               <div className="space-y-1 text-neutral-600">
                 <div className="flex justify-between p-2 rounded-lg bg-[#06507D]/5">
-                  <span>Mon - Sat:</span>
-                  <span className="font-medium text-[#D42127]">9am – 9pm</span>
-                </div>
-                <div className="flex justify-between p-2 rounded-lg bg-[#D42127]/5">
-                  <span>Sunday:</span>
-                  <span className="font-medium text-[#06507D]">10am – 6pm</span>
+                  <span>Mon - Sun:</span>
+                  <span className="font-medium text-[#D42127]">11am - 11pm</span>
                 </div>
               </div>
             </div>
@@ -89,13 +86,22 @@ export default function Contact() {
             <h2 className="font-serif text-2xl mb-6 bg-gradient-to-r from-[#D42127] via-[#06507D] to-[#D42127] bg-clip-text text-transparent">Follow Us</h2>
             <div className="flex space-x-4">
               <a 
-                href="https://www.instagram.com/relishon66?igsh=MTQwa3F3MWVvNW42dQ==" 
+                href="https://www.facebook.com/profile.php?id=61579174366831" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 from-[#D42127] rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg"
+                className="w-12 h-12 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg"
+                aria-label="Follow us on Facebook"
+              >
+                <FaFacebook className="text-xl" />
+              </a>
+              <a 
+                href="https://www.instagram.com/relishon66" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-gradient-to-br from-[#D42127] to-[#06507D] rounded-full flex items-center justify-center text-white hover:scale-110 transition-all duration-300 shadow-lg"
                 aria-label="Follow us on Instagram"
               >
-                <span className="text-xl">📷</span>
+                <FaInstagram className="text-xl" />
               </a>
             </div>
           </div>
@@ -110,7 +116,7 @@ export default function Contact() {
             {sent ? (
               <div className="text-center py-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#06507D] to-[#D42127] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
-                  <span className="text-3xl text-white">✓</span>
+                  <FaCheck className="text-3xl text-white" />
                 </div>
                 <h3 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-[#06507D] to-[#D42127] bg-clip-text text-transparent">Message Sent!</h3>
                 <p className="text-neutral-600 mb-6">Thanks for reaching out! We'll get back to you within 24 hours.</p>
@@ -202,7 +208,7 @@ export default function Contact() {
                 className="w-full h-full" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade" 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25191.916030464495!2d-116.989!3d51.299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5377d8ffb02e39d7%3A0x6b0da0b2cd4c2a0!2sGolden%2C%20BC!5e0!3m2!1sen!2sca!4v1700000000000"
+                src="https://www.google.com/maps?q=6933+Ellerslie+Road+SW,+Edmonton,+AB+T6X+2A1&output=embed"
                 style={{ border: 0 }}
                 allowFullScreen
               ></iframe>
@@ -219,19 +225,19 @@ export default function Contact() {
             {[
               {
                 question: "Do you offer local delivery?",
-                answer: "Yes! We offer free delivery within Golden for orders over $50."
+                answer: "Yes! We offer delivery and pickup services. Please contact us or order online for more details."
               },
               {
                 question: "Can I special order products?",
                 answer: "Absolutely! We're happy to special order products we don't regularly stock."
               },
               {
-                question: "Do you host tasting events?",
-                answer: "Yes, we host monthly tasting events featuring local producers."
+                question: "Book your Birthday or family parties with us.",
+                answer: "We'd love to host your special celebrations! Contact us to book your birthday or family party."
               },
               {
-                question: "Are you dog-friendly?",
-                answer: "Well-behaved dogs are always welcome in our store!"
+                question: "Do you offer catering and takeout?",
+                answer: "Yes! We offer catering services and takeout options. Please contact us for more details."
               }
             ].map((faq, index) => (
               <div key={index} className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-[#06507D]/20 hover:shadow-md transition-shadow duration-300 hover:border-[#D42127]/30">
