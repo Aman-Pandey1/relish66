@@ -23,10 +23,11 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 // Membership and Rewards removed
 import Menu from './pages/Menu.jsx';
 import Orders from './pages/Orders.jsx';
-import Testimonials from './pages/Testimonials.jsx';
 import Catering from './pages/Catering.jsx';
 import Gallery from './pages/Gallery.jsx';
 import Reservation from './pages/Reservation.jsx';
+import Blog from './pages/Blog.jsx';
+import BlogPost from './pages/BlogPost.jsx';
 
 export default function App() {
 	return (
@@ -56,8 +57,9 @@ export default function App() {
 						<Route path="/menu" element={<Menu />} />
 						<Route path="/gallery" element={<Gallery />} />
 						<Route path="/reservation" element={<Reservation />} />
-						<Route path="/testimonials" element={<Testimonials />} />
 						<Route path="/catering" element={<Catering />} />
+						<Route path="/blog" element={<Blog />} />
+						<Route path="/blog/:slug" element={<BlogPost />} />
 						<Route path="/orders" element={<Orders />} />
 					</Routes>
 				</motion.div>

@@ -12,33 +12,15 @@ export default function Footer() {
 				<div>
 					<h3 className="font-serif text-xl mb-2">RelishOn66</h3>
 					<p className="text-gray-400">6933 Ellerslie Road SW, Edmonton, AB T6X 2A1</p>
-					<p className="text-gray-400">+1 (780) 690-0746 • Info.relishon66@gmail.com</p>
-					<div className="mt-3">
-						<h4 className="font-semibold mb-1">Hours</h4>
-						<ul className="text-gray-400 space-y-0.5">
-							<li>Mon - Sun: 11am - 11pm</li>
-						</ul>
-					</div>
-					<div className="flex gap-4 mt-3 text-xl">
-						<a
-							href="https://www.facebook.com/profile.php?id=61579174366831"
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label="Facebook"
-							className="text-gray-400 hover:text-white transition-colors"
-						>
-							<FaFacebook />
+					<div className="text-gray-400 space-y-1">
+						<a href="tel:+17807846642" className="block hover:text-white transition-colors">
+							780 784 6642
 						</a>
-						<a
-							href="https://www.instagram.com/relishon66"
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label="Instagram"
-							className="text-gray-400 hover:text-white transition-colors"
-						>
-							<FaInstagram />
+						<a href="tel:+17807846643" className="block hover:text-white transition-colors">
+							780 784 6643
 						</a>
 					</div>
+					<p className="text-gray-400 mt-2">Info.relishon66@gmail.com</p>
 				</div>
 
 				{/* Quick Links */}
@@ -50,6 +32,9 @@ export default function Footer() {
 						</li>
 						<li>
 							<a href="/catering" className="text-gray-400 hover:text-white transition-colors">Catering</a>
+						</li>
+						<li>
+							<a href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</a>
 						</li>
 					</ul>
 				</div>
@@ -81,12 +66,33 @@ export default function Footer() {
 					</ul>
 				</div>
 
-				{/* Payments */}
 				<div>
-					<h5 className="font-semibold mb-1">We accept</h5>
-					<div className="flex gap-2 text-xs text-gray-400">
-						<span className="px-2 py-1 border border-neutral-700 rounded">Visa</span>
-						<span className="px-2 py-1 border border-neutral-700 rounded">Mastercard</span>
+					<h4 className="font-semibold mb-2">Hours</h4>
+					<ul className="text-gray-400 space-y-0.5 mb-4">
+						<li>Monday: Closed</li>
+						<li>Tue - Thu &amp; Sun: 1pm - 11pm</li>
+						<li>Fri - Sat: 1pm - 12am</li>
+					</ul>
+					<h4 className="font-semibold mb-2">Follow Us</h4>
+					<div className="flex gap-4 text-xl">
+						<a
+							href="https://www.facebook.com/profile.php?id=61579174366831"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Facebook"
+							className="text-gray-400 hover:text-white transition-colors"
+						>
+							<FaFacebook />
+						</a>
+						<a
+							href="https://www.instagram.com/relishon66"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Instagram"
+							className="text-gray-400 hover:text-white transition-colors"
+						>
+							<FaInstagram />
+						</a>
 					</div>
 				</div>
 			</div>

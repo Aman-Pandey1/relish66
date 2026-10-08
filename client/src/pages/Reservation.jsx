@@ -1,41 +1,62 @@
 import { useState } from 'react';
 import PageBanner from '../components/PageBanner.jsx';
 import { Seo } from '../components/Seo.jsx';
-import api from '../utils/api';
+import { PAGE_SEO, IMAGE_ALTS } from '../seo/pageSeo.js';
+import { submitContactForm } from '../config/contactApi.js';
 import { MdCall, MdAccessTime, MdChecklist, MdOutlineRestaurant } from 'react-icons/md';
 
+const emptyForm = {
+	outlet: '',
+	name: '',
+	email: '',
+	phone: '',
+	date: '',
+	time: '',
+	guests: '',
+	occasion: '',
+	message: '',
+};
+
 export default function Reservation() {
-	const [form, setForm] = useState({
-		outlet: '',
-		name: '',
-		email: '',
-		phone: '',
-		date: '',
-		time: '',
-		guests: '',
-		occasion: '',
-		message: '',
-	});
+	const [form, setForm] = useState(emptyForm);
 	const [sent, setSent] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
+	const [msg, setMsg] = useState('');
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setForm((prev) => ({ ...prev, [name]: value }));
+	};
 
 	const submit = async (e) => {
 		e.preventDefault();
 		setSubmitting(true);
+		setMsg('');
 		try {
-			await api.post('/contact', {
+			await submitContactForm({
 				name: form.name,
 				email: form.email,
 				phone: form.phone,
+				outlet: form.outlet,
+				date: form.date,
+				time: form.time,
+				guests: form.guests,
+				occasion: form.occasion || 'N/A',
+				formType: 'reservation',
 				message: `Reservation Request
 Outlet: ${form.outlet}
 Date: ${form.date}
 Time: ${form.time}
 Guests: ${form.guests}
 Occasion: ${form.occasion || 'N/A'}
+Phone: ${form.phone}
 Notes: ${form.message || 'N/A'}`,
 			});
 			setSent(true);
+			setForm(emptyForm);
+		} catch (error) {
+			console.error('Reservation submit failed:', error);
+			setMsg(error.message || 'Network error');
 		} finally {
 			setSubmitting(false);
 		}
@@ -46,11 +67,12 @@ Notes: ${form.message || 'N/A'}`,
 
 	return (
 		<div className="overflow-hidden min-h-screen bg-gradient-to-br from-[#06507D]/5 to-[#D42127]/5">
-			<Seo title="Reservation" description="Reserve your table at Relish on 66 Restaurant and Bar." />
+			<Seo path={PAGE_SEO.reservation.path} metaTitle={PAGE_SEO.reservation.metaTitle} description={PAGE_SEO.reservation.description} />
 			<PageBanner
 				title="Reserve Your Table"
 				subtitle="Book your dining experience at Relish on 66 Restaurant and Bar"
 				image="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1600&auto=format&fit=crop"
+				imageAlt={IMAGE_ALTS.reservationBanner}
 				height="h-[32vh]"
 				overlay="bg-gradient-to-r from-[#06507D]/60 to-[#D42127]/60"
 			/>
@@ -68,12 +90,19 @@ Notes: ${form.message || 'N/A'}`,
 									Reservation request submitted.
 								</p>
 								<p className="text-neutral-600 mt-2">Our team will call you to confirm your booking.</p>
+								<button
+									type="button"
+									onClick={() => { setSent(false); setMsg(''); }}
+									className="mt-6 px-6 py-2 bg-gradient-to-r from-[#06507D] to-[#D42127] text-white rounded-full hover:shadow-lg transition-all duration-300"
+								>
+									Make Another Reservation
+								</button>
 							</div>
 						) : (
 							<form onSubmit={submit} className="space-y-4">
 								<div>
-									<label className="text-sm font-medium text-gray-700 mb-1 block">Select Outlet *</label>
-									<select className={inputClass} value={form.outlet} onChange={(e) => setForm({ ...form, outlet: e.target.value })} required>
+									<label htmlFor="outlet" className="text-sm font-medium text-gray-700 mb-1 block">Select Outlet *</label>
+									<select id="outlet" name="outlet" className={inputClass} value={form.outlet} onChange={handleChange} required>
 										<option value="">Choose an outlet</option>
 										<option value="Relish on 66 Main">Relish on 66 Main</option>
 									</select>
@@ -81,23 +110,23 @@ Notes: ${form.message || 'N/A'}`,
 
 								<div className="grid sm:grid-cols-2 gap-4">
 									<div>
-										<label className="text-sm font-medium text-gray-700 mb-1 block">Select Date *</label>
-										<input type="date" className={inputClass} value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} required />
+										<label htmlFor="date" className="text-sm font-medium text-gray-700 mb-1 block">Select Date *</label>
+										<input id="date" name="date" type="date" className={inputClass} value={form.date} onChange={handleChange} required />
 									</div>
 									<div>
-										<label className="text-sm font-medium text-gray-700 mb-1 block">Select Time *</label>
-										<input type="time" className={inputClass} value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} required />
+										<label htmlFor="time" className="text-sm font-medium text-gray-700 mb-1 block">Select Time *</label>
+										<input id="time" name="time" type="time" className={inputClass} value={form.time} onChange={handleChange} required />
 									</div>
 								</div>
 
 								<div className="grid sm:grid-cols-2 gap-4">
 									<div>
-										<label className="text-sm font-medium text-gray-700 mb-1 block">Number of Guests *</label>
-										<input type="number" min="1" className={inputClass} placeholder="2 Guests" value={form.guests} onChange={(e) => setForm({ ...form, guests: e.target.value })} required />
+										<label htmlFor="guests" className="text-sm font-medium text-gray-700 mb-1 block">Number of Guests *</label>
+										<input id="guests" name="guests" type="number" min="1" className={inputClass} placeholder="2 Guests" value={form.guests} onChange={handleChange} required />
 									</div>
 									<div>
-										<label className="text-sm font-medium text-gray-700 mb-1 block">Occasion (Optional)</label>
-										<select className={inputClass} value={form.occasion} onChange={(e) => setForm({ ...form, occasion: e.target.value })}>
+										<label htmlFor="occasion" className="text-sm font-medium text-gray-700 mb-1 block">Occasion (Optional)</label>
+										<select id="occasion" name="occasion" className={inputClass} value={form.occasion} onChange={handleChange}>
 											<option value="">Select occasion</option>
 											<option value="Birthday">Birthday</option>
 											<option value="Anniversary">Anniversary</option>
@@ -107,12 +136,12 @@ Notes: ${form.message || 'N/A'}`,
 								</div>
 
 								<div className="grid sm:grid-cols-2 gap-4">
-									<input className={inputClass} placeholder="Full Name *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-									<input type="email" className={inputClass} placeholder="Email Address *" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+									<input id="name" name="name" className={inputClass} placeholder="Full Name *" value={form.name} onChange={handleChange} required />
+									<input id="email" name="email" type="email" className={inputClass} placeholder="Email Address *" value={form.email} onChange={handleChange} required />
 								</div>
 
-								<input className={inputClass} placeholder="Phone Number *" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
-								<textarea className={inputClass} rows="4" placeholder="Special requests (optional)" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
+								<input id="phone" name="phone" className={inputClass} placeholder="Phone Number *" value={form.phone} onChange={handleChange} required />
+								<textarea id="message" name="message" className={inputClass} rows="4" placeholder="Special requests (optional)" value={form.message} onChange={handleChange} />
 
 								<button
 									type="submit"
@@ -121,6 +150,7 @@ Notes: ${form.message || 'N/A'}`,
 								>
 									{submitting ? 'Submitting...' : 'Submit Reservation Request'}
 								</button>
+								{msg ? <p className="text-red-600 text-sm text-center">{msg}</p> : null}
 								<p className="text-xs text-gray-500 text-center">
 									By submitting, you agree to our reservation terms and conditions.
 								</p>
@@ -172,8 +202,12 @@ Notes: ${form.message || 'N/A'}`,
 				<div className="mt-10 flex flex-wrap items-center justify-center gap-2 text-sm text-neutral-700">
 					<MdOutlineRestaurant className="w-5 h-5 text-[#06507D]" />
 					<span>
-						Relish on 66 Restaurant and Bar <span className="text-[#D42127]">•</span> Mon - Sun <span className="text-[#D42127]">•</span>{' '}
-						<span className="font-medium text-[#06507D]">11am - 11pm</span>
+						Relish on 66 Restaurant and Bar <span className="text-[#D42127]">•</span> Monday{' '}
+						<span className="font-medium text-[#06507D]">Closed</span>
+						<span className="text-[#D42127]"> • </span>
+						Tue - Thu &amp; Sun <span className="font-medium text-[#06507D]">1pm - 11pm</span>
+						<span className="text-[#D42127]"> • </span>
+						Fri - Sat <span className="font-medium text-[#06507D]">1pm - 12am</span>
 					</span>
 				</div>
 			</section>

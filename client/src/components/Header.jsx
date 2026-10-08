@@ -17,7 +17,7 @@ export default function Header() {
 				<Link to="/" className="font-bold tracking-wide flex items-center gap-2">
 					<img 
 						src={logoImage} 
-						alt="Relish66" 
+						alt="Relish on 66 Live Indian Kitchen Edmonton" 
 						className="h-16 md:h-20 object-contain" 
 					/>
 				</Link>
@@ -95,6 +95,20 @@ export default function Header() {
 					</NavLink>
 
 					<NavLink 
+						to="/blog" 
+						className={({ isActive }) => 
+							`relative group font-medium transition-all duration-300 px-3 py-2 ${
+								isActive 
+									? 'text-[#D42127] font-semibold' 
+									: 'text-gray-700 hover:text-[#06507D]'
+							}`
+						}
+					>
+						Blog
+						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
+					</NavLink>
+
+					<NavLink 
 						to="/reservation" 
 						className={({ isActive }) => 
 							`relative group font-medium transition-all duration-300 px-3 py-2 ${
@@ -105,20 +119,6 @@ export default function Header() {
 						}
 					>
 						Reservation
-						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
-					</NavLink>
-					
-					<NavLink 
-						to="/testimonials" 
-						className={({ isActive }) => 
-							`relative group font-medium transition-all duration-300 px-3 py-2 ${
-								isActive 
-									? 'text-[#D42127] font-semibold' 
-									: 'text-gray-700 hover:text-[#06507D]'
-							}`
-						}
-					>
-						Testimonials
 						<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#06507D] to-[#D42127] group-hover:w-full transition-all duration-300 rounded-full"></span>
 					</NavLink>
 					
@@ -236,21 +236,21 @@ export default function Header() {
 						</Link>
 
 						<Link 
+							to="/blog" 
+							onClick={() => setOpen(false)}
+							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
+						>
+							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+							Blog
+						</Link>
+
+						<Link 
 							to="/reservation" 
 							onClick={() => setOpen(false)}
 							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
 						>
 							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 							Reservation
-						</Link>
-						
-						<Link 
-							to="/testimonials" 
-							onClick={() => setOpen(false)}
-							className="py-3 px-4 text-lg font-medium text-gray-700 hover:text-[#D42127] hover:bg-gradient-to-r hover:from-[#06507D]/5 hover:to-[#D42127]/5 rounded-xl transition-all duration-300 flex items-center gap-3"
-						>
-							<span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-							Testimonials
 						</Link>
 						
 						<Link 

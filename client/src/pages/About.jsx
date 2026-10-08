@@ -2,7 +2,9 @@ import PageBanner from '../components/PageBanner.jsx';
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Seo } from '../components/Seo.jsx';
+import { PAGE_SEO, IMAGE_ALTS } from '../seo/pageSeo.js';
 import { MdGroups, MdStar, MdHandshake, MdGppGood, MdVisibility } from 'react-icons/md';
+import aboutStoryImage from '../assets/karansarna.jpeg';
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,9 +46,10 @@ export default function About() {
 
   const visitDetails = [
     { label: "Address", value: "6933 Ellerslie Road SW, Edmonton, AB T6X 2A1" },
-    { label: "Days", value: "Mon - Sun" },
-    { label: "Hours", value: "11:00 am - 11:00 pm" },
-    { label: "Phone", value: "+1 (780) 690-0746" }
+    { label: "Monday", value: "Closed" },
+    { label: "Tue - Thu & Sun", value: "1:00 pm - 11:00 pm" },
+    { label: "Fri - Sat", value: "1:00 pm - 12:00 am" },
+    { label: "Phone", value: "780 784 6642\n780 784 6643" }
   ];
 
   const experienceHighlights = [
@@ -58,10 +61,10 @@ export default function About() {
 
   return (
     <div className="overflow-hidden">
-      <Seo title="About Relish on 66" description="Relish on 66 Restaurant and Bar in Edmonton with live tandoor, street food, and upscale dining." />
+      <Seo path={PAGE_SEO.about.path} metaTitle={PAGE_SEO.about.metaTitle} description={PAGE_SEO.about.description} />
       <PageBanner
         title="About Relish on 66"
-       
+        imageAlt={IMAGE_ALTS.aboutBanner}
         image="https://images.unsplash.com/photo-1542000550-85cd0f37f13b?q=80&w=1600&auto=format&fit=crop"
         height="h-[40vh]"
         overlay="bg-gradient-to-r from-[#06507D]/50 to-[#D42127]/50"
@@ -102,13 +105,13 @@ export default function About() {
         >
           <div className="absolute -inset-2 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
           <motion.img 
-            className="relative rounded-lg shadow-xl border-4 border-white/50 hover:border-[#D42127]/30 transition-all duration-300"
+            className="relative w-full rounded-lg shadow-xl border-4 border-white/50 hover:border-[#D42127]/30 transition-all duration-300 object-cover object-[center_18%] aspect-[5/6] md:aspect-[4/5]"
             initial={{ scale: 1.05 }}
             whileInView={{ scale: 1 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            src="https://images.unsplash.com/photo-1541976590-713941681591?q=80&w=1200&auto=format&fit=crop" 
-            alt="Our team at Relish66" 
+            src={aboutStoryImage}
+            alt={IMAGE_ALTS.aboutTeam}
             whileHover={{ scale: 1.05 }}
           />
         </motion.div>
@@ -131,7 +134,7 @@ export default function About() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {experienceHighlights.map((highlight, idx) => (
             <motion.div
               key={idx}
@@ -155,40 +158,16 @@ export default function About() {
           initial="hidden"
           animate={inView.experience ? "visible" : "hidden"}
           transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-6"
+          className="w-full rounded-3xl p-6 md:p-8 bg-white border border-[#D42127]/15 shadow-lg"
         >
-          <div className="rounded-3xl p-6 md:p-8 bg-white border border-[#D42127]/15 shadow-lg">
-            <h3 className="font-serif text-2xl text-[#06507D] mb-4">Visit Snapshot</h3>
-            <div className="grid gap-3">
-              {visitDetails.map((detail) => (
-                <div key={detail.label} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-1">{detail.label}</p>
-                  <p className="font-semibold text-[#06507D]">{detail.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-3xl p-6 md:p-8 bg-gradient-to-br from-[#06507D] to-[#D42127] text-white shadow-lg">
-            <h3 className="font-serif text-2xl mb-4">By the Numbers</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-xl bg-white/15 p-4">
-                <p className="text-3xl font-bold">12+</p>
-                <p className="text-sm text-white/90">Total Chefs</p>
+          <h3 className="font-serif text-2xl text-[#06507D] mb-4">Visit Snapshot</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {visitDetails.map((detail) => (
+              <div key={detail.label} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                <p className="text-xs uppercase tracking-[0.25em] text-gray-500 mb-1">{detail.label}</p>
+                <p className="font-semibold text-[#06507D] whitespace-pre-line">{detail.value}</p>
               </div>
-              <div className="rounded-xl bg-white/15 p-4">
-                <p className="text-3xl font-bold">5000+</p>
-                <p className="text-sm text-white/90">Happy Customers</p>
-              </div>
-              <div className="rounded-xl bg-white/15 p-4">
-                <p className="text-3xl font-bold">150+</p>
-                <p className="text-sm text-white/90">Dishes</p>
-              </div>
-              <div className="rounded-xl bg-white/15 p-4">
-                <p className="text-3xl font-bold">7</p>
-                <p className="text-sm text-white/90">Days Open</p>
-              </div>
-            </div>
+            ))}
           </div>
         </motion.div>
       </section>

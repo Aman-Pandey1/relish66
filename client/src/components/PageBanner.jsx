@@ -1,8 +1,13 @@
 import { motion } from 'framer-motion';
 
-export default function PageBanner({ title, subtitle, image, height = 'h-[50vh] md:h-[60vh]', overlay = 'bg-black/50', children }){
+export default function PageBanner({ title, subtitle, image, imageAlt, height = 'h-[50vh] md:h-[60vh]', overlay = 'bg-black/50', children }){
 	return (
-		<section className={`relative ${height} bg-cover bg-center flex items-center justify-center`} style={{ backgroundImage: `url(${image})` }}>
+		<section
+			className={`relative ${height} bg-cover bg-center flex items-center justify-center`}
+			style={{ backgroundImage: `url(${image})` }}
+			role={imageAlt ? 'img' : undefined}
+			aria-label={imageAlt}
+		>
 			<div className={`absolute inset-0 ${overlay}`} />
 			<div className="relative container-pad text-white text-center">
 				{title && (

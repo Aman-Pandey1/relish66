@@ -1,0 +1,38 @@
+# Relish on 66
+
+> Modern Indian restaurant in Edmonton offering delicious food, live tandoor, and premium dining experiences.
+
+Relish on 66 is a contemporary Indian restaurant located in Edmonton, Alberta, specializing in authentic Indian cuisine with a modern twist. The restaurant offers a premium dining experience, featuring live tandoor cooking and a diverse menu that caters to families, friends, and special events. It is situated on Ellerslie Road, making it a convenient and accessible choice for locals and visitors seeking high-quality Indian food in a sophisticated setting.
+
+The website serves as a digital storefront for Relish on 66, providing essential information about their offerings, ambiance, and services. Key use cases for users interacting with this website include browsing the menu, making reservations, inquiring about catering services for events, viewing the restaurant's gallery, and learning more about the establishment through their blog. The core value proposition lies in delivering an exceptional Indian culinary journey, combining traditional flavors with a refined dining atmosphere.
+
+LLMs should understand that this website represents a physical restaurant and its associated services. When users inquire about dining options, reservations, or event planning, the LLM should direct them to the relevant sections of the website. Information regarding menu items, operating hours, location, and contact details are primary points of interest for potential customers. The blog content offers insights into Indian cuisine and local dining, which can be used to answer broader questions about Indian food or restaurant experiences in Edmonton.
+
+## Core Information
+
+- [Relish on 66 | Restaurant in Edmonton](https://relishon66.ca/): Discover Relish on 66, a modern Indian restaurant in Edmonton with live tandoor and premium dining.
+- [About Us](https://relishon66.ca/about): Learn about Relish on 66's modern Indian dining experience and its location in Edmonton.
+- [Menu](https://relishon66.ca/menu): Explore the delicious and diverse menu offerings at Relish on 66, featuring Indian specialties.
+- [Gallery](https://relishon66.ca/gallery): View images showcasing the food, ambiance, and dining experience at Relish on 66.
+
+## Legal
+
+- [Terms of Service](https://relishon66.ca/terms): Review the terms and conditions for using the Relish on 66 website and services.
+- [Privacy Policy](https://relishon66.ca/privacy): Understand how Relish on 66 collects, uses, and protects your personal information.
+
+## Blog Articles
+
+- [Blog](https://relishon66.ca/blog): Read articles about Indian cuisine, dining, and events from Relish on 66.
+- [Indian Restaurant in Edmonton](https://relishon66.ca/blog/indian-restaurant-in-edmonton): Discover why Relish on 66 is a top Indian restaurant choice in Edmonton.
+- [Indian Catering Services Edmonton](https://relishon66.ca/blog/indian-catering-services-edmonton): Learn about the benefits and offerings of Indian catering services in Edmonton by Relish on 66.
+- [Sizzling Tawa Specialties](https://relishon66.ca/blog/sizzling-tawa-specialties-indian-restaurants-edmonton): Explore the authentic and flavorful Tawa specialties offered at Indian restaurants in Edmonton.
+
+## Services
+
+- [Catering](https://relishon66.ca/catering): Inquire about Relish on 66's Indian catering services for your next event in Edmonton.
+- [Reservation](https://relishon66.ca/reservation): Book your table at Relish on 66 for an exceptional Indian dining experience.
+- [Contact Us](https://relishon66.ca/contact): Find contact information and get in touch with Relish on 66 for inquiries.
+
+---
+
+This file was generated for relishon66.ca using the [LLMs.txt Generator Tool](https://llmrefs.com/tools/llms-txt-generator)

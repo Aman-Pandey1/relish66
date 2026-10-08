@@ -1,17 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Seo } from '../components/Seo.jsx';
+import { PAGE_SEO, IMAGE_ALTS } from '../seo/pageSeo.js';
+import JsonLd from '../components/JsonLd.jsx';
+import { buildMenuSchema } from '../seo/schema.js';
 import { Link } from 'react-router-dom';
 
 // Import menu item images
-import aaloPuri from '../assets/aalo puri.jpg';
-import alooPyazParantha from '../assets/Aloo Pyaz Parantha.jpg';
-import amritsariKulcha from '../assets/Amritsari Kulcha.jpg';
-import bedmiPuri from '../assets/Bedmi puri.jpg';
 import bhelPuri from '../assets/Bhel Puri.jpg';
 import breadPakoraStuffed from '../assets/Bread Pakora Stuffed.jpg';
 import chaatPapdi from '../assets/Chaat papdi.jpg';
-import choleBhature from '../assets/chole bhature.jpg';
 import churChurNaan from '../assets/chur chur naan.jpg';
 import dahiBhalle from '../assets/Dahi Bhalle.jpg';
 import dahiKabab from '../assets/Dahi Kabab.jpg';
@@ -19,7 +17,6 @@ import dahiPoori from '../assets/Dahi Poori.jpg';
 import golGappe from '../assets/Gol Gappe.jpg';
 import mixVegetablePakora from '../assets/Mix vegetable pakora.jpg';
 import paneerPakora from '../assets/Paneer Pakora.jpg';
-import paneerParantha from '../assets/Paneer Parantha.jpg';
 import pavBhaji from '../assets/PAv Bhaji.jpg';
 import samosaChaat from '../assets/Samosa Chaat.jpg';
 import samosa from '../assets/Samosa.jpg';
@@ -144,14 +141,8 @@ const nameToImageName = (name) => {
 // Image mapping function - comprehensive mapping for all menu items
 const getMenuItemImage = (itemName) => {
 	const imageMap = {
-		// Breakfast/Lunch
-		'Aloo Poori': aaloPuri,
-		'Bedmi Poori': bedmiPuri,
-		'Chole Bhature': choleBhature,
+		// Other dishes
 		'Chur Chur Naan': churChurNaan,
-		'Amritsari Kulcha': amritsariKulcha,
-		'Aloo Pyaz Parantha': alooPyazParantha,
-		'Paneer Parantha': paneerParantha,
 		'Dahi': curd,
 		// Chaat
 		'Chaat Papadi': chaatPapdi,
@@ -160,18 +151,22 @@ const getMenuItemImage = (itemName) => {
 		'Dahi Bhalla': dahiBhalle,
 		'Gol Gappe (10)': golGappe,
 		'Gol Gappe': golGappe,
+		'Gol Gappe (Live)': golGappe,
 		'Dahi Poori (8)': dahiPoori,
 		'Dahi Poori': dahiPoori,
 		'Pav Bhaji': pavBhaji,
 		'Tawa Tikki Chaat (2)': tawaTikkiChaat,
 		'Tawa Tikki Chaat': tawaTikkiChaat,
+		'Tawa Tikki Chaat (Live)': tawaTikkiChaat,
 		'Tawa Tikki Chole (2)': tawaTikkiChole,
 		'Tawa Tikki Chole': tawaTikkiChole,
+		'Tawa Tikki Chole (Live)': tawaTikkiChole,
 		'Vada Pav (2)': vadaPav,
 		'Vada Pav': vadaPav,
 		// Frying Items
 		'Samosa': samosa,
 		'Samosa Chat': samosaChaat,
+		'Samosa Chaat': samosaChaat,
 		'Mix vegetable pakora': mixVegetablePakora,
 		'Mix Vegetable Pakora': mixVegetablePakora,
 		'Bread Pakora Stuffed': breadPakoraStuffed,
@@ -216,13 +211,30 @@ const getMenuItemImage = (itemName) => {
 		'Yellow Dal Tadka': yellowDalTadka,
 		'Mix Vegetable fresh seasonal??': mixVegetableFreshSeasonal,
 		'Mix Vegetable Fresh Seasonal': mixVegetableFreshSeasonal,
+		'Mix Veg Fresh Seasonal': mixVegetableFreshSeasonal,
+		'Mix Vegetables (Fresh Seasonal)': mixVegetableFreshSeasonal,
 		'Kadahi Masala Mushroom': kadahiMasalaMushroom,
+		'Kadhai Masala Mushroom': kadahiMasalaMushroom,
+		'Kadhai Paneer': kadahiPaneer,
+		'Pindi Channa': mixVegetableFreshSeasonal,
+		'Soya Paneer Methi Malai Handi': malaiKofta,
 		'Malai Kofta': malaiKofta,
+		'Moti Malai Kofta': malaiKofta,
+		'Lasooni Bhuna Palak Paneer': palakPaneer,
+		'Lasooni Bhuna Palak Chicken': palakChicken,
+		'Chicken Murgh Tikka Masala': chickenTikkaMasala,
 		// Non Veg Main Course
 		'Chicken Tikka Masala': chickenTikkaMasala,
 		'Butter Chicken (Bone / No Bone)': butterChicken,
 		'Butter Chicken': butterChicken,
+		'Butter Chicken (Bone/Boneless)': butterChicken,
 		'Kadahi Chicken': kadahiChicken,
+		'Kadhai Chicken': kadahiChicken,
+		'Chicken Curry': chickenTikkaMasala,
+		'Kali Mirch Chicken': chickenTikkaMasala,
+		'Rara Mutton Handi': raraMutton,
+		'Mughlai Mutton Handi': mughalaiMuttonHandi,
+		'Fish Coconut Goan Curry': fishGoanCurry,
 		'Palak Chicken': palakChicken,
 		'Patiyala Chicken Curry': patiyalaChickenCurry,
 		'Mutton Curry': muttonCurry,
@@ -234,6 +246,22 @@ const getMenuItemImage = (itemName) => {
 		'Murgh mussalam bonein': murghMussalamBonein,
 		'Murgh Mussalam Bonein': murghMussalamBonein,
 		'Fish Goan Curry': fishGoanCurry,
+		'Veg Biryani': mixVegetableFreshSeasonal,
+		'Veg Handi Biryani': mixVegetableFreshSeasonal,
+		'Chicken Biryani': chickenTikkaMasala,
+		'Chicken Handi Biryani': chickenTikkaMasala,
+		'Mutton Biryani': muttonCurry,
+		'Awadhi Mutton Handi Biryani': muttonCurry,
+		'Coconut Naan': garlicNaan,
+		'Cocktail Samosa': samosa,
+		'Samosa Veg': samosa,
+		'Samosa Chole': samosaChaat,
+		'Fries 66': mixVegetablePakora,
+		'Smashed Potato': mixVegetablePakora,
+		'Juicy Chicken Tenders': chickenSeekhKabab,
+		'Shikanji': aamPanna,
+		'Lahori Jaljeera On the Rocks': aamPanna,
+		'Malai Rabadi Kulfi Falooda': malaiKulfi,
 		'Laal Maas': laalMaas,
 		'Prawn Masala (with Tail)': prawnMasala,
 		'Prawn Masala': prawnMasala,
@@ -241,6 +269,8 @@ const getMenuItemImage = (itemName) => {
 		'Rasamalai Roll': rasamalaiRoll,
 		'Moong Dal Halwa': moongDalHalwa,
 		'Gulab Jamun Hot': gulabJamunHot,
+		'Gulab Jamun With Vanilla Ice-Cream Topped With Nuts': gulabJamunHot,
+		'Strawberry Fruits And Nut Ice Cream': casata,
 		'Malai Kulfi': malaiKulfi,
 		'Casata Ice Cream': casata,
 		'Brownie with Vanilla Ice Cream': brownieWithVanillaIceCream,
@@ -267,10 +297,59 @@ const getMenuItemImage = (itemName) => {
 		// Breads
 		'Tandoori Roti': tandooriRoti,
 		'Lacha Parantha': lachaParantha,
+		'Lacha Paratha Harimirch Masala': lachaParantha,
 		'Plain Naan': plainNaan,
 		'Butter lachha Naan': butterLachhaNaan,
 		'Garlic Naan': garlicNaan,
 		'Bread Basket any 4 assortment': breadBasket,
+		'Bread Basket Any 4': breadBasket,
+		'Plain / Butter Naan': plainNaan,
+		'Malabari Parantha': lachaParantha,
+		'Mumbai Pav Bhaji': pavBhaji,
+		'Mumbai Pav Bhaji (Live)': pavBhaji,
+		'Aam Papad wali Chaat Papadi': chaatPapdi,
+		'Vada Pav Sliders': vadaPav,
+		'Tomato Dhaniya Shorba': tamatoDhaniyaShorba,
+		'Lemon Corriander Soup': tamatoDhaniyaShorba,
+		'Lemon Corriander Soup (veg or chicken)': tamatoDhaniyaShorba,
+		'Paneer Bullet Pakora': paneerPakora,
+		'Veg Velvet Kabab': dahiKababVeg,
+		'Velvet Dudhiya Kabab': dahiKababVeg,
+		'Aachari Paneer Tikka': tandooriPaneerTikka,
+		'Tandoori Soya Chaap': achariSoyaChaap,
+		'Malai Soya Chaap': achariSoyaChaap,
+		'Crispy Vegetables Platter': crispyVegetables,
+		'Chote Laal Baked Masala Potatoes': mixVegetablePakora,
+		'Crispy Cauliflower Tacos': crispyVegetables,
+		'Chicken Lasooni Tikka': chickenLasooniMalaiTikka,
+		'Chicken Malai Tikka': chickenLasooniMalaiTikka,
+		'Tandoori Chicken Half/Full': tandooriChicken,
+		'Chicken Ghungrroo Kabab': chickenGhungrooKabab,
+		'Tandoori Makhani Chicken Chop': tandooriMakhaniChickenChop,
+		'Seekh Kabab / Tikka Taco': chickenSeekhKabab,
+		'Chicken Chapali Kabab': chickenSeekhKabab,
+		'Juicy Chicken Chapali Kabab': chickenSeekhKabab,
+		'Amritsari Fish Pakora': fishPakora,
+		'Kalmi Chicken Chop': tandooriMakhaniChickenChop,
+		'Seekh Kabab Taco': chickenSeekhKabab,
+		'Seekh Kabab Taco (4 Taco)': chickenSeekhKabab,
+		'Mutton Ghungrroo Kabab': muttonGhungrooKabab,
+		'Awadhi Fish Tikka': fishTikkaNurani,
+		'Tandoori Prawns': tandooriPrawnsAjwaini,
+		'Mutton Barra (By lb)': muttonBarra,
+		'Mutton Barra': muttonBarra,
+		'Banta Lemon Soda': lemonSoda,
+		'Indian Chai tea': chaiTea,
+		'Coffee Nescafe': coffeeNscafe,
+		'Hot lime water': lemonSoda,
+		'Green Salad': saladGreen,
+		'Masala Onion': masalaOnions,
+		'Raita/Plain Yogurt': raita,
+		'Malai Kulfi Falooda': malaiKulfi,
+		'Ice Cream': casata,
+		'Warm Dhoda Burfi with Ice Cream': moongDalHalwa,
+		'Butter Naan': butterLachhaNaan,
+		'Brownie with Vanilla Ice Cream': brownieWithVanillaIceCream,
 		// Extras
 		'Raita': raita,
 		'Plain Yogurt': plainYogurt,
@@ -309,7 +388,7 @@ const getMenuItemImage = (itemName) => {
 	return null;
 };
 
-const Section = ({ title, children }) => (
+const Section = ({ title, subtitle, children }) => (
 	<motion.section 
 		initial={{ opacity: 0, y: 30 }}
 		whileInView={{ opacity: 1, y: 0 }}
@@ -318,10 +397,15 @@ const Section = ({ title, children }) => (
 		className="mb-16"
 	>
 			<motion.h2 
-				className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent mb-8 text-center"
+				className={`text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent text-center ${subtitle ? 'mb-4' : 'mb-8'}`}
 			>
 				{title}
 			</motion.h2>
+			{subtitle && (
+				<p className="text-center text-gray-600 max-w-3xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
+					{subtitle}
+				</p>
+			)}
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 			{children}
 		</div>
@@ -399,8 +483,9 @@ const Item = ({ name, note, qty, price, index, description }) => {
 				<div className="relative h-48 overflow-hidden">
 					<img 
 						src={itemImage} 
-						alt={name}
+						alt={`${name} — Relish on 66 Indian restaurant Edmonton`}
 						className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+						loading="lazy"
 						onError={() => setImageError(true)}
 					/>
 					<div className="absolute inset-0 bg-gradient-to-t from-[#06507D]/35 via-[#D42127]/15 to-transparent"></div>
@@ -442,321 +527,371 @@ const SubSection = ({ title, children }) => (
 	</div>
 );
 
+const menuFeaturedImages = [
+	{ src: butterChicken, alt: IMAGE_ALTS.menuFood1 },
+	{ src: tandooriChicken, alt: IMAGE_ALTS.menuFood2 },
+	{ src: golGappe, alt: IMAGE_ALTS.menuFood3 },
+];
+
+const buffetCourses = [
+	{
+		step: 1,
+		title: 'Begin Your Experience With',
+		single: 'Signature Welcome Drink',
+	},
+	{
+		step: 2,
+		title: 'Starters to Share',
+		items: [
+			'2 Vegetarian Appetizers',
+			'2 Non-Vegetarian Appetizers',
+			'House Condiments & Chutneys',
+		],
+	},
+	{
+		step: 3,
+		title: 'Soup Course',
+		single: "Chef's Seasonal Soup",
+	},
+	{
+		step: 4,
+		title: 'Main Course Selection',
+		items: [
+			'2 Vegetarian Curries',
+			'1 Non-Vegetarian Curry',
+			'Fragrant Fresh Rice',
+			'Fresh Salad',
+			'Yogurt / Raita',
+		],
+	},
+	{
+		step: 5,
+		title: 'Fresh From The Tandoor',
+		single: "Assorted Bread Basket",
+		detail: "(Naan, Roti & Chef's Selection)",
+	},
+	{
+		step: 6,
+		title: 'Sweet Ending',
+		single: 'Dessert',
+	},
+];
+
+const BuffetExperience = () => (
+	<div className="max-w-6xl mx-auto space-y-8">
+		<p className="text-center text-gray-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+			A curated multi-course journey—served at your table with live kitchen flair. Perfect for celebrations and group dining.
+		</p>
+
+		<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+			{buffetCourses.map((course) => (
+				<div
+					key={course.step}
+					className="group relative bg-white rounded-2xl border border-[#06507D]/15 p-5 shadow-md hover:shadow-xl hover:border-[#D42127]/25 transition-all duration-300 overflow-hidden"
+				>
+					<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] opacity-80 group-hover:opacity-100 transition-opacity" />
+					<div className="flex items-start gap-3">
+						<span className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br from-[#06507D] to-[#D42127] text-white text-sm font-bold flex items-center justify-center shadow-md">
+							{course.step}
+						</span>
+						<div className="min-w-0 flex-1">
+							<p className="text-xs uppercase tracking-[0.15em] text-[#06507D] font-semibold mb-2 leading-snug">
+								{course.title}
+							</p>
+							{course.single && (
+								<p className="text-gray-900 font-medium leading-relaxed">
+									{course.single}
+									{course.detail && (
+										<span className="block text-sm text-gray-600 font-normal mt-0.5">{course.detail}</span>
+									)}
+								</p>
+							)}
+							{course.items && (
+								<ul className="space-y-1.5">
+									{course.items.map((item) => (
+										<li key={item} className="flex items-start gap-2 text-sm text-gray-700">
+											<span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#D42127] flex-shrink-0" />
+											<span>{item}</span>
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<div className="flex flex-col lg:flex-row gap-6 items-stretch">
+			<div className="lg:w-2/5 rounded-2xl overflow-hidden shadow-xl border border-[#06507D]/10 min-h-[200px]">
+				<img
+					src={vegPlatter}
+					alt={IMAGE_ALTS.menuBuffet}
+					className="w-full h-full object-cover min-h-[200px] lg:min-h-full"
+				/>
+			</div>
+			<div className="lg:flex-1 flex flex-col justify-center rounded-2xl bg-gradient-to-br from-[#06507D] to-[#D42127] p-6 md:p-8 text-white shadow-xl">
+				<p className="text-white/90 text-sm uppercase tracking-[0.2em] mb-2">Plan Your Table</p>
+				<p className="font-serif text-xl md:text-2xl font-semibold mb-3">
+					Pricing, custom menus &amp; slot booking
+				</p>
+				<p className="text-white/85 text-sm md:text-base mb-6 leading-relaxed">
+					Contact us to reserve your buffet experience—we&apos;ll tailor the menu to your group size and occasion.
+				</p>
+				<Link
+					to="/contact"
+					className="inline-flex items-center justify-center gap-2 self-start px-6 py-3 bg-white text-[#06507D] rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+				>
+					Contact the Restaurant
+					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+					</svg>
+				</Link>
+			</div>
+		</div>
+	</div>
+);
+
+const buffetSection = {
+	title: 'À La Carte Buffet Served at Your Table',
+	buffetOnly: true,
+	items: [],
+	note: <BuffetExperience />,
+};
+
 export default function Menu() {
 	const menuSections = [
 		{
-			title: "Breakfast / Lunch",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
+			title: 'Chaat Bar',
+			subtitle: 'Guest favourites',
 			items: [
-				{ name: "Aloo Poori", qty: "4pcs", price: "10.66" },
-				{ name: "Bedmi Poori", note: "Crispy urad dal poori", qty: "3 Pcs", price: "10.66" },
-				{ name: "Chole Bhature", qty: "2 Pcs", price: "12.66" },
-				{ name: "Chur Chur Naan", qty: "1 Pcs", price: "7.66" },
-				{ name: "Amritsari Kulcha", qty: "1 Pcs", price: "7.66" },
-				{ name: "Aloo Pyaz Parantha", qty: "1 Pcs", price: "4.66" },
-				{ name: "Paneer Parantha", qty: "1 Pcs", price: "4.66" },
-				{ name: "Dahi", price: "2.66" }
-			]
-		},
-		{
-			title: "Lunch Combo / Thali",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Veg Thali", note: "Daal / Paneer / Rice / Bread / Raita / Salad / Sweet", price: "14.66" },
-				{ name: "Non Veg Thali", note: "Daal / Chicken / Rice / Bread / Raita / Salad / Sweet", price: "15.66" }
-			]
-		},
-		{
-			title: "Chaat Bar",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			subsections: [
-				{
-					title: "Cold Items",
-					items: [
-						{ name: "Chaat Papadi", price: "7.66" },
-						{ name: "Bhel Puri", price: "5.66" },
-						{ name: "Dahi Bhalla (4)", price: "8.66" },
-						{ name: "Gol Gappe (10)", price: "9.66" },
-						{ name: "Dahi Poori (8)", price: "9.66" },
-						{ name: "Rajbhog 4pcs", price: "9.66" }
-					]
-				},
-				{
-					title: "Tawa Items",
-					items: [
-						{ name: "Pav Bhaji", price: "9.66" },
-						{ name: "Tawa Tikki Chaat (2)", price: "7.66" },
-						{ name: "Tawa Tikki Chole (2)", price: "7.66" },
-						{ name: "Nutree Kulcha (1)", price: "9.66" },
-						{ name: "Vada Pav (2)", price: "7.66" }
-					]
-				}
-			]
-		},
-		{
-			title: "Frying Items",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Samosa", price: "1.25" },
-				{ name: "Samosa Chat", price: "8.66" },
-				{ name: "Mix vegetable pakora", price: "8.66" },
-				{ name: "Ram Ladoo with Lacha Mooli", price: "8.66" },
-				{ name: "Dahi Kabab (4)", price: "8.66" },
-				{ name: "Bread Pakora Stuffed", price: "1.66" },
-				{ name: "Paneer Pakora", price: "9.66" }
-			]
-		},
-		{
-			title: "Veg Appetizers",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			items: [
-				{ name: "Tandoori Paneer Tikka", price: "13.66" },
-				{ name: "Tandoori Phool", price: "13.66" },
-				{ name: "Dahi Kabab", price: "12.66" },
-				{ name: "Achari Soya Chaap", price: "13.66" },
-				{ name: "Tandoori Mushroom", price: "14.66" },
-				{ name: "Crispy Vegetables", price: "12.66" },
-				{ name: "Veg Platter", price: "23.66" }
-			]
-		},
-		{
-			title: "Non Veg Appetizers",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Banjara Chicken Tikka", price: "15.66" },
-				{ name: "Chicken Lasooni Malai Tikka", price: "15.66" },
-				{ name: "Tandoori Chicken Half / Full", note: "Half / Full", price: "14.66/23.66" },
-				{ name: "Tandoori Makhani Chicken Chop(3)", price: "15.66" },
-				{ name: "Chicken Seekh Kabab", price: "14.66" },
-				{ name: "Chicken Ghungroo Kabab", price: "14.66" },
-				{ name: "Wings Tandoori (12)", price: "14.66" },
-				{ name: "Mutton Seekh Kabab", price: "16.66" },
-				{ name: "Mutton Barra Lb/Kg", price: "" },
-				{ name: "Mutton Ghungroo Kabab", price: "16.66" },
-				{ name: "Chicken tangri kabab", price: "15.66" },
-				{ name: "Fish Tikka nurani", price: "14.66" },
-				{ name: "Fish Pakora", price: "" },
-				{ name: "Tandoori Prawns ajwaini", price: "19.66" },
-				{ name: "Meat Platter", price: "28.66" }
-			]
-		},
-		{
-			title: "Veg Main Course",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			items: [
-				{ name: "Shahi Paneer", price: "15.66" },
-				{ name: "Palak Paneer", price: "15.66" },
-				{ name: "Kadahi Paneer", price: "15.66" },
-				{ name: "Daal Makhani", note: "Our Daal is slowly cooked overnight on Tandoor", price: "13.66" },
-				{ name: "Yellow Dal Tadka", price: "12.66" },
-				{ name: "Mix Vegetable fresh seasonal??" , price: "13.66" },
-				{ name: "Kadahi Masala Mushroom", price: "13.66" },
-				{ name: "Malai Kofta", price: "15.66" }
-			]
-		},
-		{
-			title: "Non Veg Main Course",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Chicken Tikka Masala", price: "15.66" },
-				{ name: "Butter Chicken (Bone / No Bone)", price: "15.66" },
-				{ name: "Kadahi Chicken", price: "15.66" },
-				{ name: "Palak Chicken", price: "15.66" },
-				{ name: "Patiyala Chicken Curry", price: "15.66" },
-				{ name: "Mutton Curry", price: "17.66" },
-				{ name: "Kashmiri Mutton Rogan Josh", price: "17.66" },
-				{ name: "Rara Mutton", price: "17.66" },
-				{ name: "Saag Mutton", price: "17.66" },
-				{ name: "Mughalai Mutton handi", price: "22.66" },
-				{ name: "Murgh mussalam bonein", price: "16.66" },
-				{ name: "Fish Goan Curry", price: "16.66" },
-				{ name: "Laal Maas", price: "17.66" },
-				{ name: "Prawn Masala (with Tail)", price: "17.66" }
-			]
-		},
-		{
-			title: "Rice",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			items: [
-				{ name: "Cumin Rice", price: "5.66" },
-				{ name: "Ghee Rice", price: "5.66" },
-				{ name: "Plain Steam Rice", price: "4.66" },
-				{ name: "Handi Biryani Veg, Chicken, Goat", price: "14.66/15.66/16.66" }
-			]
-		},
-		{
-			title: "Breads",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Tandoori Roti", price: "2" },
-				{ name: "Lacha Parantha", price: "3" },
-				{ name: "Plain Naan", price: "2" },
-				{ name: "Butter lachha Naan", price: "3" },
-				{ name: "Garlic Naan", price: "3" },
-				{ name: "Bread Basket any 4 assortment", price: "10.99" }
-			]
-		},
-		{
-			title: "Extras",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			items: [
-				{ name: "Raita", price: "3.66" },
-				{ name: "Plain Yogurt", price: "3.66" },
-				{ name: "Papad", price: "2.66" },
-				{ name: "Pickle", price: "1.66" },
-				{ name: "Chutney", price: "2.66" },
-				{ name: "Salad Green", price: "5.66" },
-				{ name: "Masala Onions", price: "3.66" },
-				{ name: "Sirke Wala Pyaaz", price: "3.66" }
-			]
-		},
-		{
-			title: "Soup",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Tamato dhaniya shorba", note: "with croutons and butter cube on top", price: "6.66" }
-			]
-		},
-		{
-			title: "Drinks",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			items: [
-				{ name: "Strawberry Shake", price: "7.66" },
-				{ name: "Mango Milk Shake", price: "7.66" },
-				{ name: "Cold Coffee", price: "7.66" },
-				{ name: "Mango Lassi", price: "5.66" },
-				{ name: "Lassi Salted", price: "5.66" },
-				{ name: "Lassi Sweet", price: "5.66" },
-				{ name: "Aam Panna", price: "5.66" },
-				{ name: "Lemon Soda", price: "5.66" },
-				{ name: "Chai tea", price: "3.66" },
-				{ name: "Pop Coke Products", price: "2.66" },
-				{ name: "Juice", price: "2.66" },
-				{ name: "Tandoori Chai", price: "3.66" },
-				{ name: "Green Tea", price: "2.66" },
-				{ name: "Coffee Nscafe", price: "3.66" },
-				{ name: "Black Coffee", price: "2.66" },
-				{ name: "Edible tea cup", price: "1.25" }
-			]
-		},
-		{
-			title: "Desserts (House Made)",
-			bgColor: "bg-gradient-to-br from-white to-[#D42127]/5",
-			items: [
-				{ name: "Rasamalai Roll", price: "6.66" },
-				{ name: "Moong Dal Halwa", price: "6.66" },
-				{ name: "Gulab Jamun Hot", price: "6.66" },
-				{ name: "Malai Kulfi", price: "6.66" },
-				{ name: "Casata Ice Cream", price: "6.66" },
-				{ name: "Brownie with Vanilla Ice Cream", price: "6.66" }
-			]
-		},
-		{
-			title: "A La Carte Buffet Served at Your Table",
-			bgColor: "bg-gradient-to-br from-white to-[#06507D]/5",
-			special: true,
-			items: [
-				{ name: "Veg" },
-				{ name: "Meat" }
+				{ name: 'Cocktail Samosa', price: '0.66' },
+				{ name: 'Samosa Veg', price: '1.25' },
+				{ name: 'Aam Papad wali Chaat Papadi', price: '8.66' },
+				{ name: 'Bhel Puri', price: '8.66' },
+				{ name: 'Dahi Bhalla', price: '8.66' },
+				{ name: 'Samosa Chaat', price: '8.66' },
+				{ name: 'Samosa Chole', price: '8.66' },
+				{ name: 'Tawa Tikki Chaat (Live)', price: '8.66' },
+				{ name: 'Tawa Tikki Chole (Live)', price: '8.66' },
+				{ name: 'Gol Gappe (Live)', price: '9.66' },
+				{ name: 'Mix vegetable pakora', price: '9.66' },
+				{ name: 'Dahi Poori', price: '9.66' },
+				{ name: 'Mumbai Pav Bhaji (Live)', price: '11.66' },
 			],
-			note: (
-				<div className="mt-4 pt-4 border-t border-[#06507D]/20 text-sm text-gray-700 space-y-4">
-					<div>
-						<p className="font-semibold text-[#06507D]">Begin Your Experience With</p>
-						<p>Signature Welcome Drink</p>
-					</div>
-					<div>
-						<p className="font-semibold text-[#06507D]">Starters to Share</p>
-						<ul className="list-disc list-inside space-y-1">
-							<li>2 Vegetarian Appetizers</li>
-							<li>2 Non-Vegetarian Appetizers</li>
-							<li>House Condiments & Chutneys</li>
-						</ul>
-					</div>
-					<div>
-						<p className="font-semibold text-[#06507D]">Soup Course</p>
-						<p>Chef's Seasonal Soup</p>
-					</div>
-					<div>
-						<p className="font-semibold text-[#06507D]">Main Course Selection</p>
-						<ul className="list-disc list-inside space-y-1">
-							<li>2 Vegetarian Curries</li>
-							<li>1 Non-Vegetarian Curry</li>
-							<li>Fragrant Fresh Rice</li>
-							<li>Fresh Salad</li>
-							<li>Yogurt / Raita</li>
-						</ul>
-					</div>
-					<div>
-						<p className="font-semibold text-[#06507D]">Fresh From The Tandoor</p>
-						<p>Assorted Bread Basket (Naan, Roti & Chef's Selection)</p>
-					</div>
-					<div>
-						<p className="font-semibold text-[#06507D]">Sweet Ending</p>
-						<p>Dessert</p>
-					</div>
-				</div>
-			)
-		}
+		},
+		{
+			title: 'Meat Appetizers',
+			subtitle: 'Slow-cooked specialties',
+			items: [
+				{ name: 'Amritsari Fish Pakora', price: '13.66' },
+				{ name: 'Juicy Chicken Chapali Kabab', price: '15.66' },
+				{ name: 'Tandoori Chicken Half/Full', note: 'Half / full', price: '15.66 / 25.66' },
+				{ name: 'Awadhi Fish Tikka', price: '17.66' },
+				{ name: 'Banjara Chicken Tikka', price: '17.66' },
+				{ name: 'Chicken Lasooni Tikka', price: '17.66' },
+				{ name: 'Chicken Malai Tikka', price: '17.66' },
+				{ name: 'Chicken Seekh Kabab', price: '17.66' },
+				{ name: 'Chicken Ghungroo Kabab', price: '17.66' },
+				{ name: 'Seekh Kabab Taco (4 Taco)', price: '17.66' },
+				{ name: 'Mutton Seekh Kabab', price: '17.66' },
+				{ name: 'Mutton Ghungroo Kabab', price: '18.66' },
+				{ name: 'Tandoori Prawns', price: '19.66' },
+				{ name: 'Mutton Barra', price: '28.66' },
+			],
+		},
+		{
+			title: 'Veg Appetizers',
+			subtitle: 'Served with our house made chutneys',
+			items: [
+				{ name: 'Paneer Bullet Pakora', price: '12.66' },
+				{ name: 'Crispy Cauliflower Tacos', price: '13.66' },
+				{ name: 'Dahi Kabab', price: '14.66' },
+				{ name: 'Velvet Dudhiya Kabab', price: '15.66' },
+				{ name: 'Aachari Paneer Tikka', price: '15.66' },
+				{ name: 'Tandoori Soya Chaap', price: '15.66' },
+				{ name: 'Malai Soya Chaap', price: '15.66' },
+				{ name: 'Crispy Vegetables Platter', price: '19.66' },
+			],
+		},
+		{
+			title: 'Kids Menu',
+			items: [
+				{ name: 'Smashed Potato', price: '7.66' },
+				{ name: 'Crispy Vegetables', price: '8.66' },
+				{ name: 'Fries 66', note: 'Comes with cheese sauce and Peri Peri rub', price: '9.66' },
+				{ name: 'Juicy Chicken Tenders', price: '9.66' },
+				{ name: 'Butter Chicken with Rice / Fresh Naan', price: '9.66' },
+			],
+		},
+		{
+			title: 'Veg Main Course',
+			subtitle: 'Best compliment with fresh breads',
+			items: [
+				{ name: 'Yellow Dal Tadka', note: 'Tempered with desi ghee', price: '14.66' },
+				{ name: 'Mix Vegetables (Fresh Seasonal)', price: '15.66' },
+				{ name: 'Moti Malai Kofta', price: '15.66' },
+				{ name: 'Daal Makhani', note: 'Cooked overnight on tandoor', price: '15.66' },
+				{ name: 'Shahi Paneer', price: '17.66' },
+				{ name: 'Lasooni Bhuna Palak Paneer', price: '17.66' },
+				{ name: 'Kadahi Paneer', price: '17.66' },
+				{ name: 'Soya Paneer Methi Malai Handi', price: '18.66' },
+			],
+		},
+		{
+			title: 'Meat Main Course',
+			subtitle: 'Best compliment with fresh breads',
+			items: [
+				{ name: 'Chicken Tikka Masala', price: '17.66' },
+				{ name: 'Butter Chicken (Bone/Boneless)', price: '17.66' },
+				{ name: 'Kadahi Chicken', price: '17.66' },
+				{ name: 'Lasooni Bhuna Palak Chicken', price: '17.66' },
+				{ name: 'Chicken Curry', price: '17.66' },
+				{ name: 'Fish Coconut Goan Curry', price: '18.66' },
+				{ name: 'Prawn Masala', price: '19.66' },
+				{ name: 'Kashmiri Mutton Rogan Josh', price: '22.66' },
+				{ name: 'Rara Mutton Handi', price: '22.66' },
+			],
+		},
+		{
+			title: 'Rice',
+			subtitle: 'Gluten free',
+			items: [
+				{ name: 'Cumin Rice', price: '5.66' },
+				{ name: 'Plain Steam Rice', price: '5.66' },
+				{ name: 'Ghee Rice', price: '7.66' },
+				{ name: 'Saffron Rice', price: '7.66' },
+				{ name: 'Coconut Rice', price: '8.66' },
+				{ name: 'Veg Handi Biryani', price: '14.66' },
+				{ name: 'Chicken Handi Biryani', price: '15.66' },
+				{ name: 'Awadhi Mutton Handi Biryani', price: '17.66' },
+			],
+		},
+		{
+			title: 'Fresh Breads',
+			subtitle: 'You can enjoy watching chef making fresh breads',
+			items: [
+				{ name: 'Tandoori Roti', note: 'Plain / buttered', price: '2.66' },
+				{ name: 'Plain Naan', price: '2.66' },
+				{ name: 'Butter Naan', price: '3.66' },
+				{ name: 'Garlic Naan', price: '3.66' },
+				{ name: 'Lacha Parantha', price: '4.66' },
+				{ name: 'Lacha Paratha Harimirch Masala', price: '5.66' },
+				{ name: 'Bread Basket Any 4', price: '17.66' },
+			],
+		},
+		{
+			title: 'Dessert',
+			subtitle: 'Fresh homemade',
+			items: [
+				{ name: 'Moong Dal Halwa', price: '7.66' },
+				{ name: 'Gulab Jamun Hot', price: '7.66' },
+				{ name: 'Strawberry Fruits And Nut Ice Cream', price: '7.66' },
+				{ name: 'Warm Dhoda Burfi with Ice Cream', price: '8.66' },
+				{ name: 'Gulab Jamun With Vanilla Ice-Cream Topped With Nuts', price: '7.66' },
+			],
+		},
+		{
+			title: "Extra's",
+			items: [
+				{ name: 'Pickle', price: '0.66' },
+				{ name: 'Chutney', price: '0.66' },
+				{ name: 'Raita/Plain Yogurt', price: '4.66' },
+				{ name: 'Masala Onion', price: '1.66' },
+				{ name: 'Papad', price: '3.66' },
+				{ name: 'Sirke Wala Pyaaz', price: '4.66' },
+				{ name: 'Green Salad', price: '5.66' },
+			],
+		},
+		buffetSection,
+		{
+			title: 'Non Alcoholic Drinks',
+			items: [
+				{ name: 'Hot lime water', price: '1.66' },
+				{ name: 'Pop Coke Products', price: '2.66' },
+				{ name: 'Juice', price: '2.66' },
+				{ name: 'Green Tea', price: '2.66' },
+				{ name: 'Black Coffee', price: '2.66' },
+				{ name: 'Indian Chai tea', price: '3.66' },
+				{ name: 'Tandoori Chai', price: '3.66' },
+				{ name: 'Coffee Nescafe', price: '3.66' },
+				{ name: 'Banta Lemon Soda', price: '5.66' },
+				{ name: 'Shikanji', price: '5.66' },
+				{ name: 'Lahori Jaljeera On the Rocks', price: '5.66' },
+				{ name: 'Strawberry Shake', price: '6.66' },
+				{ name: 'Mango Milk Shake', price: '6.66' },
+				{ name: 'Cold Coffee', price: '6.66' },
+				{ name: 'Mango Lassi', price: '6.66' },
+				{ name: 'Lassi Salted', price: '6.66' },
+				{ name: 'Lassi Sweet', price: '6.66' },
+			],
+		},
 	];
 
 	return (
 		<div className="container-pad py-12 bg-white min-h-screen">
-			<Seo title="Menu" description="Explore our authentic menu featuring traditional breakfast, thalis, chaat, tandoori specialties, and house-made desserts." />
+			<Seo path={PAGE_SEO.menu.path} metaTitle={PAGE_SEO.menu.metaTitle} description={PAGE_SEO.menu.description} />
+			<JsonLd data={buildMenuSchema()} />
 			
 			{/* Header */}
 			<motion.div 
 				initial={{ opacity: 0, y: -20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.8 }}
-				className="text-center mb-16"
+				className="text-center mb-10"
 			>
 				<h1 className="font-serif text-5xl md:text-6xl mb-4 bg-gradient-to-r from-[#06507D] via-[#D42127] to-[#06507D] bg-clip-text text-transparent font-bold">
 					Relish66 Menu
 				</h1>
 				<div className="inline-block w-24 h-1 bg-gradient-to-r from-[#06507D] to-[#D42127] rounded-full mb-4"></div>
 				<p className="text-gray-600 text-lg font-medium">
-					Mon to Sun • 11:00am to 11:00pm
+					Monday Closed · Tue - Thu &amp; Sun • 1pm - 11pm · Fri - Sat • 1pm - 12am
 				</p>
 			</motion.div>
 
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16 max-w-5xl mx-auto">
+				{menuFeaturedImages.map(({ src, alt }) => (
+					<div key={alt} className="overflow-hidden rounded-2xl border border-[#06507D]/15 shadow-lg">
+						<img src={src} alt={alt} className="w-full h-48 object-cover" loading="lazy" />
+					</div>
+				))}
+			</div>
+
 			{/* Menu Sections */}
 			{menuSections.map((section) => (
-				<Section key={section.title} title={section.title}>
+				<Section key={section.title} title={section.title} subtitle={section.subtitle}>
 					{section.subsections ? (
 						section.subsections.map((subsection, subIndex) => (
-							<React.Fragment key={subIndex}>
+							<React.Fragment key={`${section.title}-${subsection.title}-${subIndex}`}>
 								<div className="col-span-full mb-4">
-									<h3 className="text-2xl font-bold bg-gradient-to-r from-[#06507D] to-[#D42127] bg-clip-text text-transparent mb-6">{subsection.title}</h3>
+									<h3 className="text-2xl font-bold bg-gradient-to-r from-[#06507D] to-[#D42127] bg-clip-text text-transparent mb-2">{subsection.title}</h3>
+									{subsection.blurb && (
+										<p className="text-gray-600 text-sm md:text-base mb-6 max-w-3xl">{subsection.blurb}</p>
+									)}
 								</div>
 									{subsection.items.map((item, itemIndex) => (
-									<Item key={item.name} {...item} index={itemIndex} description={item.note} />
+									<Item key={`${subsection.title}-${item.name}-${itemIndex}`} {...item} index={itemIndex} description={item.note} />
 									))}
 							</React.Fragment>
 						))
 					) : (
 						<>
-							{section.special && (
-								<div className="col-span-full mb-6">
-								<motion.p 
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									transition={{ delay: 0.3 }}
-										className="text-gray-400 italic font-medium text-center"
-								>
-									Try our custom chef special menu (Tent Card)
-								</motion.p>
-								</div>
-							)}
-							{section.items.map((item, itemIndex) => (
-								<Item key={item.name} {...item} index={itemIndex} description={item.note} />
-							))}
+							{section.items?.length > 0 &&
+								section.items.map((item, itemIndex) => (
+									<Item key={item.name} {...item} index={itemIndex} description={item.note} />
+								))}
 							{section.note && (
-								<div className="col-span-full mt-8">
-									<div className="bg-white rounded-2xl p-6 border border-[#06507D]/20 shadow-md">
+								<div className={`col-span-full ${section.items?.length > 0 ? 'mt-8' : ''}`}>
+									<div
+										className={
+											section.buffetOnly
+												? 'rounded-2xl p-0 md:p-2'
+												: 'bg-white rounded-2xl p-6 border border-[#06507D]/20 shadow-md'
+										}
+									>
 										{section.note}
 									</div>
-						</div>
+								</div>
 							)}
 						</>
 					)}

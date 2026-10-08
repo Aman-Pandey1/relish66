@@ -1,5 +1,6 @@
 import PageBanner from '../components/PageBanner.jsx';
 import { Seo } from '../components/Seo.jsx';
+import { PAGE_SEO, IMAGE_ALTS } from '../seo/pageSeo.js';
 
 import g1 from '../assets/gallary/WhatsApp Image 2026-05-08 at 10.46.11 AM (1).jpeg';
 import g2 from '../assets/gallary/WhatsApp Image 2026-05-08 at 10.46.11 AM.jpeg';
@@ -12,25 +13,26 @@ import g8 from '../assets/gallary/WhatsApp Image 2026-05-08 at 10.46.13 AM (1).j
 import g9 from '../assets/gallary/WhatsApp Image 2026-05-08 at 10.46.13 AM.jpeg';
 
 const galleryImages = [
-	{ src: g1, alt: 'Relish on 66 gallery' },
-	{ src: g2, alt: 'Relish on 66 gallery' },
-	{ src: g3, alt: 'Relish on 66 gallery' },
-	{ src: g4, alt: 'Relish on 66 gallery' },
-	{ src: g5, alt: 'Relish on 66 gallery' },
-	{ src: g6, alt: 'Relish on 66 gallery' },
-	{ src: g7, alt: 'Relish on 66 gallery' },
-	{ src: g8, alt: 'Relish on 66 gallery' },
-	{ src: g9, alt: 'Relish on 66 gallery' },
+	{ src: g1, alt: IMAGE_ALTS.galleryFood },
+	{ src: g2, alt: IMAGE_ALTS.galleryDining },
+	{ src: g3, alt: IMAGE_ALTS.galleryFood },
+	{ src: g4, alt: IMAGE_ALTS.galleryDining },
+	{ src: g5, alt: IMAGE_ALTS.galleryFood },
+	{ src: g6, alt: IMAGE_ALTS.galleryDining },
+	{ src: g7, alt: IMAGE_ALTS.galleryFood },
+	{ src: g8, alt: IMAGE_ALTS.galleryDining },
+	{ src: g9, alt: IMAGE_ALTS.galleryFood },
 ];
 
 export default function Gallery() {
 	return (
 		<div className="overflow-hidden">
-			<Seo title="Gallery" description="Explore moments from Relish on 66 Restaurant and Bar." />
+			<Seo path={PAGE_SEO.gallery.path} metaTitle={PAGE_SEO.gallery.metaTitle} description={PAGE_SEO.gallery.description} />
 			<PageBanner
 				title="Gallery"
 				subtitle="A glimpse of our food, ambiance, and celebrations"
 				image={g1}
+				imageAlt={IMAGE_ALTS.galleryBanner}
 				height="h-[35vh]"
 				overlay="bg-gradient-to-r from-[#06507D]/60 to-[#D42127]/60"
 			/>
@@ -46,6 +48,7 @@ export default function Gallery() {
 								src={src}
 								alt={alt}
 								className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+								loading="lazy"
 							/>
 						</div>
 					))}
